@@ -11,8 +11,15 @@
 	</parent>
 
 	<name>Explore With Me</name>
+    <modules>
+        <module>stateeeeee</module>
+		<module>stateeeeee/stat_client</module>
+		<module>stateeeeee/stat_dto</module>
+		<module>stateeeeee/stat_service</module>
+		<module>state</module>
+	</modules>
 
-	<groupId>ru.practicum</groupId>
+    <groupId>ru.practicum</groupId>
 	<artifactId>explore-with-me</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<packaging>pom</packaging>
