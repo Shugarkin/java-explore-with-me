@@ -8,6 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.dto.StatEventDto;
 
+import javax.servlet.http.HttpServletRequest;
+import java.util.Map;
+
 @Service
 public class StatClient  extends BaseClient{
 
@@ -21,9 +24,17 @@ public class StatClient  extends BaseClient{
         );
     }
 
-    public ResponseEntity<Object> postStatEvent(String ip, StatEventDto event) {
-        return post("/hit", ip, event);
+    public ResponseEntity<Object> postStatEvent(StatEventDto event) {
+        return post("/hit", event.getIp(), event);
     }
 
-
+    public ResponseEntity<Object> getStatEvent(String ip, String start, String end, String[] uris, boolean unique) {
+        Map<String, Object> parameters = Map.of(
+                "start", start,
+                "end", end,
+                "uris", uris,
+                "unique", unique
+        );
+        return get("/stats", ip, parameters);
+    }
 }
