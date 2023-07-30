@@ -12,6 +12,7 @@ public class StatEventMapper {
                 .app(statEventDto.getApp())
                 .uri(statEventDto.getUri())
                 .ip(statEventDto.getIp())
+                .timestamp(statEventDto.getTimestamp())
                 .build();
     }
 

@@ -16,19 +16,16 @@ public class Stat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "view_id")
-    private long viewId;
-
-//    @Column(name = "app")
-//    private String app;
-//
-//    @Column(name = "uri")
-//    private String uri;
+    @Column(name = "stat_id")
+    private long statId;
 
     @ManyToOne
-    @JoinColumn(name = "endpoint_hit_id")
-    private StatEvent statEventId;
+    @JoinColumn(name = "event")
+    private StatEvent event;
 
     @Column(name = "hits")
-    private int hits;
+    private long hits;
+
+    @Column(name = "hits_unique")
+    private long hitsUnique;
 }

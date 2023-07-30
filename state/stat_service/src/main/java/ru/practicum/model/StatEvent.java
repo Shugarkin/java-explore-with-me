@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "endpoint_hit")
+@Table(name = "stat_event")
 public class StatEvent {
 
     @Id
