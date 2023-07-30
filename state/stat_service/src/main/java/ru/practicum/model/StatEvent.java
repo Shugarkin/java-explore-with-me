@@ -31,6 +31,6 @@ public class StatEvent {
     private String ip;
 
     @Column(name = "time_stamp")
-    private LocalDateTime timestamp;
+    private String timestamp;
 
 }

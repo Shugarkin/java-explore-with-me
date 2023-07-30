@@ -17,6 +17,6 @@ public class StatEventDto {
 
     private String ip;
 
-    private LocalDateTime timestamp;
+    private String timestamp;
 
 }

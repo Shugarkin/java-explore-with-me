@@ -9,22 +9,26 @@ import javax.persistence.*;
 @ToString
 @Builder
 @EqualsAndHashCode
-//@Entity
+@Entity
 @AllArgsConstructor
 @NoArgsConstructor
 public class Stat {
 
-    //   @Id
-    //   @GeneratedValue(strategy = GenerationType.IDENTITY)
-//    @Column(name = "view_id")
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "view_id")
     private long viewId;
 
-    //   @Column(name = "app")
-    private String app;
+//    @Column(name = "app")
+//    private String app;
+//
+//    @Column(name = "uri")
+//    private String uri;
 
-    //  @Column(name = "uri")
-    private String uri;
+    @ManyToOne
+    @JoinColumn(name = "endpoint_hit_id")
+    private StatEvent statEventId;
 
-    //    @Column(name = "hits")
+    @Column(name = "hits")
     private int hits;
 }

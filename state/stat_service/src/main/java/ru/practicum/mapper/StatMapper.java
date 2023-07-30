@@ -12,9 +12,9 @@ public class StatMapper {
 
     public StatDto toStatDto(Stat stat) {
         return StatDto.builder()
-                .app(stat.getApp())
+                .app(stat.getStatEventId().getApp())
                 .hits(stat.getHits())
-                .uri(stat.getUri())
+                .uri(stat.getStatEventId().getUri())
                 .build();
     }
 
