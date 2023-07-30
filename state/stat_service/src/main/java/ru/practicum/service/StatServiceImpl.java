@@ -30,31 +30,43 @@ public class StatServiceImpl  implements StatService {
     @Transactional
     @Override
     public StatEvent postStatEvent(StatEvent event) {
+        postStat(event);
         StatEvent newStatEvent = serviceEventRepository.save(event);
-        postStat(newStatEvent);
+
         return newStatEvent;
     }
 
     @Transactional
     public void postStat(StatEvent event) {
-        boolean answer = serviceRepository.existsByEventUri(event.getUri()); //проверяю есть ли данные в статистике уже
-
+//        boolean answer = serviceRepository.existsByEventUri(event.getUri()); //проверяю есть ли данные в статистике уже
+//
+//        if (!answer) {
+//            serviceRepository.save(Stat.builder().event(event).hits(1).hitsUnique(1).build()); //добавляю если нет
+//        } else { //если данные есть
+//            Stat stat = serviceRepository.findByEventUri(event.getUri()); //получаю стату по данному uri
+//            //List<Stat> asd = serviceRepository.findAllByEventUri(event.getUri());
+//            boolean answerUnique = serviceRepository.existsByEventUriAndEventIp(event.getUri(), event.getIp()); //проверяю есть ли стата с данным uri и ip
+//            if (answerUnique) { //если ip полученого запроса не уникальный
+//                long hits = stat.getHits();
+//                stat.setHits(hits + 1);
+//            } else { //если уникальный
+//                long hits = stat.getHits();
+//                stat.setHits(hits + 1);
+//                long hitsUnique = stat.getHitsUnique();
+//                stat.setHitsUnique(hitsUnique + 1);
+//            }
+//        }
+        boolean answer = serviceRepository.existsByUri(event.getUri()); //проверяю есть ли данные в статистике уже
         if (!answer) {
-            serviceRepository.save(Stat.builder().event(event).hits(1).hitsUnique(1).build()); //добавляю если нет
+            serviceRepository.save(Stat.builder().app(event.getApp()).uri(event.getUri()).hits(1).hitsUnique(1).build()); //добавляю если нет
         } else { //если данные есть
-            Stat stat = serviceRepository.findByEventUri(event.getUri()); //получаю стату по данному uri
-            //List<Stat> asd = serviceRepository.findAllByEventUri(event.getUri());
-            boolean answerUnique = serviceRepository.existsByEventUriAndEventIp(event.getUri(), event.getIp()); //проверяю есть ли стата с данным uri и ip
-            if (answerUnique) { //если ip полученого запроса не уникальный
-                long hits = stat.getHits();
-                stat.setHits(hits + 1);
-            } else { //если уникальный
-                long hits = stat.getHits();
-                stat.setHits(hits + 1);
-                long hitsUnique = stat.getHitsUnique();
-                stat.setHitsUnique(hitsUnique + 1);
-            }
+        ????
         }
+
+        Stat stat = event.getStat();
+        stat.setHitsUnique(1);
+        stat.setHits(1);
+        serviceRepository.save(stat);
     }
 
     @Override

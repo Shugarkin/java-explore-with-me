@@ -16,12 +16,14 @@ public class Stat {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "stat_id")
+    @Column(name = "id")
     private long statId;
 
-    @ManyToOne
-    @JoinColumn(name = "event")
-    private StatEvent event;
+    @Column(name = "app")
+    private String app;
+
+    @Column(name = "uri")
+    private String uri;
 
     @Column(name = "hits")
     private long hits;

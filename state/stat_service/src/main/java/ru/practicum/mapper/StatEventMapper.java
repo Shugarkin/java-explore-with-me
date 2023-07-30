@@ -2,6 +2,7 @@ package ru.practicum.mapper;
 
 import lombok.experimental.UtilityClass;
 import ru.practicum.dto.StatEventDto;
+import ru.practicum.model.Stat;
 import ru.practicum.model.StatEvent;
 
 @UtilityClass
@@ -11,6 +12,7 @@ public class StatEventMapper {
         return StatEvent.builder()
                 .app(statEventDto.getApp())
                 .uri(statEventDto.getUri())
+                .stat(Stat.builder().app(statEventDto.getApp()).uri(statEventDto.getUri()).build())
                 .ip(statEventDto.getIp())
                 .timestamp(statEventDto.getTimestamp())
                 .build();

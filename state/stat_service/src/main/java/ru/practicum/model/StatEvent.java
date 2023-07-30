@@ -27,6 +27,10 @@ public class StatEvent {
     @Column(name = "uri")
     private String uri;
 
+    @ManyToOne
+    @JoinColumn(name = "stat_id")
+    private Stat stat;
+
     @Column(name = "ip")
     private String ip;
 

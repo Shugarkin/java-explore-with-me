@@ -25,8 +25,8 @@ public class StatMapper {
 
     public StatUniqueOrNot toUnique(Stat stat) {
         return StatUniqueOrNot.builder()
-                .app(stat.getEvent().getApp())
-                .uri(stat.getEvent().getUri())
+                .app(stat.getApp())
+                .uri(stat.getUri())
                 .hits(stat.getHitsUnique())
                 .build();
     }
@@ -37,8 +37,8 @@ public class StatMapper {
 
     public StatUniqueOrNot toNotUnique(Stat stat) {
         return StatUniqueOrNot.builder()
-                .app(stat.getEvent().getApp())
-                .uri(stat.getEvent().getUri())
+                .app(stat.getApp())
+                .uri(stat.getUri())
                 .hits(stat.getHits())
                 .build();
     }
