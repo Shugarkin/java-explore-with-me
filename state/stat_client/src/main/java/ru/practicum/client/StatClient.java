@@ -6,6 +6,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.http.client.HttpComponentsClientHttpRequestFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.web.util.DefaultUriBuilderFactory;
+import ru.practicum.dto.StatDto;
 
 import java.util.Map;
 
@@ -22,8 +23,8 @@ public class StatClient  extends BaseClient{
         );
     }
 
-    public ResponseEntity<Object> postStatEvent(StatEventDto event) {
-        return post("/hit", event.getIp(), event);
+    public ResponseEntity<Object> postStatEvent(StatDto stat) {
+        return post("/hit", stat.getIp(), stat);
     }
 
     public ResponseEntity<Object> getStatEvent(String ip, String start, String end, String[] uris, boolean unique) {

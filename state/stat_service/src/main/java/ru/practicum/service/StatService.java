@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface StatService {
 
-    Stat postStatEvent(Stat event);
+    Stat postStat(Stat stat);
 
-    List<StatUniqueOrNot> getStatEvent(String ip, String start, String end, List<String> uris, boolean unique);
+    List<StatUniqueOrNot> getStat(String start, String end, List<String> uris, boolean unique);
 }
