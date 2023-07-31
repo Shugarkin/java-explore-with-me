@@ -13,5 +13,7 @@ public class StatDto {
 
     private String uri;
 
-    private long hits;
+    private String ip;
+
+    private String timestamp;
 }

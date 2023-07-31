@@ -22,6 +22,12 @@ public class Stat {
     @Column(name = "app")
     private String app;
 
+    @Column(name = "ip")
+    private String ip;
+
+    @Column(name = "time_stamp")
+    private String timestamp;
+
     @Column(name = "uri")
     private String uri;
 
