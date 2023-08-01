@@ -1,8 +1,7 @@
 version: '3.1'
 services:
   stats-server:
-    build:
-      stat_server
+    build: state.state_service
     image:
       stat_server:latest
     container_name: stat_server
@@ -13,7 +12,6 @@ services:
 
     depends_on:
       - stats-db
-      -
     environment:
           - URL_DB=postgresql://db:1111/java-explore-with-me/state/sta_service
           - USERNAME_DB=postgres
