@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   stats-server:
-    build: state.state_service
+    build: ./state/stat_service
     image:
       stat_server:latest
     container_name: stat_server
@@ -17,11 +17,7 @@ services:
           - USERNAME_DB=postgres
           - PASSWORD_DB=123
   stats-db:
-      image: postgres_db
-      build:
-        context: ./
-        dockerfile: ./Dockerfile.postgres
-
+      image: postgres:14-alpine
       volumes:
         - /var/lib/postgresql/data/
       container_name: state_server-db
@@ -31,53 +27,9 @@ services:
         - POSTGRES_DB=java-explore-with-me
         - POSTGRES_USER=postgres
         - POSTGRES_PASSWORD=123
-  ewm-service:
-    ports:
-      - "8080:8080"
-
-  ewm-db:
-    image: postgres:14-alpine
-
-
-#services:
-#  gateway:
-#    build: gateway
-#    image: shareit-gateway:latest
-#    container_name: shareit-gateway
+#  ewm-service:
 #    ports:
 #      - "8080:8080"
-#      - "8081:8081"
-#    depends_on:
-#      - server
-#    environment:
-#      - SHAREIT_SERVER_URL=http://server:9090
 #
-#  server:
-#    build: server
-#    image: shareit-server:latest
-#    container_name: shareit-server
-#    ports:
-#      - "9090:9090"
-#      - "9091:9091"
-#    depends_on:
-#      - db
-#    environment:
-#      - URL_DB=postgresql://db:5432/shareit
-#      - USERNAME_DB=postgres
-#      - PASSWORD_DB=123
-#
-#  db:
-#    image: postgres_db
-#    build:
-#      context: ./
-#      dockerfile: ./Dockerfile.postgres
-#
-#    volumes:
-#      - /var/lib/postgresql/data/
-#    container_name: shareit-db
-#    ports:
-#      - "6541:5432"
-#    environment:
-#      - POSTGRES_DB=shareit
-#      - POSTGRES_USER=postgres
-#      - POSTGRES_PASSWORD=123
+#  ewm-db:
+#    image: postgres:14-alpine

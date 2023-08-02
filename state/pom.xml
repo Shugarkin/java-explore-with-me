@@ -7,26 +7,26 @@
         <groupId>ru.practicum</groupId>
         <artifactId>explore-with-me</artifactId>
         <version>0.0.1-SNAPSHOT</version>
+        <relativePath>../pom.xml</relativePath>
     </parent>
+
+
+    <name>Stat server</name>
+    <modules>
+        <module>stat_client</module>
+        <module>stat_dto</module>
+        <module>stat_service</module>
+    </modules>
 
     <artifactId>state</artifactId>
     <packaging>pom</packaging>
-
-    <modules>
-        <module>stat_dto</module>
-        <module>stat_client</module>
-        <module>stat_service</module></modules>
 
     <properties>
         <maven.compiler.source>11</maven.compiler.source>
         <maven.compiler.target>11</maven.compiler.target>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     </properties>
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-autoconfigure</artifactId>
-        </dependency>
-    </dependencies>
+
+
 
 </project>
