@@ -13,9 +13,6 @@
 	<name>Explore With Me</name>
     <modules>
         <module>state</module>
-		<module>state/stat_client</module>
-		<module>state/stat_dto</module>
-		<module>state/stat_service</module>
 	</modules>
 
     <groupId>ru.practicum</groupId>
