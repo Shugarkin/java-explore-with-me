@@ -13,8 +13,8 @@
 
   <name>Explore with me</name>
   <modules>
-    <module>state</module>
-    <module>service</module>
+    <module>stats-server</module>
+    <module>ewm-service</module>
   </modules>
 
   <groupId>ru.practicum</groupId>

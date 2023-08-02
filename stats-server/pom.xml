@@ -18,7 +18,7 @@
         <module>stat_service</module>
     </modules>
 
-    <artifactId>state</artifactId>
+    <artifactId>stats-server</artifactId>
     <packaging>pom</packaging>
 
     <properties>
