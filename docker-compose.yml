@@ -32,6 +32,7 @@ services:
     image:
       ewm-service:latest
     container_name: ewm-service
+
     ports:
       - "8080:8080"
 
