@@ -2,6 +2,7 @@ version: '3.1'
 services:
   stats-server:
     build: ./stats-server/stat_service
+
     image:
       stat_server:latest
     container_name: stat_server
@@ -11,33 +12,38 @@ services:
       - "9091:9091"
 
     depends_on:
-      - stats-db
+      - stats_service-db
     environment:
-          - URL_DB=jdbc:postgresql://stats_db:1111/stat_db
-          - USERNAME_DB=postgres
-          - PASSWORD_DB=123
-  stats-db:
-      image: postgres:14-alpine
-      volumes:
-        - /var/lib/postgresql/data/
-      container_name: state_server-db
-      ports:
-        - "1111:1111"
-      environment:
-        - POSTGRES_DB=stat_db
-        - POSTGRES_USER=postgres
-        - POSTGRES_PASSWORD=123
+    - URL_DB=jdbc:postgresql://stats_service-db:5594/stat_db
+    - USERNAME_DB=asd
+    - PASSWORD_DB=123
+
+
+  stats_service-db:
+    image: postgres:14-alpine
+    container_name: state_server-db
+    ports:
+    - "8347:5594"
+    environment:
+    - POSTGRES_DB=stat_db
+    - POSTGRES_USER=asd
+    - POSTGRES_PASSWORD=123
+
+
+
   ewm-service:
     build: ./ewm-service
     image:
-      ewm-service:latest
+     ewm-service:latest
     container_name: ewm-service
 
     ports:
-      - "8080:8080"
+     - "8080:8080"
+
+    depends_on:
+     - ewm-db
     environment:
-      - CLIENT_URL=http://stats-server:9090
-      - SERVICE_URL=jdbc:postgresql://ewm-db:5432/ewm_db
+      - SERVICE_URL=jdbc:postgresql://ewm-db:2222/ewm_db
       - SERVICE_USERNAME=postgres
       - SERVICE_PASSWORD=123
 
@@ -45,9 +51,8 @@ services:
     image: postgres:14-alpine
     container_name: postgres-main-db
     ports:
-      - "2222:2222"
+     - "2233:2222"
     environment:
       - EWM_DB=ewm_db
       - EWM_USER=postgres
       - EWM_PASSWORD=123
-
