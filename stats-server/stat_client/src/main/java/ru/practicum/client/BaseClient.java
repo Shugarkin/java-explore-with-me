@@ -89,7 +89,7 @@ public class BaseClient {
         HttpHeaders headers = new HttpHeaders();
         headers.setContentType(MediaType.APPLICATION_JSON);
         headers.setAccept(List.of(MediaType.APPLICATION_JSON));
-        if (ip != null || ip.isBlank()) {
+        if (ip != null) {
             headers.set("X-Sharer-User-Id", ip);
         }
         return headers;

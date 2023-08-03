@@ -12,6 +12,7 @@ import ru.practicum.model.Stat;
 import ru.practicum.model.StatUniqueOrNot;
 import ru.practicum.service.StatService;
 
+import javax.validation.constraints.Min;
 import java.util.List;
 
 @RestController
@@ -30,8 +31,9 @@ public class StatServiceController {
     }
 
     @GetMapping("/stats")
-    public List<StatUniqueOrNotDto> getStatEvent(@RequestParam("start") String start, @RequestParam("end") String end,
-                                                 @RequestParam(defaultValue = "") List<String> uris, @RequestParam(defaultValue = "false") boolean unique) {
+    public List<StatUniqueOrNotDto> getStatEvent(@RequestParam("start") @Min(19) String start, @RequestParam("end") @Min(19) String end,
+                                                 @RequestParam(defaultValue = "") List<String> uris,
+                                                 @RequestParam(defaultValue = "false") boolean unique) {
         List<StatUniqueOrNot> stats =  statService.getStat(start, end, uris, unique);
         log.info("get list stat size ={}", stats.size());
         return StatMapper.toListStatDtoFromStatUnique(stats);

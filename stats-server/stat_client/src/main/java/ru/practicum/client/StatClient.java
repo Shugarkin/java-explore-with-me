@@ -24,7 +24,7 @@ public class StatClient  extends BaseClient {
     }
 
     public ResponseEntity<Object> postStatEvent(StatDto stat) {
-        return post("/hit", stat.getIp(), stat);
+        return post("/hit", stat);
     }
 
     public ResponseEntity<Object> getStatEvent(String ip, String start, String end, String[] uris, boolean unique) {
