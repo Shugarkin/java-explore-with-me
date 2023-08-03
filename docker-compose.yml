@@ -13,7 +13,7 @@ services:
     depends_on:
       - stats-db
     environment:
-          - URL_DB=postgresql://db:1111/java-explore-with-me/state/sta_service
+          - URL_DB=jdbc:postgresql://db:1111/stat_db
           - USERNAME_DB=postgres
           - PASSWORD_DB=123
   stats-db:
@@ -24,7 +24,7 @@ services:
       ports:
         - "1111:1111"
       environment:
-        - POSTGRES_DB=java-explore-with-me
+        - POSTGRES_DB=stat_db
         - POSTGRES_USER=postgres
         - POSTGRES_PASSWORD=123
   ewm-service:
