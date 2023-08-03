@@ -11,7 +11,7 @@ import ru.practicum.dto.StatDto;
 import java.util.Map;
 
 @Service
-public class StatClient  extends BaseClient{
+public class StatClient  extends BaseClient {
 
 
     public StatClient(@Value("${stat_service.url}") String serverUrl, RestTemplateBuilder builder) {
