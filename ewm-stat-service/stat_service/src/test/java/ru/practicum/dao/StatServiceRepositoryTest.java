@@ -7,6 +7,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import ru.practicum.model.Stat;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -18,13 +20,14 @@ class StatServiceRepositoryTest {
     @Autowired
     private StatServiceRepository serviceRepository;
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private Stat stat = Stat.builder()
             .hits(1)
             .hitsUnique(1)
             .ip("85.249.18.233")
             .uri("/events")
-            .timestamp("2035-05-05 00:00:00")
+            .timestamp(LocalDateTime.parse("2035-05-05 00:00:00", formatter))
             .app("ewm-main-service")
             .build();
 
@@ -60,7 +63,8 @@ class StatServiceRepositoryTest {
     @Test
     void findByTimestampBetweenAndUri() {
         List<Stat> list =
-                serviceRepository.findByTimestampBetweenAndUri("2025-05-05 00:00:00", "2045-05-05 00:00:00",
+                serviceRepository.findByTimestampBetweenAndUri(LocalDateTime.parse("2025-05-05 00:00:00", formatter),
+                        LocalDateTime.parse("2045-05-05 00:00:00", formatter),
                         List.of("/events"));
 
         assertEquals(list, List.of(stat));
@@ -69,7 +73,8 @@ class StatServiceRepositoryTest {
     @Test
     void findByTimestampBetween() {
         List<Stat> list =
-                serviceRepository.findByTimestampBetween("2025-05-05 00:00:00", "2045-05-05 00:00:00");
+                serviceRepository.findByTimestampBetween(LocalDateTime.parse("2025-05-05 00:00:00", formatter),
+                        LocalDateTime.parse("2045-05-05 00:00:00", formatter));
 
         assertEquals(list, List.of(stat));
     }

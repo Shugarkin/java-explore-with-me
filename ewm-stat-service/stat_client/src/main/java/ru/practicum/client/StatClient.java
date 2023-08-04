@@ -14,7 +14,7 @@ import java.util.Map;
 public class StatClient  extends BaseClient {
 
 
-    public StatClient(@Value("${stat_service.url}") String serverUrl, RestTemplateBuilder builder) {
+    public StatClient(@Value("${ewm-stats-service.url}") String serverUrl, RestTemplateBuilder builder) {
         super(
                 builder
                         .uriTemplateHandler(new DefaultUriBuilderFactory(serverUrl))

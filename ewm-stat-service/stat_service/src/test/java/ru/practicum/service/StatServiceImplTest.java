@@ -9,6 +9,8 @@ import ru.practicum.dao.StatServiceRepository;
 import ru.practicum.model.Stat;
 import ru.practicum.model.StatUniqueOrNot;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -23,10 +25,12 @@ class StatServiceImplTest {
     @InjectMocks
     private StatServiceImpl statService;
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     private Stat stat = Stat.builder()
             .ip("85.249.18.233")
             .uri("/events")
-            .timestamp("2035-05-05 00:00:00")
+            .timestamp(LocalDateTime.parse("2035-05-05 00:00:00", formatter))
             .app("ewm-main-service")
             .build();
 
@@ -72,7 +76,10 @@ class StatServiceImplTest {
         List<String> uris = List.of();
         boolean unique = false;
 
-        when(serviceRepository.findByTimestampBetween(start, end)).thenReturn(List.of(stat));
+        LocalDateTime dateStart = LocalDateTime.parse(start, formatter);
+        LocalDateTime dateEnd = LocalDateTime.parse(end, formatter);
+
+        when(serviceRepository.findByTimestampBetween(dateStart, dateEnd)).thenReturn(List.of(stat));
 
         List<StatUniqueOrNot> list = statService.getStat(start, end, uris, unique);
 
@@ -86,7 +93,10 @@ class StatServiceImplTest {
         List<String> uris = List.of();
         boolean unique = true;
 
-        when(serviceRepository.findByTimestampBetween(start, end)).thenReturn(List.of(stat));
+        LocalDateTime dateStart = LocalDateTime.parse(start, formatter);
+        LocalDateTime dateEnd = LocalDateTime.parse(end, formatter);
+
+        when(serviceRepository.findByTimestampBetween(dateStart, dateEnd)).thenReturn(List.of(stat));
 
         List<StatUniqueOrNot> list = statService.getStat(start, end, uris, unique);
 
@@ -100,7 +110,10 @@ class StatServiceImplTest {
         List<String> uris = List.of("/events");
         boolean unique = true;
 
-        when(serviceRepository.findByTimestampBetweenAndUri(start, end, uris)).thenReturn(List.of(stat));
+        LocalDateTime dateStart = LocalDateTime.parse(start, formatter);
+        LocalDateTime dateEnd = LocalDateTime.parse(end, formatter);
+
+        when(serviceRepository.findByTimestampBetweenAndUri(dateStart, dateEnd, uris)).thenReturn(List.of(stat));
 
         List<StatUniqueOrNot> list = statService.getStat(start, end, uris, unique);
 
@@ -114,7 +127,10 @@ class StatServiceImplTest {
         List<String> uris = List.of("/events");
         boolean unique = false;
 
-        when(serviceRepository.findByTimestampBetweenAndUri(start, end, uris)).thenReturn(List.of(stat));
+        LocalDateTime dateStart = LocalDateTime.parse(start, formatter);
+        LocalDateTime dateEnd = LocalDateTime.parse(end, formatter);
+
+        when(serviceRepository.findByTimestampBetweenAndUri(dateStart, dateEnd, uris)).thenReturn(List.of(stat));
 
         List<StatUniqueOrNot> list = statService.getStat(start, end, uris, unique);
 

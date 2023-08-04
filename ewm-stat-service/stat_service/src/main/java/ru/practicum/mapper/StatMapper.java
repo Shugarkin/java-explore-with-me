@@ -6,24 +6,29 @@ import ru.practicum.dto.StatUniqueOrNotDto;
 import ru.practicum.model.Stat;
 import ru.practicum.model.StatUniqueOrNot;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @UtilityClass
 public class StatMapper {
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
 
     public Stat toStat(StatDto statDto) {
+
         return Stat.builder()
                 .ip(statDto.getIp())
                 .uri(statDto.getUri())
-                .timestamp(statDto.getTimestamp())
+                .timestamp(LocalDateTime.parse(statDto.getTimestamp(), formatter))
                 .app(statDto.getApp())
                 .build();
     }
 
     public StatDto toStatDto(Stat stat) {
         return StatDto.builder()
-                .timestamp(stat.getTimestamp())
+                .timestamp(stat.getTimestamp().format(formatter))
                 .app(stat.getApp())
                 .uri(stat.getUri())
                 .ip(stat.getIp())

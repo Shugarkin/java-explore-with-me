@@ -12,6 +12,8 @@ import ru.practicum.model.Stat;
 import ru.practicum.model.StatUniqueOrNot;
 import ru.practicum.service.StatService;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -26,10 +28,12 @@ class StatServiceControllerTest {
     @InjectMocks
     private StatServiceController statServiceController;
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     private Stat stat = Stat.builder()
             .ip("85.249.18.233")
             .uri("/events")
-            .timestamp("2035-05-05 00:00:00")
+            .timestamp(LocalDateTime.parse("2035-05-05 00:00:00",formatter))
             .app("ewm-main-service")
             .build();
 
@@ -51,6 +55,7 @@ class StatServiceControllerTest {
         List<String> uris = List.of();
         boolean unique = false;
         StatUniqueOrNot statUniqueOrNot = StatMapper.toUnique(stat);
+
 
         when(statService.getStat(start, end, uris, unique)).thenReturn(List.of(statUniqueOrNot));
 

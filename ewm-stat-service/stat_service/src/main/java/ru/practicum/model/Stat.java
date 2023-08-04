@@ -3,6 +3,7 @@ package ru.practicum.model;
 import lombok.*;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Getter
 @Setter
@@ -26,7 +27,7 @@ public class Stat {
     private String ip;
 
     @Column(name = "time_stamp")
-    private String timestamp;
+    private LocalDateTime timestamp;
 
     @Column(name = "uri")
     private String uri;

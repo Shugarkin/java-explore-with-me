@@ -14,6 +14,8 @@ import ru.practicum.model.StatUniqueOrNot;
 import ru.practicum.service.StatService;
 
 import java.nio.charset.StandardCharsets;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -37,13 +39,15 @@ class StatServiceControllerITTest {
     @MockBean
     private StatService statService;
 
+    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+
     private Stat stat = Stat.builder()
             .hits(1)
             .hitsUnique(1)
             .statId(1)
             .ip("85.249.18.233")
             .uri("/events")
-            .timestamp("2035-05-05 00:00:00")
+            .timestamp(LocalDateTime.parse("2035-05-05 00:00:00", formatter))
             .app("ewm-main-service")
             .build();
 
@@ -57,7 +61,7 @@ class StatServiceControllerITTest {
 
         String newStat = mockMvc.perform(post("/hit", statDto)
                         .contentType("application/json")
-                        .content(objectMapper.writeValueAsString(stat))
+                        .content(objectMapper.writeValueAsString(statDto))
                         .characterEncoding(StandardCharsets.UTF_8))
                 .andExpect(status().isOk())
                 .andReturn()

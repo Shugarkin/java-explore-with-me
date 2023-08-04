@@ -9,6 +9,8 @@ import ru.practicum.mapper.StatMapper;
 import ru.practicum.model.Stat;
 import ru.practicum.model.StatUniqueOrNot;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 
 @Service
@@ -54,20 +56,23 @@ public class StatServiceImpl  implements StatService {
     @Override
     public List<StatUniqueOrNot> getStat(String start, String end, List<String> uris, boolean unique) {
             List<StatUniqueOrNot> list;
+            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        LocalDateTime dateStart = LocalDateTime.parse(start, formatter);
+        LocalDateTime dateEnd = LocalDateTime.parse(end, formatter);
             if (uris.isEmpty()) { //если список uri пуст
                 if (unique) { //если надо учитывать уникальность
-                    list = StatMapper.toListUnique(serviceRepository.findByTimestampBetween(start, end));
+                    list = StatMapper.toListUnique(serviceRepository.findByTimestampBetween(dateStart, dateEnd));
                     log.info("get unique list without uris");
                 } else { //если не надо учитывать уникальность
-                    list = StatMapper.toListNotUnique(serviceRepository.findByTimestampBetween(start, end));
+                    list = StatMapper.toListNotUnique(serviceRepository.findByTimestampBetween(dateStart, dateEnd));
                     log.info("get not unique list without uris");
                 }
             } else { //если список uri не пуст
                 if (unique) { //если надо учитывать уникальность
-                    list = StatMapper.toListUnique(serviceRepository.findByTimestampBetweenAndUri(start, end, uris));
+                    list = StatMapper.toListUnique(serviceRepository.findByTimestampBetweenAndUri(dateStart, dateEnd, uris));
                     log.info("get unique list with uris");
                 } else { //если не надо учитывать уникальность
-                    list = StatMapper.toListNotUnique(serviceRepository.findByTimestampBetweenAndUri(start, end, uris));
+                    list = StatMapper.toListNotUnique(serviceRepository.findByTimestampBetweenAndUri(dateStart, dateEnd, uris));
                     log.info("get not unique list with uris");
                 }
             }
