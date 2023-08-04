@@ -18,7 +18,7 @@
         <module>stat_service</module>
     </modules>
 
-    <artifactId>stats-server</artifactId>
+    <artifactId>ewm-stat-service</artifactId>
     <packaging>pom</packaging>
 
     <properties>

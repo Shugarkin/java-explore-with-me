@@ -1,7 +1,7 @@
 version: '3.1'
 services:
   stats-server:
-    build: ./stats-server/stat_service
+    build: ./ewm-stat-service/stat_service
 
     image:
       stat_server:latest
@@ -31,7 +31,7 @@ services:
 
 
   ewm-service:
-    build: ./ewm-service
+    build: ./ewm-main-service
     image:
      ewm-service:latest
     container_name: ewm-service
