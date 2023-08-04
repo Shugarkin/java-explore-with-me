@@ -14,7 +14,7 @@ services:
     depends_on:
       - stats_service-db
     environment:
-    - URL_DB=jdbc:postgresql://stats_service-db:5594/stat_db
+    - URL_DB=jdbc:postgresql://stats_service-db:5432/stat_db
     - USERNAME_DB=asd
     - PASSWORD_DB=123
 
@@ -23,7 +23,7 @@ services:
     image: postgres:14-alpine
     container_name: state_server-db
     ports:
-    - "8347:5594"
+    - "8347:5432"
     environment:
     - POSTGRES_DB=stat_db
     - POSTGRES_USER=asd
