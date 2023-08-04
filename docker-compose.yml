@@ -9,6 +9,7 @@ services:
 
     ports:
       - "9090:9090"
+      - "9091:9091"
 
     depends_on:
       - stats_service-db
@@ -31,28 +32,29 @@ services:
 
 
 
-#  ewm-service:
-#    build: ./ewm-main-service
-#    image:
-#     ewm-service:latest
-#    container_name: ewm-service
-#
-#    ports:
-#     - "8080:8080"
-#
-#    depends_on:
-#     - ewm-db
-#    environment:
-#      - SERVICE_URL=jdbc:postgresql://ewm-db:2222/ewm_db
+  ewm-service:
+    build: ./ewm-main-service
+    image:
+     ewm-service:latest
+    container_name: ewm-service
+
+    ports:
+     - "8080:8080"
+
+    depends_on:
+     - ewm-db
+    environment:
+      - SERVICE_URL=jdbc:postgresql://ewm-db:6464/ewm_db
 #      - SERVICE_USERNAME=postgres
 #      - SERVICE_PASSWORD=123
-#
-#  ewm-db:
-#    image: postgres:14-alpine
-#    container_name: postgres-main-db
-#    ports:
-#     - "2233:2222"
-#    environment:
+
+  ewm-db:
+    image: postgres:14
+    container_name: postgres-main-db
+    ports:
+     - "6464:6464"
+    environment:
+        POSTGRES_HOST_AUTH_METHOD: "trust"
 #      - EWM_DB=ewm_db
 #      - EWM_USER=postgres
 #      - EWM_PASSWORD=123
