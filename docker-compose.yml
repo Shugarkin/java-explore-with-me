@@ -31,7 +31,6 @@ services:
 
 
 
-
   ewm-service:
     build: ./ewm-main-service
     image:
