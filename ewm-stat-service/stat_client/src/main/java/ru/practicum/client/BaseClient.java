@@ -27,6 +27,10 @@ public class BaseClient {
         return get(path, ip, null);
     }
 
+    protected ResponseEntity<Object> get(String path, Map<String, Object> parameters) {
+        return get(path, null, parameters);
+    }
+
     protected ResponseEntity<Object> get(String path, String ip, @Nullable Map<String, Object> parameters) {
         return makeAndSendRequest(HttpMethod.GET, path, ip, parameters, null);
     }
