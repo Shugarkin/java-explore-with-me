@@ -31,7 +31,6 @@ services:
     - POSTGRES_PASSWORD=123
 
 
-
   ewm-service:
     build: ./ewm-main-service
     image:
