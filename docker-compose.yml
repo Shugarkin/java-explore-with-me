@@ -15,9 +15,9 @@ services:
     depends_on:
       - stats_service-db
     environment:
-    - URL_DB=jdbc:postgresql://state_server-db:5432/stat_db
-    - USERNAME_DB=asd
-    - PASSWORD_DB=123
+    - STAT_URL_DB=jdbc:postgresql://state_server-db:5432/stat_db
+    - STAT_USERNAME_DB=asd
+    - STAT_PASSWORD_DB=123
 
 
   stats_service-db:
@@ -43,9 +43,9 @@ services:
     depends_on:
      - ewm-db
     environment:
-      - SERVICE_URL=jdbc:postgresql://postgres-main-db:6464/ewm_db
-#      - SERVICE_USERNAME=postgres
-#      - SERVICE_PASSWORD=123
+      - MAIN_DB=jdbc:postgresql://postgres-main-db:5432/ewm_db
+      - MAIN_USER=postgres
+      - MAIN_PASSWORD=123
 
   ewm-db:
     image: postgres:14
@@ -53,7 +53,7 @@ services:
     ports:
      - "6464:5432"
     environment:
-        POSTGRES_HOST_AUTH_METHOD: "trust"
-#      - EWM_DB=ewm_db
-#      - EWM_USER=postgres
-#      - EWM_PASSWORD=123
+#        POSTGRES_HOST_AUTH_METHOD: "trust"
+      - POSTGRES_DB=ewm_db
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123
