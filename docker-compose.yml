@@ -15,7 +15,7 @@ services:
     depends_on:
       - stats_service-db
     environment:
-    - URL_DB=jdbc:postgresql://stats_service-db:5432/stat_db
+    - URL_DB=jdbc:postgresql://state_server-db:5432/stat_db
     - USERNAME_DB=asd
     - PASSWORD_DB=123
 
@@ -44,7 +44,7 @@ services:
     depends_on:
      - ewm-db
     environment:
-      - SERVICE_URL=jdbc:postgresql://ewm-db:6464/ewm_db
+      - SERVICE_URL=jdbc:postgresql://postgres-main-db:6464/ewm_db
 #      - SERVICE_USERNAME=postgres
 #      - SERVICE_PASSWORD=123
 
