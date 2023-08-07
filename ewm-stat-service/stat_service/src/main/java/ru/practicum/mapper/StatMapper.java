@@ -6,8 +6,6 @@ import ru.practicum.dto.StatUniqueOrNotDto;
 import ru.practicum.model.Stat;
 import ru.practicum.model.StatUniqueOrNot;
 
-import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -34,30 +32,6 @@ public class StatMapper {
                 .build();
     }
 
-
-    public StatUniqueOrNot toUnique(Stat stat) {
-        return StatUniqueOrNot.builder()
-                .app(stat.getApp())
-                .uri(stat.getUri())
-                //.hits(stat.getHitsUnique())
-                .build();
-    }
-
-    public List<StatUniqueOrNot> toListUnique(List<Stat> list) {
-        return list.stream().map(StatMapper::toUnique).collect(Collectors.toList());
-    }
-
-    public StatUniqueOrNot toNotUnique(Stat stat) {
-        return StatUniqueOrNot.builder()
-                .app(stat.getApp())
-                .uri(stat.getUri())
-                //.hits(stat.getHits())
-                .build();
-    }
-
-    public List<StatUniqueOrNot> toListNotUnique(List<Stat> list) {
-        return list.stream().map(StatMapper::toNotUnique).collect(Collectors.toList());
-    }
 
     public StatUniqueOrNotDto toStatDtoFromStatUnique(StatUniqueOrNot statUniqueOrNot) {
         return StatUniqueOrNotDto.builder()

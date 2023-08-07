@@ -81,7 +81,7 @@ class StatServiceControllerITTest {
         List<String> uris = List.of();
         boolean unique = false;
 
-        List<StatUniqueOrNot> listUnique = List.of(StatMapper.toUnique(stat));
+        List<StatUniqueOrNot> listUnique = List.of(StatUniqueOrNot.builder().hits(1).app("ewm-main-service").uri("/events").build());
 
         when(statService.getStat(startDate, endDate, uris, unique)).thenReturn(listUnique);
 

@@ -54,7 +54,7 @@ class StatServiceControllerTest {
         LocalDateTime endDate = LocalDateTime.parse("2035-05-05 00:00:00", formatter);
         List<String> uris = List.of();
         boolean unique = false;
-        StatUniqueOrNot statUniqueOrNot = StatMapper.toUnique(stat);
+        StatUniqueOrNot statUniqueOrNot = StatUniqueOrNot.builder().hits(1).app("ewm-main-service").uri("/events").build();
 
 
         when(statService.getStat(startDate, endDate, uris, unique)).thenReturn(List.of(statUniqueOrNot));
