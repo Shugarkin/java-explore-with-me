@@ -16,15 +16,15 @@ import java.time.LocalDateTime;
 public class StatDto {
 
     @NotBlank(groups = Marker.Create.class)
-    @Size(max = 50)
+    @Size(max = 50, groups = Marker.Create.class)
     private String app;
 
     @NotBlank(groups = Marker.Create.class)
-    @Size(max = 50)
+    @Size(max = 50, groups = Marker.Create.class)
     private String uri;
 
     @NotBlank(groups = Marker.Create.class)
-    @Size(max = 15)
+    @Size(max = 15, groups = Marker.Create.class)
     private String ip;
 
     @NotNull(groups = Marker.Create.class)
