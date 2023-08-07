@@ -30,19 +30,19 @@ public class StatServiceImpl  implements StatService {
     @Override
     public List<StatUniqueOrNot> getStat(LocalDateTime start, LocalDateTime end, List<String> uris, boolean unique) {
             List<StatUniqueOrNot> list;
-        if (uris.isEmpty()) {//если список uri пуст
+        if (uris.isEmpty()) { //если список uri пуст
             if (unique) { //если надо учитывать уникальность
                 list = serviceRepository.findAllByUriAndIp(start, end);
                 log.info("get unique list without uris");
-            } else {//если не надо учитывать уникальность
+            } else { //если не надо учитывать уникальность
                 list = serviceRepository.findAllByTimestampBetween(start, end);
                 log.info("get not unique list without uris");
             }
-        } else {//если список uri не пуст
+        } else { //если список uri не пуст
             if (unique) { //если надо учитывать уникальность
                 list = serviceRepository.findAllByUriAndIpAndUris(start, end, uris);
                 log.info("get unique list with uris");
-            } else {//если не надо учитывать уникальность
+            } else { //если не надо учитывать уникальность
                 list = serviceRepository.findAllByUriAndIpAndUrisNotUnique(start, end, uris);
                 log.info("get not unique list with uris");
             }
