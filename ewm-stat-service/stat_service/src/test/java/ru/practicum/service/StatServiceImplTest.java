@@ -35,9 +35,8 @@ class StatServiceImplTest {
             .build();
 
     @Test
-    void postStatUnrecorded() {
+    void postStat() {
 
-        when(serviceRepository.existsByUri(stat.getUri())).thenReturn(false); //записей пока нет
         when(serviceRepository.save(stat)).thenReturn(stat);
 
         Stat stat1 = statService.postStat(stat);
@@ -46,94 +45,69 @@ class StatServiceImplTest {
 
     }
 
-    @Test
-    void postStatRecordedNotIp() {
-        when(serviceRepository.existsByUri(stat.getUri())).thenReturn(true); //запись уже есть
-        when(serviceRepository.existsByUriAndIp(stat.getUri(), stat.getIp())).thenReturn(false);//обращений с этого айпи нет
-        when(serviceRepository.findByUri(stat.getUri())).thenReturn(stat);
-
-        Stat stat1 = statService.postStat(stat);
-
-        assertNotNull(stat1);
-    }
-
-    @Test
-    void postStatRecordedWithIp() {
-        when(serviceRepository.existsByUri(stat.getUri())).thenReturn(true); //запись уже есть
-        when(serviceRepository.existsByUriAndIp(stat.getUri(), stat.getIp())).thenReturn(true);//обращения с этого айпи есть
-        when(serviceRepository.findByUri(stat.getUri())).thenReturn(stat);
-
-        Stat stat1 = statService.postStat(stat);
-
-        assertNotNull(stat1);
-    }
-
 
     @Test
     void getUniqueStatWithoutUris() {
-        String start = "2020-05-05 00:00:00";
-        String end = "2035-05-05 00:00:00";
+        LocalDateTime start = LocalDateTime.parse("2020-05-05 00:00:00", formatter);
+        LocalDateTime end = LocalDateTime.parse("2035-05-05 00:00:00", formatter);
         List<String> uris = List.of();
-        boolean unique = false;
+        boolean unique = true;
 
-        LocalDateTime dateStart = LocalDateTime.parse(start, formatter);
-        LocalDateTime dateEnd = LocalDateTime.parse(end, formatter);
+        List<StatUniqueOrNot> list = List.of(StatUniqueOrNot.builder().hits(1).uri("/events").app("ewm-main-service").build());
 
-        when(serviceRepository.findByTimestampBetween(dateStart, dateEnd)).thenReturn(List.of(stat));
+        when(serviceRepository.findAllByUriAndIp(start, end)).thenReturn(list);
 
-        List<StatUniqueOrNot> list = statService.getStat(start, end, uris, unique);
+        List<StatUniqueOrNot> newList = statService.getStat(start, end, uris, unique);
 
-        assertNotEquals(list.size(), 0);
+        assertNotEquals(newList.size(), 0);
     }
 
     @Test
     void getNotUniqueStatWithoutUris() {
-        String start = "2020-05-05 00:00:00";
-        String end = "2035-05-05 00:00:00";
+        LocalDateTime start = LocalDateTime.parse("2020-05-05 00:00:00", formatter);
+        LocalDateTime end = LocalDateTime.parse("2035-05-05 00:00:00", formatter);
         List<String> uris = List.of();
-        boolean unique = true;
+        boolean unique = false;
 
-        LocalDateTime dateStart = LocalDateTime.parse(start, formatter);
-        LocalDateTime dateEnd = LocalDateTime.parse(end, formatter);
+        List<StatUniqueOrNot> list = List.of(StatUniqueOrNot.builder().hits(1).uri("/events").app("ewm-main-service").build());
 
-        when(serviceRepository.findByTimestampBetween(dateStart, dateEnd)).thenReturn(List.of(stat));
+        when(serviceRepository.findAllByTimestampBetween(start, end)).thenReturn(list);
 
-        List<StatUniqueOrNot> list = statService.getStat(start, end, uris, unique);
+        List<StatUniqueOrNot> newList = statService.getStat(start, end, uris, unique);
 
-        assertNotEquals(list.size(), 0);
+        assertNotEquals(newList.size(), 0);
     }
 
     @Test
     void getUniqueStatWithUris() {
-        String start = "2020-05-05 00:00:00";
-        String end = "2035-05-05 00:00:00";
+        LocalDateTime start = LocalDateTime.parse("2020-05-05 00:00:00", formatter);
+        LocalDateTime end = LocalDateTime.parse("2035-05-05 00:00:00", formatter);
         List<String> uris = List.of("/events");
         boolean unique = true;
 
-        LocalDateTime dateStart = LocalDateTime.parse(start, formatter);
-        LocalDateTime dateEnd = LocalDateTime.parse(end, formatter);
+        List<StatUniqueOrNot> list = List.of(StatUniqueOrNot.builder().hits(1).uri("/events").app("ewm-main-service").build());
 
-        when(serviceRepository.findByTimestampBetweenAndUri(dateStart, dateEnd, uris)).thenReturn(List.of(stat));
+        when(serviceRepository.findAllByUriAndIpAndUris(start, end, uris)).thenReturn(list);
 
-        List<StatUniqueOrNot> list = statService.getStat(start, end, uris, unique);
+        List<StatUniqueOrNot> newList = statService.getStat(start, end, uris, unique);
 
-        assertNotEquals(list.size(), 0);
+        assertNotEquals(newList.size(), 0);
     }
 
     @Test
     void getNotUniqueStatWithUris() {
-        String start = "2020-05-05 00:00:00";
-        String end = "2035-05-05 00:00:00";
+        LocalDateTime start = LocalDateTime.parse("2020-05-05 00:00:00", formatter);
+        LocalDateTime end = LocalDateTime.parse("2035-05-05 00:00:00", formatter);
         List<String> uris = List.of("/events");
         boolean unique = false;
 
-        LocalDateTime dateStart = LocalDateTime.parse(start, formatter);
-        LocalDateTime dateEnd = LocalDateTime.parse(end, formatter);
+        List<StatUniqueOrNot> list = List.of(StatUniqueOrNot.builder().hits(1).uri("/events").app("ewm-main-service").build());
 
-        when(serviceRepository.findByTimestampBetweenAndUri(dateStart, dateEnd, uris)).thenReturn(List.of(stat));
+        when(serviceRepository.findAllByUriAndIpAndUrisNotUnique(start, end, uris)).thenReturn(list);
 
-        List<StatUniqueOrNot> list = statService.getStat(start, end, uris, unique);
+        List<StatUniqueOrNot> newList = statService.getStat(start, end, uris, unique);
 
-        assertNotEquals(list.size(), 0);
+        assertNotEquals(newList.size(), 0);
     }
+
 }

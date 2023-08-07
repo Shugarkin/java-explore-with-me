@@ -42,8 +42,6 @@ class StatServiceControllerITTest {
     private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     private Stat stat = Stat.builder()
-            .hits(1)
-            .hitsUnique(1)
             .statId(1)
             .ip("85.249.18.233")
             .uri("/events")
@@ -77,12 +75,15 @@ class StatServiceControllerITTest {
     void getStatEvent() {
         String start = "2020-05-05 00:00:00";
         String end = "2035-05-05 00:00:00";
+
+        LocalDateTime startDate = LocalDateTime.parse(start, formatter);
+        LocalDateTime endDate = LocalDateTime.parse(end, formatter);
         List<String> uris = List.of();
         boolean unique = false;
 
         List<StatUniqueOrNot> listUnique = List.of(StatMapper.toUnique(stat));
 
-        when(statService.getStat(start, end, uris, unique)).thenReturn(listUnique);
+        when(statService.getStat(startDate, endDate, uris, unique)).thenReturn(listUnique);
 
         String newUniqueList = mockMvc.perform(get("/stats")
                         .param("start", start)
@@ -95,6 +96,6 @@ class StatServiceControllerITTest {
                 .getContentAsString();
         assertEquals(newUniqueList, objectMapper.writeValueAsString(listUnique)); //проверка на получение уникальных записей без учеба uri
 
-        verify(statService).getStat(start, end, uris, unique);
+        verify(statService).getStat(startDate, endDate, uris, unique);
     }
 }

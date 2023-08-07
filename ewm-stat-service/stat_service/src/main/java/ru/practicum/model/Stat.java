@@ -31,10 +31,4 @@ public class Stat {
 
     @Column(name = "uri")
     private String uri;
-
-    @Column(name = "hits")
-    private long hits;
-
-    @Column(name = "hits_unique")
-    private long hitsUnique;
 }

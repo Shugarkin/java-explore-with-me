@@ -41,7 +41,7 @@ public class StatClient  extends BaseClient {
         } else {
             parameters = Map.of("start", encodeValue(start),
                     "end", encodeValue(end),
-                    "uris", uris,
+                    "uris", String.join(",", uris),
                     "unique", unique);
             return get("/stats?start={start}&end={end}&unique={unique}&uris={uris}", parameters);
         }

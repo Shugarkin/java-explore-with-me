@@ -50,16 +50,16 @@ class StatServiceControllerTest {
 
     @Test
     void getStatEvent() {
-        String start = "2020-05-05 00:00:00";
-        String end = "2035-05-05 00:00:00";
+        LocalDateTime startDate = LocalDateTime.parse("2020-05-05 00:00:00", formatter);
+        LocalDateTime endDate = LocalDateTime.parse("2035-05-05 00:00:00", formatter);
         List<String> uris = List.of();
         boolean unique = false;
         StatUniqueOrNot statUniqueOrNot = StatMapper.toUnique(stat);
 
 
-        when(statService.getStat(start, end, uris, unique)).thenReturn(List.of(statUniqueOrNot));
+        when(statService.getStat(startDate, endDate, uris, unique)).thenReturn(List.of(statUniqueOrNot));
 
-        List<StatUniqueOrNotDto> statEvent = statServiceController.getStatEvent(start, end, uris, unique);
+        List<StatUniqueOrNotDto> statEvent = statServiceController.getStatEvent(startDate, endDate, uris, unique);
 
         List<StatUniqueOrNotDto> statUniqueOrNotDto = List.of(StatMapper.toStatDtoFromStatUnique(statUniqueOrNot));
 

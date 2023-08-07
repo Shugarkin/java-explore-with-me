@@ -1,13 +1,13 @@
 package ru.practicum.model;
 
 
-import lombok.Builder;
-import lombok.Data;
-import lombok.EqualsAndHashCode;
+import lombok.*;
 
-@Data
+@Getter
+@Setter
 @Builder
 @EqualsAndHashCode
+@NoArgsConstructor
 public class StatUniqueOrNot {
 
     private String app;
@@ -15,4 +15,10 @@ public class StatUniqueOrNot {
     private String uri;
 
     private long hits;
+
+    public StatUniqueOrNot(String app, String uri, long hits) {
+        this.app = app;
+        this.uri = uri;
+        this.hits = hits;
+    }
 }

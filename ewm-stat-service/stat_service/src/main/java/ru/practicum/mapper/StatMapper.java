@@ -13,7 +13,6 @@ import java.util.stream.Collectors;
 
 @UtilityClass
 public class StatMapper {
-    private final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
 
     public Stat toStat(StatDto statDto) {
@@ -21,14 +20,14 @@ public class StatMapper {
         return Stat.builder()
                 .ip(statDto.getIp())
                 .uri(statDto.getUri())
-                .timestamp(LocalDateTime.parse(statDto.getTimestamp(), formatter))
+                .timestamp(statDto.getTimestamp())
                 .app(statDto.getApp())
                 .build();
     }
 
     public StatDto toStatDto(Stat stat) {
         return StatDto.builder()
-                .timestamp(stat.getTimestamp().format(formatter))
+                .timestamp(stat.getTimestamp())
                 .app(stat.getApp())
                 .uri(stat.getUri())
                 .ip(stat.getIp())
@@ -40,7 +39,7 @@ public class StatMapper {
         return StatUniqueOrNot.builder()
                 .app(stat.getApp())
                 .uri(stat.getUri())
-                .hits(stat.getHitsUnique())
+                //.hits(stat.getHitsUnique())
                 .build();
     }
 
@@ -52,7 +51,7 @@ public class StatMapper {
         return StatUniqueOrNot.builder()
                 .app(stat.getApp())
                 .uri(stat.getUri())
-                .hits(stat.getHits())
+                //.hits(stat.getHits())
                 .build();
     }
 
