@@ -13,7 +13,6 @@ import ru.practicum.model.Stat;
 import ru.practicum.model.StatUniqueOrNot;
 import ru.practicum.service.StatService;
 
-import javax.validation.constraints.Min;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -33,8 +32,8 @@ public class StatServiceController {
     }
 
     @GetMapping("/stats")
-    public List<StatUniqueOrNotDto> getStatEvent(@RequestParam("start") @Min(19) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
-                                                 @RequestParam("end") @Min(19) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
+    public List<StatUniqueOrNotDto> getStatEvent(@RequestParam("start")  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime start,
+                                                 @RequestParam("end")  @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime end,
                                                  @RequestParam(defaultValue = "") List<String> uris,
                                                  @RequestParam(defaultValue = "false") boolean unique) {
         List<StatUniqueOrNot> stats =  statService.getStat(start, end, uris, unique);
