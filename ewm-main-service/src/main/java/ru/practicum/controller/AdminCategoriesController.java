@@ -13,25 +13,28 @@ import ru.practicum.service.CategoriesService;
 @RestController
 @RequiredArgsConstructor
 @Validated
-public class CategoriesController {
+@RequestMapping(path = "/admin")
+public class AdminCategoriesController {
 
     private final CategoriesService service;
 
-    @PostMapping("/admin/categories")
+    @PostMapping("/categories")
     @ResponseStatus(HttpStatus.CREATED)
     public CategoriesDto createCategories(@RequestBody @Validated(Marker.Create.class) CategoriesDto categoriesDto) {
         Categories categories = service.createCategories(CategoriesMapper.toCategories(categoriesDto));
         return CategoriesMapper.toCategoriesDto(categories);
     }
 
-    @DeleteMapping("/admin/categories/{catId}")
+    @DeleteMapping("/categories/{catId}")
     public void deleteCategories(@PathVariable long catId ) {
         service.deleteCategories(catId);
     }
 
-    @PatchMapping("/admin/categories/{catId")
+    @PatchMapping("/categories/{catId}")
     public CategoriesDto patchCategories(@PathVariable("catId") long catId, @RequestBody @Validated(Marker.Update.class) CategoriesDto categoriesDto) {
         CategoriesDto categories = CategoriesMapper.toCategoriesDto(service.patchCategories(catId, CategoriesMapper.toCategories(categoriesDto)));
         return categories;
     }
+
+
 }

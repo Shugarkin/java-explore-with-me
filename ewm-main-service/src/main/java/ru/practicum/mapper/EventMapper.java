@@ -6,6 +6,9 @@ import ru.practicum.model.Categories;
 import ru.practicum.model.Event;
 import ru.practicum.model.EventFull;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @UtilityClass
 public class EventMapper {
 
@@ -61,5 +64,9 @@ public class EventMapper {
                 .eventDate(event.getEventDate())
                 .location(LocationDto.builder().lon(event.getLocation().getLon()).lat(event.getLocation().getLat()).build())
                 .build();
+    }
+
+    public List<EventFullDto> toListEventFullDto(List<EventFull> list) {
+        return list.stream().map(EventMapper::toEventFullDto).collect(Collectors.toList());
     }
 }

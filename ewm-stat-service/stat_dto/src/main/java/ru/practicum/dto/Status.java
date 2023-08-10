@@ -2,5 +2,6 @@ package ru.practicum.dto;
 
 public enum Status {
 
-    PENDING
+    PENDING,
+    CONFIRMED
 }

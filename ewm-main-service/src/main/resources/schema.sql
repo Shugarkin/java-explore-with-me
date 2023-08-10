@@ -35,11 +35,11 @@ CREATE TABLE IF NOT EXISTS event (
     request_Moderation BOOLEAN                  NOT NULL,
     state_event VARCHAR(50)                     NOT NULL,
     title VARCHAR(200)                          NOT NULL,
-    views BIGINT                                NOT NULL,
 
     CONSTRAINT pk_event PRIMARY KEY (id),
     CONSTRAINT fk_event_category_id FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE,
-    CONSTRAINT fk_event_initiator_id FOREIGN KEY (initiator_id) REFERENCES users (id) ON DELETE CASCADE
+    CONSTRAINT fk_event_initiator_id FOREIGN KEY (initiator_id) REFERENCES users (id) ON DELETE CASCADE,
+    CONSTRAINT fk_event_location_id FOREIGN KEY (location_id) REFERENCES location (id) ON DELETE CASCADE
 );
 
 CREATE TABLE IF NOT EXISTS request (

@@ -4,6 +4,9 @@ import lombok.experimental.UtilityClass;
 import ru.practicum.dto.CategoriesDto;
 import ru.practicum.model.Categories;
 
+import java.util.List;
+import java.util.stream.Collectors;
+
 @UtilityClass
 public class CategoriesMapper {
 
@@ -18,5 +21,9 @@ public class CategoriesMapper {
                 .id(categories.getId())
                 .name(categories.getName())
                 .build();
+    }
+
+    public List<CategoriesDto> toListCategoriesDto(List<Categories> list) {
+        return list.stream().map(CategoriesMapper::toCategoriesDto).collect(Collectors.toList());
     }
 }
