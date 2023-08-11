@@ -1,5 +1,6 @@
 package ru.practicum.dto;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
 import javax.validation.constraints.Min;
@@ -27,18 +28,16 @@ public class EventReceivedDto {
     @Size(min = 20, max = 7000)
     private String description;
 
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime eventDate;
 
     private LocationDto location;
 
-//    @NotNull(groups = {Marker.Create.class, Marker.Update.class})
-    private boolean paid;
+    private boolean paid = false;
 
-//    @NotNull(groups = {Marker.Create.class, Marker.Update.class})
-    private int participantLimit;
+    private int participantLimit = 0;
 
-//    @NotNull(groups = {Marker.Create.class, Marker.Update.class})
-    private boolean requestModeration;
+    private boolean requestModeration = true;
 
     @NotBlank(groups = {Marker.Create.class, Marker.Update.class})
     @Size(min = 3, max = 120)

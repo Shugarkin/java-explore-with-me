@@ -79,8 +79,8 @@
         </dependency>
         <dependency>
             <groupId>ru.practicum</groupId>
-            <artifactId>stat_service</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
+            <artifactId>stat_client</artifactId>
+            <version>${project.version}</version>
             <scope>compile</scope>
         </dependency>
     </dependencies>
