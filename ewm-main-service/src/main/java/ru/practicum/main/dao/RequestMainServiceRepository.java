@@ -15,4 +15,6 @@ public interface RequestMainServiceRepository extends JpaRepository<Request, Lon
             "and req.status = 'CONFIRMED' " +
             "group by req.event.id ")
     List<ConfirmedRequestShort> countByEventId(List<Long> longs);
+
+    boolean existsByRequesterIdAndEventId(long userId, long eventId);
 }

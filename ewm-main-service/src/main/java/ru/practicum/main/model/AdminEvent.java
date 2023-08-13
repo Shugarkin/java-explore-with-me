@@ -1,8 +1,11 @@
-package ru.practicum.dto;
+package ru.practicum.main.model;
 
 import lombok.*;
+import ru.practicum.dto.AdminUpdateEventStatus;
+import ru.practicum.dto.LocationDto;
 
 import java.time.LocalDateTime;
+
 
 @Getter
 @Setter
@@ -11,22 +14,17 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class EventFullDto {
-    private Long id;
+public class AdminEvent {
 
     private String annotation;
 
-    private CategoriesDto category;
-
-    private LocalDateTime createdOn;
+    private Long category;
 
     private String description;
 
     private LocalDateTime eventDate;
 
-    private UserDto initiator;
-
-    private LocationDto location;
+    private Location location;
 
     private Boolean paid;
 
@@ -34,11 +32,7 @@ public class EventFullDto {
 
     private Boolean requestModeration;
 
-    private State state;
-
     private String title;
 
-    private Long views;
-
-    private Long confirmedRequests;
+    private AdminUpdateEventStatus stateAction;
 }

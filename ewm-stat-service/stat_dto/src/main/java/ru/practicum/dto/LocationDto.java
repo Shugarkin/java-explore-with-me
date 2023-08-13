@@ -12,8 +12,6 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class LocationDto {
 
-    private long id;
-
     @NotBlank(groups = Marker.Create.class)
     private String lat;
 

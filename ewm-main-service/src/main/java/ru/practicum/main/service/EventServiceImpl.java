@@ -8,14 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.client.StatClient;
+import ru.practicum.dto.AdminUpdateEventStatus;
 import ru.practicum.dto.State;
+import ru.practicum.dto.UpdateEventStatus;
 import ru.practicum.main.dao.*;
+import ru.practicum.main.exception.ConflictException;
 import ru.practicum.main.exception.NotFoundException;
 import ru.practicum.main.mapper.EventMapper;
-import ru.practicum.main.model.ConfirmedRequestShort;
-import ru.practicum.main.model.Event;
-import ru.practicum.main.model.EventFull;
-import ru.practicum.main.model.Stat;
+import ru.practicum.main.model.*;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
@@ -52,7 +52,7 @@ public class EventServiceImpl implements EventService {
         event.setCreatedOn(LocalDateTime.now().withNano(0));
         event.setLocation(locationMainServiceRepository.save(event.getLocation()));
         event.setInitiator(userMainServiceRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден")));
-        event.setState(State.PUBLISH_EVENT);
+        event.setState(State.PENDING);
         return repository.save(event);
     }
 
@@ -64,6 +64,9 @@ public class EventServiceImpl implements EventService {
             throw new NotFoundException("Пользователь не найден");
         }
         List<Event> listEvent = repository.findAllByInitiatorId(userId, pageable); //получил ивенты созданные этим пользователем
+        if (listEvent.isEmpty()) {
+            return List.of();
+        }
 
         Map<Long, Long> confirmedRequest = toConfirmedRequest(listEvent);
 
@@ -87,6 +90,130 @@ public class EventServiceImpl implements EventService {
         Map<Long, Long> mapView = toView(List.of(event));
 
         EventFull eventFull = EventMapper.toEventFull(event, mapView.get(eventId), confirmedRequest.get(eventId));
+        return eventFull;
+    }
+
+    @Transactional
+    @Override
+    public EventFull patchEvent(long userId, long eventId, UpdateEvent updateEvent) {
+        Event event = repository.findByIdAndInitiatorId(eventId, userId).orElseThrow(() -> new NotFoundException("Ивент не найден"));
+
+        if (!event.getInitiator().getId().equals(userId)) {
+            throw new ConflictException("ВЫ не создавали этот евент");
+        }
+
+        if (event.getState().equals(State.PUBLISHED)) {
+            throw new ConflictException("Нельзя изменить уже опубликованные события");
+        }
+
+        LocalDateTime eventTime = updateEvent.getEventDate();
+        if (eventTime != null) {
+            if (eventTime.isBefore(LocalDateTime.now().plusHours(2))) {
+                throw new ConflictException("Дата и время события не могут быть раньше чем за 2 часа до данного момента");
+            }
+            event.setEventDate(eventTime);
+        }
+
+        UpdateEventStatus status = updateEvent.getStateAction();
+        if (status != null) {
+            if (status.equals(UpdateEventStatus.SEND_TO_REVIEW)) {
+                event.setState(State.PENDING);
+            }
+            if (status.equals(UpdateEventStatus.CANCEL_REVIEW)) {
+                event.setState(State.CANCELED);
+            }
+        }
+        if (updateEvent.getRequestModeration() != null) {
+            event.setRequestModeration(updateEvent.getRequestModeration());
+        }
+        if (updateEvent.getPaid() != null) {
+            event.setPaid(updateEvent.getPaid());
+        }
+        if (updateEvent.getDescription() != null) {
+            event.setDescription(updateEvent.getDescription());
+        }
+        if (updateEvent.getAnnotation() != null) {
+            event.setAnnotation(updateEvent.getAnnotation());
+        }
+        if (updateEvent.getTitle() != null) {
+            event.setTitle(updateEvent.getTitle());
+        }
+
+        if (updateEvent.getCategory() != null) {
+            event.setCategory(categoriesMainServiceRepository.findById(updateEvent.getCategory())
+                    .orElseThrow(() -> new NotFoundException("Категория не найдена")));
+        }
+        if (updateEvent.getLocation() != null) {
+            event.setLocation(locationMainServiceRepository.findByLatAndLon(updateEvent.getLocation().getLat(), updateEvent.getLocation().getLon()));
+        }
+
+        Map<Long, Long> view = toView(List.of(event));
+        Map<Long, Long> confirmedRequest = toConfirmedRequest(List.of(event));
+
+
+        return EventMapper.toEventFull(event, view.get(eventId), confirmedRequest.get(eventId));
+    }
+
+    @Transactional
+    @Override
+    public EventFull patchAdminEvent(long eventId, AdminEvent eventNew) {
+        Event event = repository.findById(eventId).orElseThrow(() -> new NotFoundException("События " + eventId + " не найденно"));
+
+        if (event.getEventDate().isBefore(LocalDateTime.now().plusHours(1))) {
+            throw new ConflictException("Время изменить данное событие уже упущенно");
+        }
+        if (eventNew.getEventDate() != null) {
+            if (eventNew.getEventDate().isBefore(LocalDateTime.now().plusHours(1))) {
+                event.setEventDate(eventNew.getEventDate());
+            } else {
+                throw new ConflictException("Поздновато для изменений даты начала события");
+            }
+        }
+        if (eventNew.getStateAction() != null) {
+            if (!event.getState().equals(State.PENDING)) {
+                throw new ConflictException("Нельзя изменять событие не находящееся в статусе ожидания");
+            }
+
+            if (eventNew.getStateAction().equals(AdminUpdateEventStatus.PUBLISH_EVENT)) {
+                event.setState(State.PUBLISHED);
+                event.setPublishedOn(LocalDateTime.now().withNano(0));
+            }
+            if (eventNew.getStateAction().equals(AdminUpdateEventStatus.REJECT_EVENT)) {
+                event.setState(State.CANCELED);
+            }
+        }
+
+        if (eventNew.getRequestModeration() != null) {
+            event.setRequestModeration(eventNew.getRequestModeration());
+        }
+        if (eventNew.getPaid() != null) {
+            event.setPaid(eventNew.getPaid());
+        }
+        if (eventNew.getParticipantLimit() != null) {
+            event.setParticipantLimit(eventNew.getParticipantLimit());
+        }
+        if (eventNew.getLocation() != null) {
+            event.setLocation(eventNew.getLocation());
+        }
+        if (eventNew.getAnnotation() != null) {
+            event.setAnnotation(event.getAnnotation());
+        }
+        if (eventNew.getDescription() != null) {
+            event.setDescription(eventNew.getDescription());
+        }
+        if (eventNew.getTitle() != null) {
+            event.setTitle(event.getTitle());
+        }
+        if (eventNew.getCategory() != null) {
+            event.setCategory(categoriesMainServiceRepository.findById(eventNew.getCategory())
+                    .orElseThrow(() -> new NotFoundException("Категория не найдена")));
+        }
+
+        Map<Long, Long> confirmedRequest = toConfirmedRequest(List.of(event));
+        Map<Long, Long> view = toView(List.of(event));
+
+        EventFull eventFull = EventMapper.toEventFull(event, view.get(eventId), confirmedRequest.get(eventId));
+
         return eventFull;
     }
 

@@ -42,4 +42,6 @@ public class EventFull {
     private Long views;
 
     private Long confirmedRequests;
+
+    private LocalDateTime publishedOn;
 }

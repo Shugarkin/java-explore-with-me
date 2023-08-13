@@ -3,9 +3,6 @@ package ru.practicum.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -14,17 +11,13 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class EventReceivedDto {
+public class UpdateEventDto {
 
-    @NotBlank(groups = {Marker.Create.class, Marker.Update.class})
     @Size(min = 20, max = 2000)
     private String annotation;
 
-    @NotNull(groups = Marker.Create.class)
-    @Min(1)
     private Long category;
 
-    @NotBlank(groups = {Marker.Create.class, Marker.Update.class})
     @Size(min = 20, max = 7000)
     private String description;
 
@@ -33,14 +26,14 @@ public class EventReceivedDto {
 
     private LocationDto location;
 
-    private Boolean paid = false;
+    private Boolean paid;
 
-    private Integer participantLimit = 0;
+    private int participantLimit;
 
-    private Boolean requestModeration = true;
+    private boolean requestModeration;
 
-    @NotBlank(groups = {Marker.Create.class, Marker.Update.class})
     @Size(min = 3, max = 120)
     private String title;
 
+    private UpdateEventStatus stateAction;
 }

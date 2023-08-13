@@ -2,9 +2,7 @@ package ru.practicum.main.mapper;
 
 import lombok.experimental.UtilityClass;
 import ru.practicum.dto.*;
-import ru.practicum.main.model.Categories;
-import ru.practicum.main.model.Event;
-import ru.practicum.main.model.EventFull;
+import ru.practicum.main.model.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -17,11 +15,11 @@ public class EventMapper {
                 .eventDate(receivedDto.getEventDate())
                 .annotation(receivedDto.getAnnotation())
                 .category(Categories.builder().id(receivedDto.getCategory()).build())
-                .paid(receivedDto.isPaid())
+                .paid(receivedDto.getPaid())
                 .description(receivedDto.getDescription())
                 .title(receivedDto.getTitle())
                 .participantLimit(receivedDto.getParticipantLimit())
-                .requestModeration(receivedDto.isRequestModeration())
+                .requestModeration(receivedDto.getRequestModeration())
                 .location(LocationMapper.toLocation(receivedDto.getLocation()))
                 .build();
     }
@@ -35,8 +33,8 @@ public class EventMapper {
                 .state(event.getState())
                 .annotation(event.getAnnotation())
                 .participantLimit(event.getParticipantLimit())
-                .requestModeration(event.isRequestModeration())
-                .paid(event.isPaid())
+                .requestModeration(event.getRequestModeration())
+                .paid(event.getPaid())
                 .title(event.getTitle())
                 .id(event.getId())
                 .category(event.getCategory())
@@ -49,7 +47,7 @@ public class EventMapper {
     public EventFullDto toEventFullDto(EventFull event) {
         return EventFullDto.builder()
                 .createdOn(event.getCreatedOn())
-                .initiator(UserDto.builder().name(event.getInitiator().getName()).id(event.getInitiator().getId()).build())
+                .initiator(UserMapper.toUserDto(event.getInitiator()))
                 .confirmedRequests(event.getConfirmedRequests())
                 .views(event.getViews())
                 .state(event.getState())
@@ -59,14 +57,49 @@ public class EventMapper {
                 .paid(event.isPaid())
                 .title(event.getTitle())
                 .id(event.getId())
-                .category(CategoriesDto.builder().id(event.getCategory().getId()).name(event.getCategory().getName()).build())
+                .category(CategoriesMapper.toCategoriesDto(event.getCategory()))
                 .description(event.getDescription())
                 .eventDate(event.getEventDate())
-                .location(LocationDto.builder().lon(event.getLocation().getLon()).lat(event.getLocation().getLat()).build())
+                .location(LocationMapper.toLocationDto(event.getLocation()))
                 .build();
     }
 
     public List<EventFullDto> toListEventFullDto(List<EventFull> list) {
         return list.stream().map(EventMapper::toEventFullDto).collect(Collectors.toList());
+    }
+
+    public UpdateEvent toEventFromUpdateEvent(UpdateEventDto updateEventDto) {
+        return UpdateEvent.builder()
+                .stateAction(updateEventDto.getStateAction())
+                .annotation(updateEventDto.getAnnotation())
+                .participantLimit(updateEventDto.getParticipantLimit())
+                .requestModeration(updateEventDto.isRequestModeration())
+                .category(updateEventDto.getCategory())
+                .description(updateEventDto.getDescription())
+                .title(updateEventDto.getTitle())
+                .paid(updateEventDto.getPaid())
+                .eventDate(updateEventDto.getEventDate())
+                .location(updateEventDto.getLocation())
+                .build();
+    }
+
+    public static AdminEvent toAdminEventFromAdminDto(AdminEventReceivedDto adminEvent) {
+        AdminEvent event = AdminEvent.builder()
+                .stateAction(adminEvent.getStateAction())
+                .annotation(adminEvent.getAnnotation())
+                .participantLimit(adminEvent.getParticipantLimit())
+                .requestModeration(adminEvent.getRequestModeration())
+                .category(adminEvent.getCategory())
+                .description(adminEvent.getDescription())
+                .eventDate(adminEvent.getEventDate())
+                .paid(adminEvent.getPaid())
+                .title(adminEvent.getTitle())
+                .build();
+        if (adminEvent.getLocation() == null) {
+            event.setLocation(null);
+        } else {
+            event.setLocation(LocationMapper.toLocation(adminEvent.getLocation()));
+        }
+        return event;
     }
 }

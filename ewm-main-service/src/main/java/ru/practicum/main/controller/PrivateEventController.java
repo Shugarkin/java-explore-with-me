@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.EventFullDto;
 import ru.practicum.dto.EventReceivedDto;
+import ru.practicum.dto.UpdateEventDto;
 import ru.practicum.main.mapper.EventMapper;
 import ru.practicum.main.model.EventFull;
 import ru.practicum.main.service.EventService;
@@ -39,5 +40,11 @@ public class PrivateEventController {
     public EventFullDto getEventByUserIdAndEventId(@PathVariable long userId, @PathVariable long eventId) {
         EventFull event = service.getEventByUserIdAndEventId(userId, eventId);
         return EventMapper.toEventFullDto(event);
+    }
+
+    @PatchMapping("/{userId}/events/{eventId}")
+    public EventFullDto patchEvent(@PathVariable long userId, @PathVariable long eventId, @RequestBody UpdateEventDto receivedDto) {
+        EventFull eventFull = service.patchEvent(userId, eventId, EventMapper.toEventFromUpdateEvent(receivedDto));
+        return EventMapper.toEventFullDto(eventFull);
     }
 }

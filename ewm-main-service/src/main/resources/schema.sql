@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS event (
     request_moderation BOOLEAN                  DEFAULT TRUE,
     state_event VARCHAR(50)                     NOT NULL,
     title VARCHAR(120)                          NOT NULL,
+    published_on TIMESTAMP WITHOUT TIME ZONE,
 
     CONSTRAINT pk_event PRIMARY KEY (id),
     CONSTRAINT fk_event_category_id FOREIGN KEY (category_id) REFERENCES categories (id) ON DELETE CASCADE,

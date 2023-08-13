@@ -20,7 +20,7 @@ public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
-    private long id;
+    private Long id;
 
     @Column(name = "annotation")
     private String annotation;
@@ -47,18 +47,21 @@ public class Event {
     private Location location;
 
     @Column(name = "paid")
-    private boolean paid;
+    private Boolean paid;
 
     @Column(name = "participant_limit")
-    private int participantLimit;
+    private Integer participantLimit;
 
     @Column(name = "request_moderation")
-    private boolean requestModeration;
+    private Boolean requestModeration;
 
     @Column(name = "state_event")
     private State state;
 
     @Column(name = "title")
     private String title;
+
+    @Column(name = "published_on")
+    private LocalDateTime publishedOn;
 
 }
