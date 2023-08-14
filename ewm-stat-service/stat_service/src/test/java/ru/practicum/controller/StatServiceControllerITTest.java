@@ -61,7 +61,7 @@ class StatServiceControllerITTest {
                         .contentType("application/json")
                         .content(objectMapper.writeValueAsString(statDto))
                         .characterEncoding(StandardCharsets.UTF_8))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andReturn()
                 .getResponse()
                 .getContentAsString();

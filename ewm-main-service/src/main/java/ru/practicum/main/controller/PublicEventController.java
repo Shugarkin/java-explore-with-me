@@ -3,14 +3,12 @@ package ru.practicum.main.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+import ru.practicum.dto.EventFullDto;
 import ru.practicum.dto.EventShortDto;
 import ru.practicum.main.mapper.EventMapper;
+import ru.practicum.main.model.EventFull;
 import ru.practicum.main.model.EventShort;
-import ru.practicum.main.service.PrivateEventService;
 import ru.practicum.main.service.PublicEventService;
 
 import javax.servlet.http.HttpServletRequest;
@@ -44,4 +42,9 @@ public class PublicEventController {
     }
 
 
+    @GetMapping("/{id}")
+    public EventFullDto getPublicEvent(@PathVariable long id, HttpServletRequest request) {
+        EventFull eventFull = service.getPublicEvent(id, request);
+        return EventMapper.toEventFullDto(eventFull);
+    }
 }

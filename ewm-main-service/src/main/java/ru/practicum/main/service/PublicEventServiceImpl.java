@@ -7,9 +7,12 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.StatDto;
+import ru.practicum.dto.State;
 import ru.practicum.main.dao.EventMainServiceRepository;
+import ru.practicum.main.exception.NotFoundException;
 import ru.practicum.main.mapper.EventMapper;
 import ru.practicum.main.model.Event;
+import ru.practicum.main.model.EventFull;
 import ru.practicum.main.model.EventShort;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,5 +64,25 @@ public class PublicEventServiceImpl implements PublicEventService {
                 .app("ewm-main-service")
                 .build());
         return listShort;
+    }
+
+    @Override
+    public EventFull getPublicEvent(long id, HttpServletRequest request) {
+        Event event = repository.findById(id).orElseThrow(() -> new NotFoundException("Событие с id " + id + " не найдено"));
+
+        if (!event.getState().equals(State.PUBLISHED)) {
+            throw new NotFoundException("Событие с id " + id + " не опубликованно");
+        }
+
+        Map<Long, Long> view = statService.toView(List.of(event));
+        Map<Long, Long> confirmedRequest = statService.toConfirmedRequest(List.of(event));
+
+        statService.addHits(StatDto.builder()
+                .uri(request.getRequestURI())
+                .ip(request.getRemoteAddr())
+                .timestamp(LocalDateTime.now().withNano(0))
+                .app("ewm-main-service")
+                .build());
+        return EventMapper.toEventFull(event, view.getOrDefault(id, 0L), confirmedRequest.getOrDefault(id, 0L));
     }
 }
