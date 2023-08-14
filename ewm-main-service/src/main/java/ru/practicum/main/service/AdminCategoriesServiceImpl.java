@@ -15,7 +15,7 @@ import java.util.List;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
-public class CategoriesServiceImpl implements CategoriesService {
+public class AdminCategoriesServiceImpl implements AdminCategoriesService {
 
     private final CategoriesMainServiceRepository repository;
 
@@ -44,18 +44,7 @@ public class CategoriesServiceImpl implements CategoriesService {
         return categories;
     }
 
-    @Override
-    public List<Categories> getListCategories(int from, int size) {
-        Pageable pageable = PageRequest.of(from > 0 ? from / size : 0, size, Sort.by("id").ascending());
-        List<Categories> list = repository.findAllCategories(pageable);
-        return list;
-    }
 
-    @Override
-    public Categories getCategories(long catId) {
-        Categories categories = repository.findById(catId).orElseThrow(() -> new NotFoundException("Данной категории нет"));
-        return categories;
-    }
 
 
 }

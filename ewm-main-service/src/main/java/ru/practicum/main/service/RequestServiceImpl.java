@@ -67,8 +67,24 @@ public class RequestServiceImpl implements RequestService {
         return repository.save(request);
     }
 
+
     @Override
     public List<Request> getRequests(long userId) {
-        return null;
+        List<Request> byRequesterId = repository.findAllByRequesterId(userId);
+        return byRequesterId;
     }
+
+    @Transactional
+    @Override
+    public Request canselRequest(long userId, long requestId) {
+        boolean answer = userMainServiceRepository.existsById(userId);
+        if (!answer) {
+            throw new ConflictException("Пользователя с id " + userId + " не существует");
+        }
+        Request request = repository.findById(requestId).orElseThrow(() -> new NotFoundException("Данного запроса не существует"));
+
+        request.setStatus(Status.CANCELED);
+        return request;
+    }
+
 }

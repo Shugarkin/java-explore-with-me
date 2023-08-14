@@ -31,4 +31,10 @@ public class RequestController {
         List<Request> requests = service.getRequests(userId);
         return RequestMapper.toListRequestDto(requests);
     }
+
+    @PatchMapping("/{userId}/requests/{requestId}/cancel")
+    public RequestDto canselRequest(@PathVariable long userId, @PathVariable long requestId) {
+        Request request = service.canselRequest(userId, requestId);
+        return RequestMapper.toRequestDto(request);
+    }
 }

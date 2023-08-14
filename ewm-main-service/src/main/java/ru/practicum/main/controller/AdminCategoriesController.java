@@ -8,7 +8,7 @@ import ru.practicum.dto.CategoriesDto;
 import ru.practicum.dto.Marker;
 import ru.practicum.main.mapper.CategoriesMapper;
 import ru.practicum.main.model.Categories;
-import ru.practicum.main.service.CategoriesService;
+import ru.practicum.main.service.AdminCategoriesService;
 
 @RestController
 @RequiredArgsConstructor
@@ -16,7 +16,7 @@ import ru.practicum.main.service.CategoriesService;
 @RequestMapping(path = "/admin")
 public class AdminCategoriesController {
 
-    private final CategoriesService service;
+    private final AdminCategoriesService service;
 
     @PostMapping("/categories")
     @ResponseStatus(HttpStatus.CREATED)
@@ -35,6 +35,4 @@ public class AdminCategoriesController {
         CategoriesDto categories = CategoriesMapper.toCategoriesDto(service.patchCategories(catId, CategoriesMapper.toCategories(categoriesDto)));
         return categories;
     }
-
-
 }

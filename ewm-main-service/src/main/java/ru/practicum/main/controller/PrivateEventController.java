@@ -4,12 +4,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.dto.EventFullDto;
-import ru.practicum.dto.EventReceivedDto;
-import ru.practicum.dto.UpdateEventDto;
+import ru.practicum.dto.*;
 import ru.practicum.main.mapper.EventMapper;
+import ru.practicum.main.mapper.RequestMapper;
 import ru.practicum.main.model.EventFull;
-import ru.practicum.main.service.EventService;
+import ru.practicum.main.model.Request;
+import ru.practicum.main.model.RequestShortUpdate;
+import ru.practicum.main.service.PrivateEventService;
 
 import java.util.List;
 
@@ -19,7 +20,7 @@ import java.util.List;
 @RequestMapping(path = "/users")
 public class PrivateEventController {
 
-    private final EventService service;
+    private final PrivateEventService service;
 
     @PostMapping("/{userId}/events")
     @ResponseStatus(HttpStatus.CREATED)
@@ -46,5 +47,17 @@ public class PrivateEventController {
     public EventFullDto patchEvent(@PathVariable long userId, @PathVariable long eventId, @RequestBody UpdateEventDto receivedDto) {
         EventFull eventFull = service.patchEvent(userId, eventId, EventMapper.toEventFromUpdateEvent(receivedDto));
         return EventMapper.toEventFullDto(eventFull);
+    }
+
+    @GetMapping("/{userId}/events/{eventId}/requests")
+    public List<RequestDto> getRequestByUserIdAndEventId(@PathVariable long userId, @PathVariable long eventId) {
+        List<Request> list = service.getRequestByUserIdAndEventId(userId, eventId);
+        return RequestMapper.toListRequestDto(list);
+    }
+
+    @PatchMapping("/{userId}/events/{eventId}/requests")
+    public RequestShortUpdateDto patchRequestByOwnerUser(@PathVariable long userId, @PathVariable long eventId, @RequestBody RequestShortDto shortDto) {
+        RequestShortUpdate requestShort = service.patchRequestByOwnerUser(userId, eventId, RequestMapper.toRequestShort(shortDto));
+        return RequestMapper.toRequestShortUpdateDto(requestShort);
     }
 }

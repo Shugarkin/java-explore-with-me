@@ -41,6 +41,7 @@ public class EventMapper {
                 .description(event.getDescription())
                 .eventDate(event.getEventDate())
                 .location(event.getLocation())
+                .publishedOn(event.getPublishedOn())
                 .build();
     }
 
@@ -61,6 +62,7 @@ public class EventMapper {
                 .description(event.getDescription())
                 .eventDate(event.getEventDate())
                 .location(LocationMapper.toLocationDto(event.getLocation()))
+                .publishedOn(event.getPublishedOn())
                 .build();
     }
 
@@ -101,5 +103,37 @@ public class EventMapper {
             event.setLocation(LocationMapper.toLocation(adminEvent.getLocation()));
         }
         return event;
+    }
+
+    public EventShort toEventShort(Event event, Long view, Long confirmedRequests) {
+        return EventShort.builder()
+                .id(event.getId())
+                .eventDate(event.getEventDate())
+                .confirmedRequests(confirmedRequests)
+                .views(view)
+                .annotation(event.getAnnotation())
+                .category(event.getCategory())
+                .initiator(event.getInitiator())
+                .paid(event.getPaid())
+                .title(event.getTitle())
+                .build();
+    }
+
+    public EventShortDto toEventShortDto(EventShort eventShort) {
+        return EventShortDto.builder()
+                .initiator(UserMapper.toUserDto(eventShort.getInitiator()))
+                .views(eventShort.getViews())
+                .eventDate(eventShort.getEventDate())
+                .annotation(eventShort.getAnnotation())
+                .title(eventShort.getTitle())
+                .category(CategoriesMapper.toCategoriesDto(eventShort.getCategory()))
+                .confirmedRequests(eventShort.getConfirmedRequests())
+                .id(eventShort.getId())
+                .paid(eventShort.getPaid())
+                .build();
+    }
+
+    public static List<EventShortDto> toListEventShortDto(List<EventShort> list) {
+        return list.stream().map(EventMapper::toEventShortDto).collect(Collectors.toList());
     }
 }

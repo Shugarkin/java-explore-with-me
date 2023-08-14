@@ -8,4 +8,6 @@ public interface RequestService {
     Request createRequest(long userId, long eventId);
 
     List<Request> getRequests(long userId);
+
+    Request canselRequest(long userId, long requestId);
 }

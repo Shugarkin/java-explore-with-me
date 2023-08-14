@@ -2,6 +2,8 @@ package ru.practicum.dto;
 
 public enum Status {
 
+    CONFIRMED,
     PENDING,
-    CONFIRMED
+    REJECTED,
+    CANCELED
 }

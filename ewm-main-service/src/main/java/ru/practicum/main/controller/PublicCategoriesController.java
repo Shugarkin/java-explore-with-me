@@ -6,7 +6,8 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.CategoriesDto;
 import ru.practicum.main.mapper.CategoriesMapper;
 import ru.practicum.main.model.Categories;
-import ru.practicum.main.service.CategoriesService;
+import ru.practicum.main.service.AdminCategoriesService;
+import ru.practicum.main.service.PublicCategoriesService;
 
 import javax.validation.constraints.Min;
 import java.util.List;
@@ -17,7 +18,7 @@ import java.util.List;
 @RequestMapping(path = "/categories")
 public class PublicCategoriesController {
 
-    private final CategoriesService service;
+    private final PublicCategoriesService service;
 
     @GetMapping
     public List<CategoriesDto> getListCategories(@RequestParam(defaultValue = "0") @Min(0) int from,

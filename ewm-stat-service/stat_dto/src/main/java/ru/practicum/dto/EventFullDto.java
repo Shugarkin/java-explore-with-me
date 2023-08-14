@@ -41,4 +41,6 @@ public class EventFullDto {
     private Long views;
 
     private Long confirmedRequests;
+
+    private LocalDateTime publishedOn;
 }

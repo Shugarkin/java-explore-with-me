@@ -44,4 +44,5 @@ public class EventFull {
     private Long confirmedRequests;
 
     private LocalDateTime publishedOn;
+
 }

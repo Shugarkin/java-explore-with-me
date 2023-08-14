@@ -6,6 +6,7 @@ import ru.practicum.main.model.ConfirmedRequestShort;
 import ru.practicum.main.model.Request;
 
 import java.util.List;
+import java.util.Optional;
 
 public interface RequestMainServiceRepository extends JpaRepository<Request, Long> {
 
@@ -17,4 +18,8 @@ public interface RequestMainServiceRepository extends JpaRepository<Request, Lon
     List<ConfirmedRequestShort> countByEventId(List<Long> longs);
 
     boolean existsByRequesterIdAndEventId(long userId, long eventId);
+
+    List<Request> findAllByRequesterId(long userId);
+
+    List<Request> findAllByEventId(long eventId);
 }
