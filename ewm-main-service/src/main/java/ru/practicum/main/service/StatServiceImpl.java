@@ -1,18 +1,24 @@
 package ru.practicum.main.service;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.client.StatClient;
 import ru.practicum.dto.StatDto;
+import ru.practicum.dto.StatUniqueOrNotDto;
 import ru.practicum.main.dao.RequestMainServiceRepository;
+import ru.practicum.main.exception.StatException;
+import ru.practicum.main.mapper.StatMapper;
 import ru.practicum.main.model.ConfirmedRequestShort;
 import ru.practicum.main.model.Event;
 import ru.practicum.main.model.Stat;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,6 +35,8 @@ public class StatServiceImpl implements StatService {
 
     private final StatClient statClient;
 
+    private final ObjectMapper objectMapper;
+
     @Override
     public Map<Long, Long> toConfirmedRequest(List<Event> list) {
         List<Long> listEventId = list.stream().map(a -> a.getId()).collect(Collectors.toList());
@@ -43,15 +51,25 @@ public class StatServiceImpl implements StatService {
     public Map<Long, Long> toView(List<Event> list) {
         Map<Long, Long> mapView = new HashMap<>();
         LocalDateTime start = list.stream().map(a -> a.getCreatedOn()).min(LocalDateTime::compareTo).orElse(LocalDateTime.now());
-        List<String> uris = list.stream().map(a -> "event/" + a.getId()).collect(Collectors.toList());
+        List<String> uris = list.stream().map(a -> "/events/" + a.getId()).collect(Collectors.toList());
 
-        ResponseEntity<Object> statEvent = statClient.getStatEvent(start.format(FORMATTER), LocalDateTime.now().withNano(0).format(FORMATTER), uris, true);
-        List<Stat> stat = (List<Stat>) statEvent.getBody();
-        stat.forEach(statUniqueOrNot -> mapView.put(
-                        Long.parseLong(statUniqueOrNot.getUri().replaceAll("[\\D]+", "")),
-                        statUniqueOrNot.getHits()
-                )
-        );
+        ResponseEntity<Object> response = statClient.getStatEvent(start.format(FORMATTER), LocalDateTime.now().format(FORMATTER), uris, true);
+
+        try {
+            List<StatUniqueOrNotDto> stat = Arrays.asList(objectMapper.readValue(
+                    objectMapper.writeValueAsString(response.getBody()), StatUniqueOrNotDto[].class));
+
+            List<Stat> listStat = StatMapper.toListStat(stat);
+
+            listStat.forEach(statistic -> mapView.put(
+                            Long.parseLong(statistic.getUri().replaceAll("[\\D]+", "")),
+                    statistic.getHits()
+                    )
+            );
+
+        } catch (JsonProcessingException e) {
+            throw new StatException("Произошла ошибка выполнения запроса статистики");
+        }
 
         return mapView; //получил количество просмотров на ивент
     }

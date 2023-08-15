@@ -13,7 +13,7 @@ public class Stat {
 
     private String uri;
 
-    private long hits;
+    private Long hits;
 
     public Stat(String app, String uri, long hits) {
         this.app = app;

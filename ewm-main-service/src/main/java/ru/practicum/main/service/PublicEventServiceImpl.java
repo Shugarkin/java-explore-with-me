@@ -36,7 +36,7 @@ public class PublicEventServiceImpl implements PublicEventService {
     public List<EventShort> getPublicEvents(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
                                             LocalDateTime rangeEnd, Boolean onlyAvailable, String sort, Integer from, Integer size, HttpServletRequest request) {
 
-        if (sort.equals("EVENT_DATE")) {
+        if (sort != null && sort.equals("EVENT_DATE")) {
             sort = "eventDate";
         } else {
             sort = "id";
@@ -60,7 +60,7 @@ public class PublicEventServiceImpl implements PublicEventService {
         statService.addHits(StatDto.builder()
                 .uri(request.getRequestURI())
                 .ip(request.getRemoteAddr())
-                .timestamp(LocalDateTime.now().withNano(0))
+                .timestamp(LocalDateTime.now())
                 .app("ewm-main-service")
                 .build());
         return listShort;
@@ -80,7 +80,7 @@ public class PublicEventServiceImpl implements PublicEventService {
         statService.addHits(StatDto.builder()
                 .uri(request.getRequestURI())
                 .ip(request.getRemoteAddr())
-                .timestamp(LocalDateTime.now().withNano(0))
+                .timestamp(LocalDateTime.now())
                 .app("ewm-main-service")
                 .build());
         return EventMapper.toEventFull(event, view.getOrDefault(id, 0L), confirmedRequest.getOrDefault(id, 0L));

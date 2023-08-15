@@ -12,6 +12,7 @@ import ru.practicum.main.model.Request;
 import ru.practicum.main.model.RequestShortUpdate;
 import ru.practicum.main.service.PrivateEventService;
 
+import javax.validation.Valid;
 import java.util.List;
 
 @RestController
@@ -24,7 +25,7 @@ public class PrivateEventController {
 
     @PostMapping("/{userId}/events")
     @ResponseStatus(HttpStatus.CREATED)
-    public EventFullDto createEvent(@PathVariable long userId, @RequestBody EventReceivedDto eventReceivedDto) {
+    public EventFullDto createEvent(@PathVariable long userId, @RequestBody @Validated(Marker.Create.class) EventReceivedDto eventReceivedDto) {
         EventFull event = EventMapper.toEventFull(service.createEvent(userId, EventMapper.toEvent(eventReceivedDto)), 0L, 0L);
         return EventMapper.toEventFullDto(event);
     }

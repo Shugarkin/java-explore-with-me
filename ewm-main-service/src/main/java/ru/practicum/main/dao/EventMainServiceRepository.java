@@ -35,15 +35,6 @@ public interface EventMainServiceRepository extends JpaRepository<Event, Long> {
             "and (event.paid = ?3 or ?3 is null) " +
             "and (event.eventDate > ?4 or ?4 is null) and (event.eventDate < ?5 or ?5 is null) " +
             "and (?6 = false or (?6 = true and (event.participantLimit > 0 ))) ")
-//    @Query("select event " +
-//            "from Event as event " +
-//            "where ((?1 is null) or ((lower(event.annotation) like %?1%) or (lower(event.description) like %?1%))) " +
-//            "and (event.category.id in ?2 or ?2 is null) " +
-//            "and (event.paid = ?3 or ?3 is null) " +
-//            "and (?4 is null and event.eventDate > now()) and (?5 is null) " +
-//            "and (?4 is not null and event.eventDate > ?4) and (?5 is not null and event.eventDate < ?5) " +
-//            "and (?6 = false or (?6 = true and (event.participantLimit > 0 ))) ")
-
     List<Event> findAllEvents(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
                               LocalDateTime rangeEnd, Boolean onlyAvailable, String sort, Pageable pageable);
 }
