@@ -8,6 +8,8 @@ import java.util.List;
 @Getter
 @Builder
 @Setter
+@ToString
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class RequestShortUpdateDto {

@@ -13,11 +13,13 @@ import java.util.List;
 @NoArgsConstructor
 public class CompilationShort {
 
+    private List<EventShort> events;
+
     private Long id;
 
     private Boolean pinned;
 
     private String title;
 
-    private List<EventShort> events;
+
 }

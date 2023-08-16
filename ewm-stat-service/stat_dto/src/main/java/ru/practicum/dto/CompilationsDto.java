@@ -8,6 +8,7 @@ import java.util.List;
 @Getter
 @Builder
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 public class CompilationsDto {
