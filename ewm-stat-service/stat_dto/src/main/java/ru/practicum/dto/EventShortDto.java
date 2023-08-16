@@ -18,7 +18,7 @@ public class EventShortDto {
 
     private Long confirmedRequests;
 
-    private LocalDateTime eventDate;
+    private String eventDate;
 
     private UserDto initiator;
 

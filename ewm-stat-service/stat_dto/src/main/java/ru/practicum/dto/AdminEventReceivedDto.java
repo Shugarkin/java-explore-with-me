@@ -3,6 +3,7 @@ package ru.practicum.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
+import javax.validation.constraints.Future;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -14,14 +15,15 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 public class AdminEventReceivedDto {
 
-    @Size(min = 20, max = 2000)
+    @Size(min = 20, max = 2000, groups = Marker.Update.class)
     private String annotation;
 
     private Long category;
 
-    @Size(min = 20, max = 7000)
+    @Size(min = 20, max = 7000, groups = Marker.Update.class)
     private String description;
 
+    @Future(groups = Marker.Update.class)
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime eventDate;
 
@@ -33,7 +35,7 @@ public class AdminEventReceivedDto {
 
     private Boolean requestModeration;
 
-    @Size(min = 3, max = 120)
+    @Size(min = 3, max = 120, groups = Marker.Update.class)
     private String title;
 
     private AdminUpdateEventStatus stateAction;

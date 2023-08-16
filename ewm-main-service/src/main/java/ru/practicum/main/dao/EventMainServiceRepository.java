@@ -37,4 +37,6 @@ public interface EventMainServiceRepository extends JpaRepository<Event, Long> {
             "and (?6 = false or (?6 = true and (event.participantLimit > 0 ))) ")
     List<Event> findAllEvents(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
                               LocalDateTime rangeEnd, Boolean onlyAvailable, String sort, Pageable pageable);
+
+    boolean existsByCategoryId(long catId);
 }

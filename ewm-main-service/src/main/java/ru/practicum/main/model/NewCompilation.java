@@ -2,9 +2,11 @@ package ru.practicum.main.model;
 
 import lombok.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
-@Data
+@Getter
+@Setter
 @Builder
 @EqualsAndHashCode
 @AllArgsConstructor

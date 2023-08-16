@@ -17,6 +17,6 @@ public class CategoriesDto {
     private long id;
 
     @NotBlank(groups = {Marker.Create.class, Marker.Update.class})
-    @Size(min = 1, max = 50)
+    @Size(min = 1, max = 50, groups = {Marker.Create.class, Marker.Update.class})
     private String name;
 }

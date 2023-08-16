@@ -30,7 +30,7 @@ public class AdminCompilationsServiceImpl implements AdminCompilationsService {
 
         List<Event> events = eventMainServiceRepository.findAllById(newCompilation.getEvents());
 
-        if (newCompilation.getPinned() != null) {
+        if (newCompilation.getPinned() == null) {
             newCompilation.setPinned(false);
         }
 

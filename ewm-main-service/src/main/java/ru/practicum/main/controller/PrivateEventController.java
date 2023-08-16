@@ -25,7 +25,7 @@ public class PrivateEventController {
 
     @PostMapping("/{userId}/events")
     @ResponseStatus(HttpStatus.CREATED)
-    public EventFullDto createEvent(@PathVariable long userId, @RequestBody @Validated(Marker.Create.class) EventReceivedDto eventReceivedDto) {
+    public EventFullDto createEvent(@PathVariable long userId, @Validated(Marker.Create.class) @RequestBody  EventReceivedDto eventReceivedDto) {
         EventFull event = EventMapper.toEventFull(service.createEvent(userId, EventMapper.toEvent(eventReceivedDto)), 0L, 0L);
         return EventMapper.toEventFullDto(event);
     }
@@ -45,7 +45,8 @@ public class PrivateEventController {
     }
 
     @PatchMapping("/{userId}/events/{eventId}")
-    public EventFullDto patchEvent(@PathVariable long userId, @PathVariable long eventId, @RequestBody UpdateEventDto receivedDto) {
+    public EventFullDto patchEvent(@PathVariable long userId, @PathVariable long eventId,
+                                   @RequestBody @Validated(Marker.Update.class) UpdateEventDto receivedDto) {
         EventFull eventFull = service.patchEvent(userId, eventId, EventMapper.toEventFromUpdateEvent(receivedDto));
         return EventMapper.toEventFullDto(eventFull);
     }

@@ -8,6 +8,7 @@ import ru.practicum.dto.Status;
 import ru.practicum.main.dao.EventMainServiceRepository;
 import ru.practicum.main.dao.RequestMainServiceRepository;
 import ru.practicum.main.dao.UserMainServiceRepository;
+import ru.practicum.main.exception.BadRequestException;
 import ru.practicum.main.exception.ConflictException;
 import ru.practicum.main.exception.NotFoundException;
 import ru.practicum.main.model.ConfirmedRequestShort;
@@ -31,10 +32,18 @@ public class RequestServiceImpl implements RequestService {
 
     @Transactional
     @Override
-    public Request createRequest(long userId, long eventId) {
+    public Request createRequest(Long userId, Long eventId) {
+        if (userId == null || eventId == null) {
+            throw new BadRequestException("Неверный запрос");
+        }
+
         User user = userMainServiceRepository.findById(userId).orElseThrow(() -> new NotFoundException("Вы не зарегестрированный пользователь"));
 
         Event event = eventMainServiceRepository.findById(eventId).orElseThrow(() -> new NotFoundException("Данного ивента " + eventId + " не существует"));
+
+        if (event.getInitiator().getId().equals(userId)) {
+            throw new ConflictException("Инициатор события не может отправлять заявку на его же событие");
+        }
 
         if (!event.getState().equals(State.PUBLISHED)) {
             throw new ConflictException("Данное событие " + eventId + " еще не опубликованно");
@@ -69,14 +78,21 @@ public class RequestServiceImpl implements RequestService {
 
 
     @Override
-    public List<Request> getRequests(long userId) {
+    public List<Request> getRequests(Long userId) {
+        if (userId == null) {
+            throw new BadRequestException("Неверный запрос");
+        }
         List<Request> byRequesterId = repository.findAllByRequesterId(userId);
         return byRequesterId;
     }
 
     @Transactional
     @Override
-    public Request canselRequest(long userId, long requestId) {
+    public Request canselRequest(Long userId, Long requestId) {
+        if (userId == null || requestId == null) {
+            throw new BadRequestException("Неверный запрос");
+        }
+
         boolean answer = userMainServiceRepository.existsById(userId);
         if (!answer) {
             throw new ConflictException("Пользователя с id " + userId + " не существует");

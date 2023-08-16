@@ -6,6 +6,7 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.AdminEventReceivedDto;
 import ru.practicum.dto.EventFullDto;
+import ru.practicum.dto.Marker;
 import ru.practicum.dto.State;
 import ru.practicum.main.mapper.EventMapper;
 import ru.practicum.main.model.EventFull;
@@ -23,7 +24,7 @@ public class AdminEventController {
     private final AdminEventService service;
 
     @PatchMapping("/{eventId}")
-    public EventFullDto patchAdminEvent(@PathVariable long eventId, @RequestBody AdminEventReceivedDto adminEvent) {
+    public EventFullDto patchAdminEvent(@PathVariable long eventId, @RequestBody @Validated({Marker.Update.class}) AdminEventReceivedDto adminEvent) {
         EventFull eventFull = service.patchAdminEvent(eventId, EventMapper.toAdminEventFromAdminDto(adminEvent));
         return EventMapper.toEventFullDto(eventFull);
     }

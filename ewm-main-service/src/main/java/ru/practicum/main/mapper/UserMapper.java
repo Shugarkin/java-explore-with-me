@@ -1,6 +1,7 @@
 package ru.practicum.main.mapper;
 
 import lombok.experimental.UtilityClass;
+import ru.practicum.dto.AdminUserDto;
 import ru.practicum.dto.UserDto;
 import ru.practicum.dto.UserDtoReceived;
 import ru.practicum.main.model.User;
@@ -33,4 +34,15 @@ public class UserMapper {
         return list.stream().map(UserMapper::toUserDto).collect(Collectors.toList());
     }
 
+    public AdminUserDto toAdminUserDto(User newUser) {
+        return AdminUserDto.builder()
+                .email(newUser.getEmail())
+                .id(newUser.getId())
+                .name(newUser.getName())
+                .build();
+    }
+
+    public List<AdminUserDto> toListAdminUserDto(List<User> users) {
+        return users.stream().map(UserMapper::toAdminUserDto).collect(Collectors.toList());
+    }
 }

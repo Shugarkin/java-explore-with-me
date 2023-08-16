@@ -10,17 +10,21 @@ import ru.practicum.dto.AdminUpdateEventStatus;
 import ru.practicum.dto.State;
 import ru.practicum.main.dao.CategoriesMainServiceRepository;
 import ru.practicum.main.dao.EventMainServiceRepository;
+import ru.practicum.main.dao.LocationMainServiceRepository;
+import ru.practicum.main.exception.BadRequestException;
 import ru.practicum.main.exception.ConflictException;
 import ru.practicum.main.exception.NotFoundException;
 import ru.practicum.main.mapper.EventMapper;
 import ru.practicum.main.model.AdminEvent;
 import ru.practicum.main.model.Event;
 import ru.practicum.main.model.EventFull;
+import ru.practicum.main.model.Location;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.Optional;
 
 @Service
 @Transactional(readOnly = true)
@@ -31,6 +35,8 @@ public class AdminEventServiceImpl implements AdminEventService {
 
     private final CategoriesMainServiceRepository categoriesMainServiceRepository;
 
+    private final LocationMainServiceRepository locationMainServiceRepository;
+
     private final StatService statService;
 
     @Transactional
@@ -39,18 +45,18 @@ public class AdminEventServiceImpl implements AdminEventService {
         Event event = repository.findById(eventId).orElseThrow(() -> new NotFoundException("События " + eventId + " не найденно"));
 
         if (event.getEventDate().isBefore(LocalDateTime.now().plusHours(1))) {
-            throw new ConflictException("Время изменить данное событие уже упущенно");
+            throw new BadRequestException("Время изменить данное событие уже упущенно");
         }
         if (eventNew.getEventDate() != null) {
             if (eventNew.getEventDate().isBefore(LocalDateTime.now().plusHours(1))) {
-                event.setEventDate(eventNew.getEventDate());
+                throw new BadRequestException("Поздновато для изменений даты начала события");
             } else {
-                throw new ConflictException("Поздновато для изменений даты начала события");
+                event.setEventDate(eventNew.getEventDate());
             }
         }
         if (eventNew.getStateAction() != null) {
             if (!event.getState().equals(State.PENDING)) {
-                throw new ConflictException("Нельзя изменять событие не находящееся в статусе ожидания");
+                throw new ConflictException("Нельзя изменять событие не находящееся в статусе ожидания, опубликованное или отмененное");
             }
 
             if (eventNew.getStateAction().equals(AdminUpdateEventStatus.PUBLISH_EVENT)) {
@@ -72,16 +78,16 @@ public class AdminEventServiceImpl implements AdminEventService {
             event.setParticipantLimit(eventNew.getParticipantLimit());
         }
         if (eventNew.getLocation() != null) {
-            event.setLocation(eventNew.getLocation());
+            event.setLocation(getLocation(eventNew.getLocation()).orElse(saveLocation(eventNew.getLocation())));
         }
         if (eventNew.getAnnotation() != null) {
-            event.setAnnotation(event.getAnnotation());
+            event.setAnnotation(eventNew.getAnnotation());
         }
         if (eventNew.getDescription() != null) {
             event.setDescription(eventNew.getDescription());
         }
         if (eventNew.getTitle() != null) {
-            event.setTitle(event.getTitle());
+            event.setTitle(eventNew.getTitle());
         }
         if (eventNew.getCategory() != null) {
             event.setCategory(categoriesMainServiceRepository.findById(eventNew.getCategory())
@@ -112,5 +118,13 @@ public class AdminEventServiceImpl implements AdminEventService {
                         EventMapper.toEventFull(event, view.getOrDefault(event.getId(), 0L), confirmedRequest.getOrDefault(event.getId(), 0L))));
 
         return listEventFull;
+    }
+
+    private Optional<Location> getLocation(Location location) {
+        return locationMainServiceRepository.findByLatAndLon(location.getLat(), location.getLon());
+    }
+
+    private Location saveLocation(Location location) {
+        return locationMainServiceRepository.save(location);
     }
 }

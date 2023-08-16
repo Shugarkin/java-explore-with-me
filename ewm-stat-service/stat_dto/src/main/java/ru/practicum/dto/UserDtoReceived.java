@@ -16,7 +16,7 @@ public class UserDtoReceived {
     private long id;
 
     @Email(groups = {Marker.Create.class})
-    @Size(min = 6, max = 64, groups = {Marker.Create.class})
+    @Size(min = 6, max = 254, groups = {Marker.Create.class})
     @NotBlank(groups = {Marker.Create.class})
     private String email;
 

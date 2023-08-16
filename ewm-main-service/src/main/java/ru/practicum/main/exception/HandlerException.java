@@ -1,12 +1,14 @@
 package ru.practicum.main.exception;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.MissingRequestHeaderException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
 
 import javax.validation.ConstraintViolationException;
 import java.io.PrintWriter;
@@ -21,7 +23,8 @@ public class HandlerException {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
-    @ExceptionHandler({MissingRequestHeaderException.class, MethodArgumentNotValidException.class, ConstraintViolationException.class})
+    @ExceptionHandler({MissingRequestHeaderException.class, MethodArgumentNotValidException.class,
+                        BadRequestException.class, ConstraintViolationException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse badRequest(final Exception e) {
         return new ErrorResponse(HttpStatus.BAD_REQUEST.name(), e.getMessage(), "Incorrectly made request.", LocalDateTime.now().format(FORMATTER));
@@ -33,7 +36,8 @@ public class HandlerException {
         return new ErrorResponse(HttpStatus.NOT_FOUND.name(), e.getMessage(), "Not found", LocalDateTime.now().format(FORMATTER));
     }
 
-    @ExceptionHandler({ConflictException.class})
+    @ExceptionHandler({ConflictException.class,
+            DataIntegrityViolationException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse Conflict(final Exception e) {
         return new ErrorResponse(HttpStatus.CONFLICT.name(), e.getMessage(), "Integrity constraint has been violated" , LocalDateTime.now().format(FORMATTER));

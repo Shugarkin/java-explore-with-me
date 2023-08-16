@@ -24,7 +24,7 @@ public class UpdateEvent {
 
     private LocalDateTime eventDate;
 
-    private LocationDto location;
+    private Location location;
 
     private Boolean paid;
 

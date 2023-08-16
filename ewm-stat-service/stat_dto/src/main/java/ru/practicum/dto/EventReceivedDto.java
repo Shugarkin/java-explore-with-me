@@ -3,10 +3,7 @@ package ru.practicum.dto;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
+import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
 @Data
@@ -17,17 +14,17 @@ import java.time.LocalDateTime;
 public class EventReceivedDto {
 
     @NotBlank(groups = {Marker.Create.class, Marker.Update.class})
-    @Size(min = 20, max = 2000)
+    @Size(min = 20, max = 2000, groups = {Marker.Create.class, Marker.Update.class})
     private String annotation;
 
     @NotNull(groups = Marker.Create.class)
-    @Min(1)
     private Long category;
 
     @NotBlank(groups = {Marker.Create.class, Marker.Update.class})
-    @Size(min = 20, max = 7000)
+    @Size(min = 20, max = 7000, groups = {Marker.Create.class, Marker.Update.class})
     private String description;
 
+    @Future(groups = {Marker.Create.class, Marker.Update.class})
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
     private LocalDateTime eventDate;
 
@@ -40,7 +37,7 @@ public class EventReceivedDto {
     private Boolean requestModeration = true;
 
     @NotBlank(groups = {Marker.Create.class, Marker.Update.class})
-    @Size(min = 3, max = 120)
+    @Size(min = 3, max = 120, groups = {Marker.Create.class, Marker.Update.class})
     private String title;
 
 }

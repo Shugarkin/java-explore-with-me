@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.*;
 import ru.practicum.main.dao.*;
+import ru.practicum.main.exception.BadRequestException;
 import ru.practicum.main.exception.ConflictException;
 import ru.practicum.main.exception.NotFoundException;
 import ru.practicum.main.mapper.EventMapper;
@@ -98,7 +99,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         LocalDateTime eventTime = updateEvent.getEventDate();
         if (eventTime != null) {
             if (eventTime.isBefore(LocalDateTime.now().plusHours(2))) {
-                throw new ConflictException("Дата и время события не могут быть раньше чем за 2 часа до данного момента");
+                throw new BadRequestException("Дата и время события не могут быть раньше чем за 2 часа до данного момента");
             }
             event.setEventDate(eventTime);
         }
@@ -133,7 +134,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
                     .orElseThrow(() -> new NotFoundException("Категория не найдена")));
         }
         if (updateEvent.getLocation() != null) {
-            event.setLocation(locationMainServiceRepository.findByLatAndLon(updateEvent.getLocation().getLat(), updateEvent.getLocation().getLon()));
+            event.setLocation(getLocation(updateEvent.getLocation()).orElse(saveLocation(updateEvent.getLocation())));
         }
 
         Map<Long, Long> view = statService.toView(List.of(event));
@@ -171,7 +172,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
 
         int confirmedRequest = statService.toConfirmedRequest(List.of(event)).values().size();
 
-        if (event.getParticipantLimit() != 0 && confirmedRequest > event.getParticipantLimit()) {
+        if (event.getParticipantLimit() != 0 && confirmedRequest >= event.getParticipantLimit()) {
             throw new ConflictException("Нет свободный заявок на участие");
         }
 
@@ -194,4 +195,11 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         return updateRequest;
     }
 
+    private Optional<Location> getLocation(Location location) {
+        return locationMainServiceRepository.findByLatAndLon(location.getLat(), location.getLon());
+    }
+
+    private Location saveLocation(Location location) {
+        return locationMainServiceRepository.save(location);
+    }
 }

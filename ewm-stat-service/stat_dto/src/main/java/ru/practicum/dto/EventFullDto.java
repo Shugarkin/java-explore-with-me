@@ -18,11 +18,11 @@ public class EventFullDto {
 
     private CategoriesDto category;
 
-    private LocalDateTime createdOn;
+    private String createdOn;
 
     private String description;
 
-    private LocalDateTime eventDate;
+    private String eventDate;
 
     private UserDto initiator;
 
@@ -42,5 +42,5 @@ public class EventFullDto {
 
     private Long confirmedRequests;
 
-    private LocalDateTime publishedOn;
+    private String publishedOn;
 }

@@ -10,7 +10,7 @@ import java.util.Optional;
 
 public interface RequestMainServiceRepository extends JpaRepository<Request, Long> {
 
-    @Query("select new ru.practicum.main.model.ConfirmedRequestShort(req.event.id ,count(req.id)) " +
+    @Query("select new ru.practicum.main.model.ConfirmedRequestShort(req.event.id , count(req.id)) " +
             "from Request as req " +
             "where req.event.id in ?1 " +
             "and req.status = 'CONFIRMED' " +

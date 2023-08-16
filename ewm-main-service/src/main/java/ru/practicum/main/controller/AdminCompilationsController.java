@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.CompilationsDto;
+import ru.practicum.dto.Marker;
 import ru.practicum.dto.NewCompilationDto;
 import ru.practicum.main.mapper.CompilationMapper;
 import ru.practicum.main.model.CompilationShort;
@@ -20,7 +21,7 @@ public class AdminCompilationsController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CompilationsDto postCompilations(@RequestBody NewCompilationDto newCompilationDto) {
+    public CompilationsDto postCompilations(@RequestBody @Validated(Marker.Create.class) NewCompilationDto newCompilationDto) {
         CompilationShort compilations = service.createCompilation(CompilationMapper.toNewCompilation(newCompilationDto));
         return CompilationMapper.toCompilationsDto(compilations);
     }
@@ -32,7 +33,7 @@ public class AdminCompilationsController {
     }
 
     @PatchMapping("/{compId}")
-    public CompilationsDto patchCompilation(@PathVariable long compId, @RequestBody NewCompilationDto newCompilationDto) {
+    public CompilationsDto patchCompilation(@PathVariable long compId, @RequestBody @Validated(Marker.Update.class) NewCompilationDto newCompilationDto) {
         CompilationShort compilationShort = service.patchCompilation(compId, CompilationMapper.toNewCompilation(newCompilationDto));
         return CompilationMapper.toCompilationsDto(compilationShort);
     }

@@ -4,11 +4,14 @@ import lombok.experimental.UtilityClass;
 import ru.practicum.dto.*;
 import ru.practicum.main.model.*;
 
+import java.time.format.DateTimeFormatter;
 import java.util.List;
 import java.util.stream.Collectors;
 
 @UtilityClass
 public class EventMapper {
+
+    private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     public Event toEvent(EventReceivedDto receivedDto) {
         return Event.builder()
@@ -46,8 +49,8 @@ public class EventMapper {
     }
 
     public EventFullDto toEventFullDto(EventFull event) {
-        return EventFullDto.builder()
-                .createdOn(event.getCreatedOn())
+        EventFullDto build = EventFullDto.builder()
+                .createdOn(event.getCreatedOn().format(FORMATTER))
                 .initiator(UserMapper.toUserDto(event.getInitiator()))
                 .confirmedRequests(event.getConfirmedRequests())
                 .views(event.getViews())
@@ -60,10 +63,14 @@ public class EventMapper {
                 .id(event.getId())
                 .category(CategoriesMapper.toCategoriesDto(event.getCategory()))
                 .description(event.getDescription())
-                .eventDate(event.getEventDate())
+                .eventDate(event.getEventDate().format(FORMATTER))
                 .location(LocationMapper.toLocationDto(event.getLocation()))
-                .publishedOn(event.getPublishedOn())
                 .build();
+
+        if (event.getPublishedOn() != null) {
+            build.setPublishedOn(event.getPublishedOn().format(FORMATTER));
+        }
+        return build;
     }
 
     public List<EventFullDto> toListEventFullDto(List<EventFull> list) {
@@ -71,18 +78,23 @@ public class EventMapper {
     }
 
     public UpdateEvent toEventFromUpdateEvent(UpdateEventDto updateEventDto) {
-        return UpdateEvent.builder()
+        UpdateEvent event = UpdateEvent.builder()
                 .stateAction(updateEventDto.getStateAction())
                 .annotation(updateEventDto.getAnnotation())
                 .participantLimit(updateEventDto.getParticipantLimit())
-                .requestModeration(updateEventDto.isRequestModeration())
+                .requestModeration(updateEventDto.getRequestModeration())
                 .category(updateEventDto.getCategory())
                 .description(updateEventDto.getDescription())
                 .title(updateEventDto.getTitle())
                 .paid(updateEventDto.getPaid())
                 .eventDate(updateEventDto.getEventDate())
-                .location(updateEventDto.getLocation())
                 .build();
+        if (updateEventDto.getLocation() == null) {
+            event.setLocation(null);
+        } else {
+            event.setLocation(LocationMapper.toLocation(updateEventDto.getLocation()));
+        }
+        return event;
     }
 
     public static AdminEvent toAdminEventFromAdminDto(AdminEventReceivedDto adminEvent) {
@@ -123,7 +135,7 @@ public class EventMapper {
         return EventShortDto.builder()
                 .initiator(UserMapper.toUserDto(eventShort.getInitiator()))
                 .views(eventShort.getViews())
-                .eventDate(eventShort.getEventDate())
+                .eventDate(eventShort.getEventDate().format(FORMATTER))
                 .annotation(eventShort.getAnnotation())
                 .title(eventShort.getTitle())
                 .category(CategoriesMapper.toCategoriesDto(eventShort.getCategory()))
