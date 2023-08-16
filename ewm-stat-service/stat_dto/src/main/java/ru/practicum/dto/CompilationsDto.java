@@ -9,6 +9,7 @@ import java.util.List;
 @Builder
 @Setter
 @ToString
+@EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
 public class CompilationsDto {
