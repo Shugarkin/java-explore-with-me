@@ -93,8 +93,7 @@ class PrivateEventControllerITTest {
     @SneakyThrows
     @Test
     void getEventByUserIdAndEventId() {
-        when(service.getEventByUserIdAndEventId
-                (1L, 1L)).thenReturn(EventMapper.toEventFull(event, 0L, 0L));
+        when(service.getEventByUserIdAndEventId(1L, 1L)).thenReturn(EventMapper.toEventFull(event, 0L, 0L));
 
         mockMvc.perform(get("/users/{userId}/events/{eventId}", 1L, 1L)).andExpect(status().isOk());
 
@@ -142,8 +141,7 @@ class PrivateEventControllerITTest {
                 .created(LocalDateTime.now().withNano(0))
                 .id(1L)
                 .build();
-        when(service.getRequestByUserIdAndEventId
-                (1L, 1L)).thenReturn(List.of(request));
+        when(service.getRequestByUserIdAndEventId(1L, 1L)).thenReturn(List.of(request));
 
         mockMvc.perform(get("/users//{userId}/events/{eventId}/requests", 1L, 1L)).andExpect(status().isOk());
 

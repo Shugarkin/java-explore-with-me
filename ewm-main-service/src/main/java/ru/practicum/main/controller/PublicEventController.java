@@ -36,7 +36,7 @@ public class PublicEventController {
                                                @RequestParam(required = false) String sort,
                                                @RequestParam(defaultValue = "0") @PositiveOrZero Integer from,
                                                @RequestParam(defaultValue = "10") @Positive Integer size,
-                                               HttpServletRequest request ) {
+                                               HttpServletRequest request) {
         List<EventShort> list = service.getPublicEvents(text, categories, paid, rangeStart, rangeEnd, onlyAvailable, sort, from, size, request);
         return EventMapper.toListEventShortDto(list);
     }

@@ -36,7 +36,7 @@ class PublicEventControllerITTest {
 
         when(service.getPublicEvents(any(), any(), any(), any(), any(), any(), any(), any(), any(), any())).thenReturn(List.of());
 
-        mockMvc.perform(get("/events" )).andExpect(status().isOk());
+        mockMvc.perform(get("/events")).andExpect(status().isOk());
 
         verify(service).getPublicEvents(any(), any(), any(), any(), any(), any(), any(), any(), any(), any());
     }
@@ -62,7 +62,7 @@ class PublicEventControllerITTest {
                 .build();
         when(service.getPublicEvent(anyLong(), any())).thenReturn(event);
 
-        mockMvc.perform(get("/events/{id}", 1L )).andExpect(status().isOk());
+        mockMvc.perform(get("/events/{id}", 1L)).andExpect(status().isOk());
 
         verify(service).getPublicEvent(anyLong(), any());
     }

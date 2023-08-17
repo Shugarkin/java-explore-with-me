@@ -34,6 +34,7 @@ class PublicEventServiceImplTest {
 
     @Mock
     private HttpServletRequest request;
+
     @Test
     void getPublicEvents() {
         when(repository.findAllEvents(anyString(), anyList(), anyBoolean(), any(), any(), anyBoolean(), anyString(), any())).thenReturn(List.of());

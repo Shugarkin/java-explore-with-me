@@ -31,6 +31,7 @@ class AdminCategoriesServiceImplTest {
 
 
     private Categories categories = Categories.builder().name("asf").id(1L).build();
+
     @Test
     void createCategories() {
         when(repository.save(any())).thenReturn(categories);

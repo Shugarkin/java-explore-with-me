@@ -52,6 +52,7 @@ class RequestControllerTest {
                     .build())
             .status(Status.CONFIRMED)
             .build();
+
     @Test
     void createRequest() {
         when(service.createRequest(anyLong(), any())).thenReturn(request);

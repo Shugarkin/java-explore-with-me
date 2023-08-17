@@ -32,7 +32,7 @@ class PublicCategoriesControllerITTest {
 
         mockMvc.perform(get("/categories", 0, 10)).andExpect(status().isOk());
 
-        verify(service).getListCategories( 0, 10);
+        verify(service).getListCategories(0, 10);
     }
 
     @SneakyThrows
@@ -43,6 +43,6 @@ class PublicCategoriesControllerITTest {
 
         mockMvc.perform(get("/categories/{catId}", 1L)).andExpect(status().isOk());
 
-        verify(service).getCategories( 1L);
+        verify(service).getCategories(1L);
     }
 }

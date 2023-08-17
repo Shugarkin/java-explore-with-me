@@ -1,10 +1,7 @@
 package ru.practicum.main.service;
 
-import ru.practicum.dto.State;
 import ru.practicum.main.model.*;
 
-import javax.servlet.http.HttpServletRequest;
-import java.time.LocalDateTime;
 import java.util.List;
 
 public interface PrivateEventService {
