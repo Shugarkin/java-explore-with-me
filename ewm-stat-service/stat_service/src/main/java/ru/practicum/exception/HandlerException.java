@@ -29,6 +29,6 @@ public class HandlerException {
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse internalServerError(final Exception e) {
-        return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.name(), e.getMessage(), "Internal Server Error" , LocalDateTime.now().format(FORMATTER));
+        return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.name(), e.getMessage(), "Internal Server Error", LocalDateTime.now().format(FORMATTER));
     }
 }
