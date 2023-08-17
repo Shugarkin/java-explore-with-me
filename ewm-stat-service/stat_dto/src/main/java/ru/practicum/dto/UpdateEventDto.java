@@ -2,7 +2,6 @@ package ru.practicum.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.springframework.lang.Nullable;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Size;
