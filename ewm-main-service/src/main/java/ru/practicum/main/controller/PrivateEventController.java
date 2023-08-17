@@ -12,7 +12,6 @@ import ru.practicum.main.model.Request;
 import ru.practicum.main.model.RequestShortUpdate;
 import ru.practicum.main.service.PrivateEventService;
 
-import javax.validation.Valid;
 import java.util.List;
 
 @RestController

@@ -11,7 +11,6 @@ import ru.practicum.dto.*;
 import ru.practicum.main.mapper.EventMapper;
 import ru.practicum.main.mapper.RequestMapper;
 import ru.practicum.main.model.*;
-import ru.practicum.main.service.AdminCategoriesService;
 import ru.practicum.main.service.PrivateEventService;
 
 import java.nio.charset.StandardCharsets;

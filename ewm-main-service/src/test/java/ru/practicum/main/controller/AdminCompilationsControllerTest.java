@@ -10,7 +10,6 @@ import ru.practicum.dto.NewCompilationDto;
 import ru.practicum.main.mapper.CompilationMapper;
 import ru.practicum.main.model.CompilationShort;
 import ru.practicum.main.model.Compilations;
-import ru.practicum.main.service.AdminCategoriesService;
 import ru.practicum.main.service.AdminCompilationsService;
 
 import java.util.List;

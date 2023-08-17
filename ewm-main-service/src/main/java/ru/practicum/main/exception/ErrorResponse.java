@@ -2,8 +2,6 @@ package ru.practicum.main.exception;
 
 import lombok.Data;
 
-import java.time.LocalDateTime;
-
 @Data
 public class ErrorResponse {
 

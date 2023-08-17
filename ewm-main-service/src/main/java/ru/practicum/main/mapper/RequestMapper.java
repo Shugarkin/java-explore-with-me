@@ -28,13 +28,6 @@ public class RequestMapper {
         return requests.stream().map(RequestMapper::toRequestDto).collect(Collectors.toList());
     }
 
-    public RequestShortDto toRequestShortDto(RequestShort requestShort) {
-        return RequestShortDto.builder()
-                .requestIds(requestShort.getRequestIds())
-                .status(requestShort.getStatus())
-                .build();
-    }
-
     public RequestShort toRequestShort(RequestShortDto shortDto) {
         return RequestShort.builder()
                 .requestIds(shortDto.getRequestIds())

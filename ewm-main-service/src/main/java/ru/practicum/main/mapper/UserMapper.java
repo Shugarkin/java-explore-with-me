@@ -19,19 +19,11 @@ public class UserMapper {
                 .build();
     }
 
-    public List<User> toListUserFromUserReceived(List<UserDtoReceived> list) {
-        return list.stream().map(UserMapper::toUser).collect(Collectors.toList());
-    }
-
     public UserDto toUserDto(User user) {
         return UserDto.builder()
                 .name(user.getName())
                 .id(user.getId())
                 .build();
-    }
-
-    public List<UserDto> toListUserDto(List<User> list) {
-        return list.stream().map(UserMapper::toUserDto).collect(Collectors.toList());
     }
 
     public AdminUserDto toAdminUserDto(User newUser) {

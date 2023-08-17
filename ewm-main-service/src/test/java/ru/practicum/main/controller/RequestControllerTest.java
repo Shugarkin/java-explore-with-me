@@ -10,7 +10,6 @@ import ru.practicum.dto.State;
 import ru.practicum.dto.Status;
 import ru.practicum.main.mapper.RequestMapper;
 import ru.practicum.main.model.*;
-import ru.practicum.main.service.PublicEventService;
 import ru.practicum.main.service.RequestService;
 
 import java.time.LocalDateTime;

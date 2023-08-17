@@ -8,8 +8,6 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import ru.practicum.dto.CompilationsDto;
 import ru.practicum.main.mapper.CompilationMapper;
 import ru.practicum.main.model.CompilationShort;
-import ru.practicum.main.model.Compilations;
-import ru.practicum.main.service.PublicCategoriesService;
 import ru.practicum.main.service.PublicCompilationService;
 
 import java.util.List;

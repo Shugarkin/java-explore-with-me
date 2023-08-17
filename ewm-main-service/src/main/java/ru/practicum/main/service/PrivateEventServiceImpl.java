@@ -1,6 +1,7 @@
 package ru.practicum.main.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -20,6 +21,7 @@ import java.util.*;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class PrivateEventServiceImpl implements PrivateEventService {
 
 
@@ -43,6 +45,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         event.setLocation(locationMainServiceRepository.save(event.getLocation()));
         event.setInitiator(userMainServiceRepository.findById(userId).orElseThrow(() -> new NotFoundException("Пользователь не найден")));
         event.setState(State.PENDING);
+        log.info("create new event");
         return repository.save(event);
     }
 
@@ -67,7 +70,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         listEvent.forEach(
                 event -> listEventFull.add(
                         EventMapper.toEventFull(event, mapView.getOrDefault(event.getId(), 0L), confirmedRequest.getOrDefault(event.getId(), 0L))));
-
+        log.info("get event by userID");
         return listEventFull;
     }
 
@@ -80,6 +83,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         Map<Long, Long> mapView = statService.toView(List.of(event));
 
         EventFull eventFull = EventMapper.toEventFull(event, mapView.get(eventId), confirmedRequest.get(eventId));
+        log.info("get event by userID and eventID");
         return eventFull;
     }
 
@@ -140,7 +144,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         Map<Long, Long> view = statService.toView(List.of(event));
         Map<Long, Long> confirmedRequest = statService.toConfirmedRequest(List.of(event));
 
-
+        log.info("patch event");
         return EventMapper.toEventFull(event, view.get(eventId), confirmedRequest.get(eventId));
     }
 
@@ -154,6 +158,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         }
 
         List<Request> list = requestMainServiceRepository.findAllByEventId(eventId);
+        log.info("get list request");
         return list;
     }
 
@@ -191,15 +196,17 @@ public class PrivateEventServiceImpl implements PrivateEventService {
                 updateRequest.getCanselRequest().add(request);
             }
         });
-
+        log.info("update request");
         return updateRequest;
     }
 
     private Optional<Location> getLocation(Location location) {
+        log.info("get location");
         return locationMainServiceRepository.findByLatAndLon(location.getLat(), location.getLon());
     }
 
     private Location saveLocation(Location location) {
+        log.info("save new location user");
         return locationMainServiceRepository.save(location);
     }
 }

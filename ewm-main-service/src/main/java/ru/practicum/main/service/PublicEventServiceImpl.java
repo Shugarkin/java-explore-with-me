@@ -1,6 +1,7 @@
 package ru.practicum.main.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -25,6 +26,7 @@ import java.util.Map;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class PublicEventServiceImpl implements PublicEventService {
 
     private final EventMainServiceRepository repository;
@@ -63,6 +65,7 @@ public class PublicEventServiceImpl implements PublicEventService {
                 .timestamp(LocalDateTime.now())
                 .app("ewm-main-service")
                 .build());
+        log.info("get public events");
         return listShort;
     }
 
@@ -83,6 +86,7 @@ public class PublicEventServiceImpl implements PublicEventService {
                 .timestamp(LocalDateTime.now())
                 .app("ewm-main-service")
                 .build());
+        log.info("get public event");
         return EventMapper.toEventFull(event, view.getOrDefault(id, 0L), confirmedRequest.getOrDefault(id, 0L));
     }
 }

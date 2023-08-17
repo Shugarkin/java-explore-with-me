@@ -6,7 +6,6 @@ import ru.practicum.main.model.ConfirmedRequestShort;
 import ru.practicum.main.model.Request;
 
 import java.util.List;
-import java.util.Optional;
 
 public interface RequestMainServiceRepository extends JpaRepository<Request, Long> {
 

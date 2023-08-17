@@ -6,7 +6,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.AdminUserDto;
 import ru.practicum.dto.Marker;
-import ru.practicum.dto.UserDto;
 import ru.practicum.dto.UserDtoReceived;
 import ru.practicum.main.mapper.UserMapper;
 import ru.practicum.main.model.User;

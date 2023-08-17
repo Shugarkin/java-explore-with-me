@@ -1,6 +1,7 @@
 package ru.practicum.main.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -22,6 +23,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class PublicCompilationServiceImpl implements PublicCompilationService {
 
     private final CompilationMainServiceRepository repository;
@@ -31,6 +33,7 @@ public class PublicCompilationServiceImpl implements PublicCompilationService {
     @Override
     public CompilationShort getCompilationById(long compId) {
         Compilations compilations = repository.findById(compId).orElseThrow(() -> new NotFoundException("Данной подборки не существует"));
+        log.info("get compilation by id");
         return toCompilationShort(compilations);
     }
 
@@ -48,7 +51,7 @@ public class PublicCompilationServiceImpl implements PublicCompilationService {
             listComShort.add(compilationShort);
         });
 
-
+        log.info("get compilation");
         return listComShort;
     }
 

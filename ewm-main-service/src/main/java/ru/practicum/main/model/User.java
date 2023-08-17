@@ -1,6 +1,5 @@
 package ru.practicum.main.model;
 
-
 import lombok.*;
 
 import javax.persistence.*;

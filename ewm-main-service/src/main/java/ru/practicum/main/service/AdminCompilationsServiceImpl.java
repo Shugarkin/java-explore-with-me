@@ -1,6 +1,7 @@
 package ru.practicum.main.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.main.dao.CompilationMainServiceRepository;
@@ -17,6 +18,7 @@ import java.util.stream.Collectors;
 @Service
 @Transactional
 @RequiredArgsConstructor
+@Slf4j
 public class AdminCompilationsServiceImpl implements AdminCompilationsService {
 
     private final CompilationMainServiceRepository repository;
@@ -44,7 +46,7 @@ public class AdminCompilationsServiceImpl implements AdminCompilationsService {
                 EventMapper.toEventShort(event, view.getOrDefault(event.getId(), 0L), confirmedRequest.getOrDefault(event.getId(), 0L)))
                 .collect(Collectors.toList());
 
-
+        log.info("create new compilation");
         return CompilationMapper.toCompilationShort(compilations, listEventShort);
     }
 
@@ -54,7 +56,7 @@ public class AdminCompilationsServiceImpl implements AdminCompilationsService {
         if (!answer) {
             throw new NotFoundException("Данной подборки не существует");
         }
-
+        log.info("delete compilation");
         repository.deleteById(compId);
     }
 
@@ -82,7 +84,7 @@ public class AdminCompilationsServiceImpl implements AdminCompilationsService {
                         EventMapper.toEventShort(event, view.getOrDefault(event.getId(), 0L), confirmedRequest.getOrDefault(event.getId(), 0L)))
                 .collect(Collectors.toList());
 
-
+        log.info("patch compilation");
         return CompilationMapper.toCompilationShort(compilations, listEventShort);
 
     }

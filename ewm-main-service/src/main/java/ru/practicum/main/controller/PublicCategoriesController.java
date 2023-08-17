@@ -6,7 +6,6 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.CategoriesDto;
 import ru.practicum.main.mapper.CategoriesMapper;
 import ru.practicum.main.model.Categories;
-import ru.practicum.main.service.AdminCategoriesService;
 import ru.practicum.main.service.PublicCategoriesService;
 
 import javax.validation.constraints.Min;

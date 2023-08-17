@@ -1,9 +1,7 @@
 package ru.practicum.main.service;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.main.dao.CategoriesMainServiceRepository;
@@ -12,11 +10,10 @@ import ru.practicum.main.exception.ConflictException;
 import ru.practicum.main.exception.NotFoundException;
 import ru.practicum.main.model.Categories;
 
-import java.util.List;
-
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class AdminCategoriesServiceImpl implements AdminCategoriesService {
 
     private final CategoriesMainServiceRepository repository;
@@ -26,6 +23,7 @@ public class AdminCategoriesServiceImpl implements AdminCategoriesService {
     @Override
     @Transactional
     public Categories createCategories(Categories categories) {
+        log.info("create new categories");
         return repository.save(categories);
     }
 
@@ -38,6 +36,7 @@ public class AdminCategoriesServiceImpl implements AdminCategoriesService {
 
         boolean answer = repository.existsById(catId);
         if (answer) {
+            log.info("delete categories");
             repository.deleteById(catId);
         } else {
             throw new NotFoundException("Нет данной категории");
@@ -49,6 +48,7 @@ public class AdminCategoriesServiceImpl implements AdminCategoriesService {
     public Categories patchCategories(long catId, Categories categoriesDto) {
         Categories categories = repository.findById(catId).orElseThrow(() -> new NotFoundException("Данной категории нет"));
         categories.setName(categoriesDto.getName());
+        log.info("patch categories");
         return categories;
     }
 

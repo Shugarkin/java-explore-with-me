@@ -1,6 +1,7 @@
 package ru.practicum.main.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.State;
@@ -22,6 +23,7 @@ import java.util.List;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class RequestServiceImpl implements RequestService {
 
     private final RequestMainServiceRepository repository;
@@ -72,7 +74,7 @@ public class RequestServiceImpl implements RequestService {
                 .created(LocalDateTime.now().withNano(0))
                 .status(status)
                 .build();
-
+        log.info("create request");
         return repository.save(request);
     }
 
@@ -83,6 +85,7 @@ public class RequestServiceImpl implements RequestService {
             throw new BadRequestException("Неверный запрос");
         }
         List<Request> byRequesterId = repository.findAllByRequesterId(userId);
+        log.info("get request");
         return byRequesterId;
     }
 
@@ -100,6 +103,7 @@ public class RequestServiceImpl implements RequestService {
         Request request = repository.findById(requestId).orElseThrow(() -> new NotFoundException("Данного запроса не существует"));
 
         request.setStatus(Status.CANCELED);
+        log.info("cansel request");
         return request;
     }
 

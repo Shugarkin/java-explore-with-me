@@ -14,12 +14,10 @@ import ru.practicum.main.model.Categories;
 import ru.practicum.main.model.EventFull;
 import ru.practicum.main.model.Location;
 import ru.practicum.main.model.User;
-import ru.practicum.main.service.AdminCompilationsService;
 import ru.practicum.main.service.AdminEventService;
 
 import java.nio.charset.StandardCharsets;
 import java.time.LocalDateTime;
-import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;

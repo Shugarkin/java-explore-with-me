@@ -1,6 +1,7 @@
 package ru.practicum.main.service;
 
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -29,6 +30,7 @@ import java.util.Optional;
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
+@Slf4j
 public class AdminEventServiceImpl implements AdminEventService {
 
     private final EventMainServiceRepository repository;
@@ -98,7 +100,7 @@ public class AdminEventServiceImpl implements AdminEventService {
         Map<Long, Long> view = statService.toView(List.of(event));
 
         EventFull eventFull = EventMapper.toEventFull(event, view.get(eventId), confirmedRequest.get(eventId));
-
+        log.info("path event for admin");
         return eventFull;
     }
 
@@ -116,15 +118,17 @@ public class AdminEventServiceImpl implements AdminEventService {
         list.forEach(
                 event -> listEventFull.add(
                         EventMapper.toEventFull(event, view.getOrDefault(event.getId(), 0L), confirmedRequest.getOrDefault(event.getId(), 0L))));
-
+        log.info("get event for admin");
         return listEventFull;
     }
 
     private Optional<Location> getLocation(Location location) {
+        log.info("find location");
         return locationMainServiceRepository.findByLatAndLon(location.getLat(), location.getLon());
     }
 
     private Location saveLocation(Location location) {
+        log.info("save new location");
         return locationMainServiceRepository.save(location);
     }
 }

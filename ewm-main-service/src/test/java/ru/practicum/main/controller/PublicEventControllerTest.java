@@ -13,7 +13,6 @@ import ru.practicum.main.model.Categories;
 import ru.practicum.main.model.EventFull;
 import ru.practicum.main.model.Location;
 import ru.practicum.main.model.User;
-import ru.practicum.main.service.PrivateEventService;
 import ru.practicum.main.service.PublicEventService;
 
 import java.time.LocalDateTime;

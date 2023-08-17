@@ -7,7 +7,6 @@ import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.practicum.dto.CategoriesDto;
 import ru.practicum.main.model.Categories;
-import ru.practicum.main.service.PrivateEventService;
 import ru.practicum.main.service.PublicCategoriesService;
 
 import java.util.List;

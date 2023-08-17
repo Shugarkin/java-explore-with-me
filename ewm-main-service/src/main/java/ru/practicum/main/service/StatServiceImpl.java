@@ -3,6 +3,7 @@ package ru.practicum.main.service;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -27,6 +28,7 @@ import java.util.stream.Collectors;
 @Service
 @RequiredArgsConstructor
 @Transactional(readOnly = true)
+@Slf4j
 public class StatServiceImpl implements StatService {
 
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
@@ -43,7 +45,7 @@ public class StatServiceImpl implements StatService {
         List<ConfirmedRequestShort> confirmedRequestShorts = requestMainServiceRepository.countByEventId(listEventId);
         Map<Long, Long> mapConRequest = confirmedRequestShorts.stream()
                 .collect(Collectors.toMap(ConfirmedRequestShort::getEventId, ConfirmedRequestShort::getConfirmedRequestsCount));
-
+        log.info("get confirmed request");
         return mapConRequest; //получил количество запросов на ивент
     }
 
@@ -70,7 +72,7 @@ public class StatServiceImpl implements StatService {
         } catch (JsonProcessingException e) {
             throw new StatException("Произошла ошибка выполнения запроса статистики");
         }
-
+        log.info("get view");
         return mapView; //получил количество просмотров на ивент
     }
 
@@ -78,5 +80,6 @@ public class StatServiceImpl implements StatService {
     @Override
     public void addHits(StatDto statDto) {
         statClient.postStatEvent(statDto);
+        log.info("add hits");
     }
 }

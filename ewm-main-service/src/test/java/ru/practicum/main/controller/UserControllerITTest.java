@@ -9,7 +9,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
 import ru.practicum.dto.UserDtoReceived;
 import ru.practicum.main.model.User;
-import ru.practicum.main.service.RequestService;
 import ru.practicum.main.service.UserService;
 
 import java.nio.charset.StandardCharsets;
