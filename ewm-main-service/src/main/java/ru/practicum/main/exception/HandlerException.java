@@ -25,14 +25,14 @@ public class HandlerException {
                         BadRequestException.class, ConstraintViolationException.class, MissingServletRequestParameterException.class})
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public ErrorResponse badRequest(final Exception e) {
-        log.debug("ERROR bad request");
+        log.debug("ERROR bad request {}", e.getMessage(), e);
         return new ErrorResponse(HttpStatus.BAD_REQUEST.name(), e.getMessage(), "Incorrectly made request.", LocalDateTime.now().format(FORMATTER));
     }
 
     @ExceptionHandler({NotFoundException.class})
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public ErrorResponse notFound(final RuntimeException e) {
-        log.debug("ERROR not found");
+        log.debug("ERROR not found {}", e.getMessage(), e);
         return new ErrorResponse(HttpStatus.NOT_FOUND.name(), e.getMessage(), "Not found", LocalDateTime.now().format(FORMATTER));
     }
 
@@ -40,14 +40,14 @@ public class HandlerException {
             DataIntegrityViolationException.class})
     @ResponseStatus(HttpStatus.CONFLICT)
     public ErrorResponse conflict(final Exception e) {
-        log.debug("ERROR conflict");
+        log.debug("ERROR conflict {}", e.getMessage(), e);
         return new ErrorResponse(HttpStatus.CONFLICT.name(), e.getMessage(), "Integrity constraint has been violated", LocalDateTime.now().format(FORMATTER));
     }
 
     @ExceptionHandler
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public ErrorResponse internalServerError(final Exception e) {
-        log.debug("ERROR Internal Server Error");
+        log.debug("ERROR Internal Server Error {}", e.getMessage(), e);
         return new ErrorResponse(HttpStatus.INTERNAL_SERVER_ERROR.name(), e.getMessage(), "Internal Server Error", LocalDateTime.now().format(FORMATTER));
     }
 }
