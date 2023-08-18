@@ -9,6 +9,8 @@ import ru.practicum.main.model.Categories;
 import ru.practicum.main.service.PublicCategoriesService;
 
 import javax.validation.constraints.Min;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @RestController
@@ -20,8 +22,8 @@ public class PublicCategoriesController {
     private final PublicCategoriesService service;
 
     @GetMapping
-    public List<CategoriesDto> getListCategories(@RequestParam(defaultValue = "0") @Min(0) int from,
-                                             @RequestParam(defaultValue = "10") @Min(0) int size) {
+    public List<CategoriesDto> getListCategories(@RequestParam(defaultValue = "0") @PositiveOrZero int from,
+                                             @RequestParam(defaultValue = "10") @Positive int size) {
         List<Categories> list = service.getListCategories(from, size);
         return CategoriesMapper.toListCategoriesDto(list);
     }

@@ -12,6 +12,8 @@ import ru.practicum.main.model.Request;
 import ru.practicum.main.model.RequestShortUpdate;
 import ru.practicum.main.service.PrivateEventService;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @RestController
@@ -31,8 +33,8 @@ public class PrivateEventController {
 
     @GetMapping("/{userId}/events")
     public List<EventFullDto> getEventByUserId(@PathVariable long userId,
-                                               @RequestParam(defaultValue = "0") int from,
-                                               @RequestParam(defaultValue = "10") int size) {
+                                               @RequestParam(defaultValue = "0") @PositiveOrZero int from,
+                                               @RequestParam(defaultValue = "10") @Positive int size) {
         List<EventFull> list = service.getEventByUserId(userId, from, size);
         return EventMapper.toListEventFullDto(list);
     }

@@ -11,6 +11,8 @@ import ru.practicum.main.mapper.UserMapper;
 import ru.practicum.main.model.User;
 import ru.practicum.main.service.UserService;
 
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import java.util.List;
 
 @RestController
@@ -36,8 +38,9 @@ public class UserController {
     }
 
     @GetMapping
-    public List<AdminUserDto> getUsers(@RequestParam(defaultValue = "") List<Long> ids, @RequestParam(defaultValue = "0") int from,
-                                  @RequestParam(defaultValue = "10") int size) {
+    public List<AdminUserDto> getUsers(@RequestParam(defaultValue = "") List<Long> ids,
+                                       @RequestParam(defaultValue = "0") @PositiveOrZero int from,
+                                        @RequestParam(defaultValue = "10") @Positive int size) {
         List<AdminUserDto> list = UserMapper.toListAdminUserDto(userService.getUsers(ids, from, size));
         return list;
     }
