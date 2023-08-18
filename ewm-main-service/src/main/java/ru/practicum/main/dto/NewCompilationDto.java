@@ -6,7 +6,9 @@ import ru.practicum.dto.Marker;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -17,7 +19,7 @@ import java.util.List;
 @NoArgsConstructor
 public class NewCompilationDto {
 
-    private List<Long> events = new ArrayList<>();
+    private Set<Long> events = new HashSet<>();
 
     private Boolean pinned;
 
