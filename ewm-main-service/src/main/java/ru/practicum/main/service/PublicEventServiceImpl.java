@@ -58,12 +58,7 @@ public class PublicEventServiceImpl implements PublicEventService {
         if (sort.equals("VIEWS")) {
             listShort.sort(Comparator.comparingLong(EventShort::getViews));
         }
-        statService.addHits(StatDto.builder()
-                .uri(request.getRequestURI())
-                .ip(request.getRemoteAddr())
-                .timestamp(LocalDateTime.now())
-                .app("ewm-main-service")
-                .build());
+        statService.addHits(request);
         log.info("get public events");
         return listShort;
     }
@@ -79,12 +74,7 @@ public class PublicEventServiceImpl implements PublicEventService {
         Map<Long, Long> view = statService.toView(List.of(event));
         Map<Long, Long> confirmedRequest = statService.toConfirmedRequest(List.of(event));
 
-        statService.addHits(StatDto.builder()
-                .uri(request.getRequestURI())
-                .ip(request.getRemoteAddr())
-                .timestamp(LocalDateTime.now())
-                .app("ewm-main-service")
-                .build());
+        statService.addHits(request);
         log.info("get public event");
 
         event.setView(view.getOrDefault(event.getId(), 0L));

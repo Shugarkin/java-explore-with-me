@@ -17,6 +17,7 @@ import ru.practicum.main.model.ConfirmedRequestShort;
 import ru.practicum.main.model.Event;
 import ru.practicum.dto.Stat;
 
+import javax.servlet.http.HttpServletRequest;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.*;
@@ -78,8 +79,8 @@ public class StatServiceImpl implements StatService {
 
     @Transactional
     @Override
-    public void addHits(StatDto statDto) {
-        statClient.postStatEvent(statDto);
+    public void addHits(HttpServletRequest request) {
+        statClient.postStatEvent(request);
         log.info("add hits");
     }
 }
