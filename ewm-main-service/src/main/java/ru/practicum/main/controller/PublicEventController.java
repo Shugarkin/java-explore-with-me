@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.EventFullDto;
 import ru.practicum.dto.EventShortDto;
 import ru.practicum.main.mapper.EventMapper;
-import ru.practicum.main.model.EventFull;
+import ru.practicum.main.model.Event;
 import ru.practicum.main.model.EventShort;
 import ru.practicum.main.service.PublicEventService;
 
@@ -44,7 +44,7 @@ public class PublicEventController {
 
     @GetMapping("/{id}")
     public EventFullDto getPublicEvent(@PathVariable long id, HttpServletRequest request) {
-        EventFull eventFull = service.getPublicEvent(id, request);
+        Event eventFull = service.getPublicEvent(id, request);
         return EventMapper.toEventFullDto(eventFull);
     }
 }

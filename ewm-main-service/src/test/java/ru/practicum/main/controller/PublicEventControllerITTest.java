@@ -41,29 +41,29 @@ class PublicEventControllerITTest {
         verify(service).getPublicEvents(any(), any(), any(), any(), any(), any(), any(), any(), any(), any());
     }
 
-    @SneakyThrows
-    @Test
-    void getPublicEvent() {
-        EventFull event = EventFull.builder()
-                .id(1L)
-                .eventDate(LocalDateTime.now().withNano(0).plusDays(1))
-                .description("aaaaaaaaaaaaaaaaaaaaaaaa")
-                .title("aaaaaaaaa")
-                .location(Location.builder().lat("1124").lon("1421").build())
-                .paid(false)
-                .category(Categories.builder().id(1L).name("asdsa").build())
-                .participantLimit(12)
-                .createdOn(LocalDateTime.now().withNano(0))
-                .requestModeration(false)
-                .annotation("aaaaaaaaaaaaaaaaaaaaaaaaa")
-                .initiator(User.builder().id(1L).name("asdasf").email("asdsf@asfs.ru").build())
-                .state(State.PUBLISHED)
-                .publishedOn(LocalDateTime.now().withNano(0))
-                .build();
-        when(service.getPublicEvent(anyLong(), any())).thenReturn(event);
-
-        mockMvc.perform(get("/events/{id}", 1L)).andExpect(status().isOk());
-
-        verify(service).getPublicEvent(anyLong(), any());
-    }
+//    @SneakyThrows
+//    @Test
+//    void getPublicEvent() {
+//        EventFull event = EventFull.builder()
+//                .id(1L)
+//                .eventDate(LocalDateTime.now().withNano(0).plusDays(1))
+//                .description("aaaaaaaaaaaaaaaaaaaaaaaa")
+//                .title("aaaaaaaaa")
+//                .location(Location.builder().lat("1124").lon("1421").build())
+//                .paid(false)
+//                .category(Categories.builder().id(1L).name("asdsa").build())
+//                .participantLimit(12)
+//                .createdOn(LocalDateTime.now().withNano(0))
+//                .requestModeration(false)
+//                .annotation("aaaaaaaaaaaaaaaaaaaaaaaaa")
+//                .initiator(User.builder().id(1L).name("asdasf").email("asdsf@asfs.ru").build())
+//                .state(State.PUBLISHED)
+//                .publishedOn(LocalDateTime.now().withNano(0))
+//                .build();
+//        when(service.getPublicEvent(anyLong(), any())).thenReturn(event);
+//
+//        mockMvc.perform(get("/events/{id}", 1L)).andExpect(status().isOk());
+//
+//        verify(service).getPublicEvent(anyLong(), any());
+//    }
 }

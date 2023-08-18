@@ -50,7 +50,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
     }
 
     @Override
-    public List<EventFull> getEventByUserId(long userId, int from, int size) {
+    public List<Event> getEventByUserId(long userId, int from, int size) {
         Pageable pageable = PageRequest.of(from > 0 ? from / size : 0, size, Sort.by("id").ascending());
         boolean answer = userMainServiceRepository.existsById(userId);
         if (!answer) {
@@ -65,31 +65,31 @@ public class PrivateEventServiceImpl implements PrivateEventService {
 
         Map<Long, Long> mapView = statService.toView(listEvent);
 
-        List<EventFull> listEventFull = new ArrayList<>();
-
-        listEvent.forEach(
-                event -> listEventFull.add(
-                        EventMapper.toEventFull(event, mapView.getOrDefault(event.getId(), 0L), confirmedRequest.getOrDefault(event.getId(), 0L))));
+        listEvent.forEach(event -> {
+            event.setConfirmedRequests(confirmedRequest.getOrDefault(event.getId(), 0L));
+            event.setView(mapView.getOrDefault(event.getId(), 0L));
+        });
         log.info("get event by userID");
-        return listEventFull;
+        return listEvent;
     }
 
     @Override
-    public EventFull getEventByUserIdAndEventId(long userId, long eventId) {
+    public Event getEventByUserIdAndEventId(long userId, long eventId) {
         Event event = repository.findByIdAndInitiatorId(eventId, userId).orElseThrow(() -> new NotFoundException("Ивент не найден"));
 
         Map<Long, Long> confirmedRequest = statService.toConfirmedRequest(List.of(event));
 
         Map<Long, Long> mapView = statService.toView(List.of(event));
 
-        EventFull eventFull = EventMapper.toEventFull(event, mapView.get(eventId), confirmedRequest.get(eventId));
+        event.setView(mapView.getOrDefault(eventId, 0L));
+        event.setConfirmedRequests(confirmedRequest.getOrDefault(eventId, 0L));
         log.info("get event by userID and eventID");
-        return eventFull;
+        return event;
     }
 
     @Transactional
     @Override
-    public EventFull patchEvent(long userId, long eventId, UpdateEvent updateEvent) {
+    public Event patchEvent(long userId, long eventId, UpdateEvent updateEvent) {
         Event event = repository.findByIdAndInitiatorId(eventId, userId).orElseThrow(() -> new NotFoundException("Ивент не найден"));
 
         if (!event.getInitiator().getId().equals(userId)) {
@@ -144,8 +144,10 @@ public class PrivateEventServiceImpl implements PrivateEventService {
         Map<Long, Long> view = statService.toView(List.of(event));
         Map<Long, Long> confirmedRequest = statService.toConfirmedRequest(List.of(event));
 
+        event.setView(view.getOrDefault(eventId, 0L));
+        event.setConfirmedRequests(confirmedRequest.getOrDefault(eventId, 0L));
         log.info("patch event");
-        return EventMapper.toEventFull(event, view.get(eventId), confirmedRequest.get(eventId));
+        return event;
     }
 
 

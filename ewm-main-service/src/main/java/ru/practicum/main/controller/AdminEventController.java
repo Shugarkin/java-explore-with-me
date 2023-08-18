@@ -9,7 +9,7 @@ import ru.practicum.dto.EventFullDto;
 import ru.practicum.dto.Marker;
 import ru.practicum.dto.State;
 import ru.practicum.main.mapper.EventMapper;
-import ru.practicum.main.model.EventFull;
+import ru.practicum.main.model.Event;
 import ru.practicum.main.service.AdminEventService;
 
 import javax.validation.constraints.Positive;
@@ -27,7 +27,7 @@ public class AdminEventController {
 
     @PatchMapping("/{eventId}")
     public EventFullDto patchAdminEvent(@PathVariable long eventId, @RequestBody @Validated({Marker.Update.class}) AdminEventReceivedDto adminEvent) {
-        EventFull eventFull = service.patchAdminEvent(eventId, EventMapper.toAdminEventFromAdminDto(adminEvent));
+        Event eventFull = service.patchAdminEvent(eventId, EventMapper.toAdminEventFromAdminDto(adminEvent));
         return EventMapper.toEventFullDto(eventFull);
     }
 
@@ -39,7 +39,7 @@ public class AdminEventController {
                                              @RequestParam(required = false) @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") LocalDateTime rangeEnd,
                                              @RequestParam(defaultValue = "0") @PositiveOrZero int from,
                                              @RequestParam(defaultValue = "10") @Positive int size) {
-        List<EventFull> list = service.getAdminEvents(users, states, categories, rangeStart, rangeEnd, from, size);
+        List<Event> list = service.getAdminEvents(users, states, categories, rangeStart, rangeEnd, from, size);
         return EventMapper.toListEventFullDto(list);
     }
 }

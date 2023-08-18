@@ -65,4 +65,9 @@ public class Event {
     @Column(name = "published_on")
     private LocalDateTime publishedOn;
 
+    @Transient
+    private Long view;
+
+    @Transient
+    private Long confirmedRequests;
 }

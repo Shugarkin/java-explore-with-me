@@ -18,7 +18,6 @@ import ru.practicum.main.exception.NotFoundException;
 import ru.practicum.main.mapper.EventMapper;
 import ru.practicum.main.model.AdminEvent;
 import ru.practicum.main.model.Event;
-import ru.practicum.main.model.EventFull;
 import ru.practicum.main.model.Location;
 
 import java.time.LocalDateTime;
@@ -43,7 +42,7 @@ public class AdminEventServiceImpl implements AdminEventService {
 
     @Transactional
     @Override
-    public EventFull patchAdminEvent(long eventId, AdminEvent eventNew) {
+    public Event patchAdminEvent(long eventId, AdminEvent eventNew) {
         Event event = repository.findById(eventId).orElseThrow(() -> new NotFoundException("События " + eventId + " не найденно"));
 
         if (event.getEventDate().isBefore(LocalDateTime.now().plusHours(1))) {
@@ -99,13 +98,14 @@ public class AdminEventServiceImpl implements AdminEventService {
         Map<Long, Long> confirmedRequest = statService.toConfirmedRequest(List.of(event));
         Map<Long, Long> view = statService.toView(List.of(event));
 
-        EventFull eventFull = EventMapper.toEventFull(event, view.get(eventId), confirmedRequest.get(eventId));
+        event.setView(view.getOrDefault(eventId, 0L));
+        event.setConfirmedRequests(confirmedRequest.getOrDefault(eventId, 0L));
         log.info("path event for admin");
-        return eventFull;
+        return event;
     }
 
     @Override
-    public List<EventFull> getAdminEvents(List<Long> users, List<State> states, List<Long> categories, LocalDateTime rangeStart, LocalDateTime rangeEnd, int from, int size) {
+    public List<Event> getAdminEvents(List<Long> users, List<State> states, List<Long> categories, LocalDateTime rangeStart, LocalDateTime rangeEnd, int from, int size) {
         Pageable pageable = PageRequest.of(from > 0 ? from / size : 0, size, Sort.by("id").ascending());
 
         List<Event> list = repository.findAllByParam(users, states, categories, rangeStart, rangeEnd, pageable);
@@ -113,13 +113,12 @@ public class AdminEventServiceImpl implements AdminEventService {
         Map<Long, Long> confirmedRequest = statService.toConfirmedRequest(list);
         Map<Long, Long> view = statService.toView(list);
 
-        List<EventFull> listEventFull = new ArrayList<>();
-
-        list.forEach(
-                event -> listEventFull.add(
-                        EventMapper.toEventFull(event, view.getOrDefault(event.getId(), 0L), confirmedRequest.getOrDefault(event.getId(), 0L))));
+        list.forEach(event -> {
+            event.setConfirmedRequests(confirmedRequest.getOrDefault(event.getId(), 0L));
+            event.setView(view.getOrDefault(event.getId(), 0L));
+        });
         log.info("get event for admin");
-        return listEventFull;
+        return list;
     }
 
     private Optional<Location> getLocation(Location location) {

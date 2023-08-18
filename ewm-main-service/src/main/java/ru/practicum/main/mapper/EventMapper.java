@@ -27,38 +27,17 @@ public class EventMapper {
                 .build();
     }
 
-    public EventFull toEventFull(Event event, Long view, Long confirmedRequests) {
-        return EventFull.builder()
-                .createdOn(event.getCreatedOn())
-                .initiator(event.getInitiator())
-                .confirmedRequests(confirmedRequests)
-                .views(view)
+    public EventFullDto toEventFullDto(Event event) {
+        EventFullDto build = EventFullDto.builder()
+                .createdOn(event.getCreatedOn().format(FORMATTER))
+                .initiator(UserMapper.toUserDto(event.getInitiator()))
+                .confirmedRequests(event.getConfirmedRequests())
+                .views(event.getView())
                 .state(event.getState())
                 .annotation(event.getAnnotation())
                 .participantLimit(event.getParticipantLimit())
                 .requestModeration(event.getRequestModeration())
                 .paid(event.getPaid())
-                .title(event.getTitle())
-                .id(event.getId())
-                .category(event.getCategory())
-                .description(event.getDescription())
-                .eventDate(event.getEventDate())
-                .location(event.getLocation())
-                .publishedOn(event.getPublishedOn())
-                .build();
-    }
-
-    public EventFullDto toEventFullDto(EventFull event) {
-        EventFullDto build = EventFullDto.builder()
-                .createdOn(event.getCreatedOn().format(FORMATTER))
-                .initiator(UserMapper.toUserDto(event.getInitiator()))
-                .confirmedRequests(event.getConfirmedRequests())
-                .views(event.getViews())
-                .state(event.getState())
-                .annotation(event.getAnnotation())
-                .participantLimit(event.getParticipantLimit())
-                .requestModeration(event.isRequestModeration())
-                .paid(event.isPaid())
                 .title(event.getTitle())
                 .id(event.getId())
                 .category(CategoriesMapper.toCategoriesDto(event.getCategory()))
@@ -73,7 +52,7 @@ public class EventMapper {
         return build;
     }
 
-    public List<EventFullDto> toListEventFullDto(List<EventFull> list) {
+    public List<EventFullDto> toListEventFullDto(List<Event> list) {
         return list.stream().map(EventMapper::toEventFullDto).collect(Collectors.toList());
     }
 

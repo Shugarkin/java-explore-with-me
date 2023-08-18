@@ -13,7 +13,6 @@ import ru.practicum.main.dao.EventMainServiceRepository;
 import ru.practicum.main.exception.NotFoundException;
 import ru.practicum.main.mapper.EventMapper;
 import ru.practicum.main.model.Event;
-import ru.practicum.main.model.EventFull;
 import ru.practicum.main.model.EventShort;
 
 import javax.servlet.http.HttpServletRequest;
@@ -70,7 +69,7 @@ public class PublicEventServiceImpl implements PublicEventService {
     }
 
     @Override
-    public EventFull getPublicEvent(long id, HttpServletRequest request) {
+    public Event getPublicEvent(long id, HttpServletRequest request) {
         Event event = repository.findById(id).orElseThrow(() -> new NotFoundException("Событие с id " + id + " не найдено"));
 
         if (!event.getState().equals(State.PUBLISHED)) {
@@ -87,6 +86,9 @@ public class PublicEventServiceImpl implements PublicEventService {
                 .app("ewm-main-service")
                 .build());
         log.info("get public event");
-        return EventMapper.toEventFull(event, view.getOrDefault(id, 0L), confirmedRequest.getOrDefault(id, 0L));
+
+        event.setView(view.getOrDefault(event.getId(), 0L));
+        event.setConfirmedRequests(confirmedRequest.getOrDefault(event.getId(), 0L));
+        return event;
     }
 }

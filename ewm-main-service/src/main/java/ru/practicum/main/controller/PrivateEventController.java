@@ -7,7 +7,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.dto.*;
 import ru.practicum.main.mapper.EventMapper;
 import ru.practicum.main.mapper.RequestMapper;
-import ru.practicum.main.model.EventFull;
+import ru.practicum.main.model.Event;
 import ru.practicum.main.model.Request;
 import ru.practicum.main.model.RequestShortUpdate;
 import ru.practicum.main.service.PrivateEventService;
@@ -27,7 +27,7 @@ public class PrivateEventController {
     @PostMapping("/{userId}/events")
     @ResponseStatus(HttpStatus.CREATED)
     public EventFullDto createEvent(@PathVariable long userId, @Validated(Marker.Create.class) @RequestBody  EventReceivedDto eventReceivedDto) {
-        EventFull event = EventMapper.toEventFull(service.createEvent(userId, EventMapper.toEvent(eventReceivedDto)), 0L, 0L);
+        Event event = service.createEvent(userId, EventMapper.toEvent(eventReceivedDto));
         return EventMapper.toEventFullDto(event);
     }
 
@@ -35,20 +35,20 @@ public class PrivateEventController {
     public List<EventFullDto> getEventByUserId(@PathVariable long userId,
                                                @RequestParam(defaultValue = "0") @PositiveOrZero int from,
                                                @RequestParam(defaultValue = "10") @Positive int size) {
-        List<EventFull> list = service.getEventByUserId(userId, from, size);
+        List<Event> list = service.getEventByUserId(userId, from, size);
         return EventMapper.toListEventFullDto(list);
     }
 
     @GetMapping("/{userId}/events/{eventId}")
     public EventFullDto getEventByUserIdAndEventId(@PathVariable long userId, @PathVariable long eventId) {
-        EventFull event = service.getEventByUserIdAndEventId(userId, eventId);
+        Event event = service.getEventByUserIdAndEventId(userId, eventId);
         return EventMapper.toEventFullDto(event);
     }
 
     @PatchMapping("/{userId}/events/{eventId}")
     public EventFullDto patchEvent(@PathVariable long userId, @PathVariable long eventId,
                                    @RequestBody @Validated(Marker.Update.class) UpdateEventDto receivedDto) {
-        EventFull eventFull = service.patchEvent(userId, eventId, EventMapper.toEventFromUpdateEvent(receivedDto));
+        Event eventFull = service.patchEvent(userId, eventId, EventMapper.toEventFromUpdateEvent(receivedDto));
         return EventMapper.toEventFullDto(eventFull);
     }
 
