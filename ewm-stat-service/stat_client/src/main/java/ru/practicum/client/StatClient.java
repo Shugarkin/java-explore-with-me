@@ -10,10 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.util.DefaultUriBuilderFactory;
 import ru.practicum.dto.StatDto;
 
-import javax.servlet.http.HttpServletRequest;
 import java.net.URLEncoder;
 import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Map;
 
@@ -31,8 +29,8 @@ public class StatClient  extends BaseClient {
         );
     }
 
-    public ResponseEntity<Object> postStatEvent(HttpServletRequest request) {
-        return post("/hit", StatDto.builder().uri(request.getRequestURI()).ip(request.getRemoteAddr()).app(request.getContextPath()).timestamp(LocalDateTime.now()));
+    public ResponseEntity<Object> postStatEvent(StatDto stat) {
+        return post("/hit", stat);
     }
 
     public ResponseEntity<Object> getStatEvent(String start, String end, @Nullable List<String> uris, boolean unique) {

@@ -4,10 +4,12 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.client.StatClient;
+import ru.practicum.dto.StatDto;
 import ru.practicum.dto.StatUniqueOrNotDto;
 import ru.practicum.main.dao.RequestMainServiceRepository;
 import ru.practicum.main.exception.StatException;
@@ -35,6 +37,9 @@ public class StatServiceImpl implements StatService {
     private final StatClient statClient;
 
     private final ObjectMapper objectMapper;
+
+    @Value("${main_app}")
+    private String app;
 
     @Override
     public Map<Long, Long> toConfirmedRequest(Collection<Event> list) {
@@ -79,7 +84,12 @@ public class StatServiceImpl implements StatService {
     @Transactional
     @Override
     public void addHits(HttpServletRequest request) {
-        statClient.postStatEvent(request);
+        statClient.postStatEvent(StatDto.builder()
+                        .ip(request.getRemoteAddr())
+                        .timestamp(LocalDateTime.now())
+                        .uri(request.getRequestURI())
+                        .app(app)
+                .build());
         log.info("add hits");
     }
 }
