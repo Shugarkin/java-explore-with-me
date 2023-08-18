@@ -11,6 +11,7 @@ import ru.practicum.main.mapper.CompilationMapper;
 import ru.practicum.main.mapper.EventMapper;
 import ru.practicum.main.model.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -73,7 +74,7 @@ public class AdminCompilationsServiceImpl implements AdminCompilationsService {
         }
 
         if (newCompilation.getEvents() != null) {
-            compilations.setEvents(eventMainServiceRepository.findAllById(newCompilation.getEvents()));
+            compilations.setEvents(new HashSet<>(eventMainServiceRepository.findAllById(newCompilation.getEvents())));
         }
 
         Map<Long, Long> view = statService.toView(compilations.getEvents());

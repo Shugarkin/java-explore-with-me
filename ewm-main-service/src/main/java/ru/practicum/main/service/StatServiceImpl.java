@@ -19,10 +19,7 @@ import ru.practicum.dto.Stat;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -40,7 +37,7 @@ public class StatServiceImpl implements StatService {
     private final ObjectMapper objectMapper;
 
     @Override
-    public Map<Long, Long> toConfirmedRequest(List<Event> list) {
+    public Map<Long, Long> toConfirmedRequest(Collection<Event> list) {
         List<Long> listEventId = list.stream().map(a -> a.getId()).collect(Collectors.toList());
         List<ConfirmedRequestShort> confirmedRequestShorts = requestMainServiceRepository.countByEventId(listEventId);
         Map<Long, Long> mapConRequest = confirmedRequestShorts.stream()
@@ -50,7 +47,7 @@ public class StatServiceImpl implements StatService {
     }
 
     @Override
-    public Map<Long, Long> toView(List<Event> list) {
+    public Map<Long, Long> toView(Collection<Event> list) {
         Map<Long, Long> mapView = new HashMap<>();
         LocalDateTime start = list.stream().map(a -> a.getCreatedOn()).min(LocalDateTime::compareTo).orElse(LocalDateTime.now());
         List<String> uris = list.stream().map(a -> "/events/" + a.getId()).collect(Collectors.toList());

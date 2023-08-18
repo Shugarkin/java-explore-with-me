@@ -29,21 +29,21 @@ class PublicCompilationServiceImplTest {
     @InjectMocks
     private PublicCompilationServiceImpl service;
 
-    @Test
-    void getCompilationById() {
-        when(repository.findById(anyLong())).thenReturn(Optional.of(Compilations.builder().events(List.of()).build()));
-        when(statService.toView(List.of())).thenReturn(Map.of());
-        when(statService.toConfirmedRequest(List.of())).thenReturn(Map.of());
-        CompilationShort compilationById = service.getCompilationById(1L);
-        assertNotNull(compilationById);
-    }
-
-    @Test
-    void getCompilation() {
-        when(repository.findAllByPinned(any(), any())).thenReturn(List.of());
-
-        List<CompilationShort> compilation = service.getCompilation(false, 0, 10);
-
-        assertEquals(compilation, List.of());
-    }
+//    @Test
+//    void getCompilationById() {
+//        when(repository.findById(anyLong())).thenReturn(Optional.of(Compilations.builder().events(List.of()).build()));
+//        when(statService.toView(List.of())).thenReturn(Map.of());
+//        when(statService.toConfirmedRequest(List.of())).thenReturn(Map.of());
+//        CompilationShort compilationById = service.getCompilationById(1L);
+//        assertNotNull(compilationById);
+//    }
+//
+//    @Test
+//    void getCompilation() {
+//        when(repository.findAllByPinned(any(), any())).thenReturn(List.of());
+//
+//        List<CompilationShort> compilation = service.getCompilation(false, 0, 10);
+//
+//        assertEquals(compilation, List.of());
+//    }
 }

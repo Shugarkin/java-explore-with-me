@@ -5,6 +5,7 @@ import ru.practicum.main.dto.CompilationsDto;
 import ru.practicum.main.dto.NewCompilationDto;
 import ru.practicum.main.model.*;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -33,7 +34,7 @@ public class CompilationMapper {
         return Compilations.builder()
                 .title(newCompilation.getTitle())
                 .pinned(newCompilation.getPinned())
-                .events(list)
+                .events(new HashSet<>(list))
                 .build();
     }
 
