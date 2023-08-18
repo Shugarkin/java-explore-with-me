@@ -2,7 +2,7 @@ package ru.practicum.main.mapper;
 
 import lombok.experimental.UtilityClass;
 import ru.practicum.dto.StatUniqueOrNotDto;
-import ru.practicum.main.model.Stat;
+import ru.practicum.dto.Stat;
 
 import java.util.List;
 import java.util.stream.Collectors;

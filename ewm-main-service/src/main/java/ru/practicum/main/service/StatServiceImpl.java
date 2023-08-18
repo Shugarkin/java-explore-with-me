@@ -15,7 +15,7 @@ import ru.practicum.main.exception.StatException;
 import ru.practicum.main.mapper.StatMapper;
 import ru.practicum.main.model.ConfirmedRequestShort;
 import ru.practicum.main.model.Event;
-import ru.practicum.main.model.Stat;
+import ru.practicum.dto.Stat;
 
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
