@@ -47,6 +47,7 @@ public class AdminCategoriesServiceImpl implements AdminCategoriesService {
     @Override
     public Categories patchCategories(long catId, Categories categoriesDto) {
         Categories categories = repository.findById(catId).orElseThrow(() -> new NotFoundException("Данной категории нет"));
+
         categories.setName(categoriesDto.getName());
         log.info("patch categories");
         return categories;
