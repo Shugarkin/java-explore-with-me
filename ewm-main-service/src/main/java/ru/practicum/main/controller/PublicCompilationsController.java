@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import ru.practicum.main.dto.CompilationsDto;
 import ru.practicum.main.mapper.CompilationMapper;
 import ru.practicum.main.model.CompilationShort;
+import ru.practicum.main.model.Compilations;
 import ru.practicum.main.service.PublicCompilationService;
 
 import javax.validation.constraints.Positive;
@@ -30,7 +31,7 @@ public class PublicCompilationsController {
     public List<CompilationsDto> getCompilation(@RequestParam(required = false) Boolean pinned,
                                                 @RequestParam(defaultValue = "0") @PositiveOrZero int from,
                                                 @RequestParam(defaultValue = "10") @Positive int size) {
-        List<CompilationShort> list = service.getCompilation(pinned, from, size);
-        return CompilationMapper.toListCompilationDto(list);
+        List<Compilations> list = service.getCompilation(pinned, from, size);
+        return CompilationMapper.toListCompilationDtoFromCompilation(list);
     }
 }

@@ -5,6 +5,7 @@ import ru.practicum.main.dto.CompilationsDto;
 import ru.practicum.main.dto.NewCompilationDto;
 import ru.practicum.main.model.*;
 
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -49,5 +50,18 @@ public class CompilationMapper {
 
     public List<CompilationsDto> toListCompilationDto(List<CompilationShort> list) {
         return list.stream().map(CompilationMapper::toCompilationsDto).collect(Collectors.toList());
+    }
+
+    public CompilationsDto toCompilationsDtoFromCompilation(Compilations compilations) {
+        return CompilationsDto.builder()
+                .events(EventMapper.toListEventShortDto(EventMapper.toListEventShort(new ArrayList<>(compilations.getEvents()))))
+                .id(compilations.getId())
+                .pinned(compilations.getPinned())
+                .title(compilations.getTitle())
+                .build();
+    }
+
+    public List<CompilationsDto> toListCompilationDtoFromCompilation(List<Compilations> list) {
+        return list.stream().map(CompilationMapper::toCompilationsDtoFromCompilation).collect(Collectors.toList());
     }
 }

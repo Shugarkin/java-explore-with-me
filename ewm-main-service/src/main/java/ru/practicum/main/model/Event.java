@@ -64,10 +64,10 @@ public class Event {
     private LocalDateTime publishedOn;
 
     @Transient
-    private Long view;
+    private long view;
 
     @Transient
-    private Long confirmedRequests;
+    private long confirmedRequests;
 
     @Override
     public String toString() {

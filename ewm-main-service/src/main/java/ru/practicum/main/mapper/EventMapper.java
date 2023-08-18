@@ -127,4 +127,22 @@ public class EventMapper {
     public static List<EventShortDto> toListEventShortDto(List<EventShort> list) {
         return list.stream().map(EventMapper::toEventShortDto).collect(Collectors.toList());
     }
+
+    public EventShort toEventShort(Event event) {
+        return EventShort.builder()
+                .id(event.getId())
+                .eventDate(event.getEventDate())
+                .confirmedRequests(event.getConfirmedRequests())
+                .views(event.getView())
+                .annotation(event.getAnnotation())
+                .category(event.getCategory())
+                .initiator(event.getInitiator())
+                .paid(event.getPaid())
+                .title(event.getTitle())
+                .build();
+    }
+
+    public static List<EventShort> toListEventShort(List<Event> list) {
+        return list.stream().map(EventMapper::toEventShort).collect(Collectors.toList());
+    }
 }

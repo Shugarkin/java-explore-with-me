@@ -38,21 +38,13 @@ public class PublicCompilationServiceImpl implements PublicCompilationService {
     }
 
     @Override
-    public List<CompilationShort> getCompilation(Boolean pinned, int from, int size) {
+    public List<Compilations> getCompilation(Boolean pinned, int from, int size) {
         Pageable pageable = PageRequest.of(from > 0 ? from / size : 0, size, Sort.by("id").ascending());
 
         List<Compilations> list = repository.findAllByPinned(pinned, pageable);
 
-        List<CompilationShort> listComShort = new ArrayList<>();
-
-        list.forEach(compilations -> {
-            CompilationShort compilationShort = toCompilationShort(compilations);
-
-            listComShort.add(compilationShort);
-        });
-
         log.info("get compilation");
-        return listComShort;
+        return list;
     }
 
     private CompilationShort toCompilationShort(Compilations compilations) {
