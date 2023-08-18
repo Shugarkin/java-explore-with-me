@@ -5,6 +5,8 @@ import lombok.*;
 import ru.practicum.dto.Marker;
 
 import javax.validation.constraints.Future;
+import javax.validation.constraints.Positive;
+import javax.validation.constraints.PositiveOrZero;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 
@@ -32,6 +34,7 @@ public class AdminEventReceivedDto {
 
     private Boolean paid;
 
+    @PositiveOrZero(groups = Marker.Update.class)
     private Integer participantLimit;
 
     private Boolean requestModeration;

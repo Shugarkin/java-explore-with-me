@@ -27,7 +27,7 @@ public class PrivateEventController {
 
     @PostMapping("/{userId}/events")
     @ResponseStatus(HttpStatus.CREATED)
-    public EventFullDto createEvent(@PathVariable long userId, @Validated(Marker.Create.class) @RequestBody EventReceivedDto eventReceivedDto) {
+    public EventFullDto createEvent(@PathVariable long userId,  @RequestBody @Validated EventReceivedDto eventReceivedDto) {
         Event event = service.createEvent(userId, EventMapper.toEvent(eventReceivedDto));
         return EventMapper.toEventFullDto(event);
     }

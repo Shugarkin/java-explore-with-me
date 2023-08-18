@@ -49,7 +49,10 @@ public class StatServiceImpl implements StatService {
     @Override
     public Map<Long, Long> toView(Collection<Event> list) {
         Map<Long, Long> mapView = new HashMap<>();
-        LocalDateTime start = list.stream().map(a -> a.getCreatedOn()).min(LocalDateTime::compareTo).orElse(LocalDateTime.now());
+        LocalDateTime start = list.stream().map(a -> a.getCreatedOn()).min(LocalDateTime::compareTo).orElse(null);
+        if (start == null) {
+            return Map.of();
+        }
         List<String> uris = list.stream().map(a -> "/events/" + a.getId()).collect(Collectors.toList());
 
         ResponseEntity<Object> response = statClient.getStatEvent(start.format(FORMATTER), LocalDateTime.now().format(FORMATTER), uris, true);
