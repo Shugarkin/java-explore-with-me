@@ -18,11 +18,11 @@ public class EventMapper {
                 .eventDate(receivedDto.getEventDate())
                 .annotation(receivedDto.getAnnotation())
                 .category(Categories.builder().id(receivedDto.getCategory()).build())
-                .paid(receivedDto.getPaid())
+                .paid(receivedDto.isPaid())
                 .description(receivedDto.getDescription())
                 .title(receivedDto.getTitle())
                 .participantLimit(receivedDto.getParticipantLimit())
-                .requestModeration(receivedDto.getRequestModeration())
+                .requestModeration(receivedDto.isRequestModeration())
                 .location(LocationMapper.toLocation(receivedDto.getLocation()))
                 .build();
     }

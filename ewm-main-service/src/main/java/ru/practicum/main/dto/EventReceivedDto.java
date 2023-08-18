@@ -31,11 +31,12 @@ public class EventReceivedDto {
 
     private LocationDto location;
 
-    private Boolean paid = false;
+    private boolean paid;
 
     private int participantLimit = 0;
 
-    private Boolean requestModeration = true;
+    @NotNull
+    private boolean requestModeration = true;
 
     @NotBlank
     @Size(min = 3, max = 120)
