@@ -8,9 +8,7 @@ import java.time.LocalDateTime;
 
 @Getter
 @Setter
-@ToString
 @Builder
-@EqualsAndHashCode
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -37,4 +35,14 @@ public class Request {
     @Enumerated(EnumType.STRING)
     private Status status;
 
+    @Override
+    public String toString() {
+        return "Request{" +
+                "id=" + id +
+                ", created=" + created +
+                ", event=" + event +
+                ", requester=" + requester +
+                ", status=" + status +
+                '}';
+    }
 }

@@ -6,8 +6,6 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@EqualsAndHashCode
-@ToString
 @Builder
 @Entity
 @AllArgsConstructor
@@ -22,4 +20,12 @@ public class Categories {
 
     @Column(name = "cat_name")
     private String name;
+
+    @Override
+    public String toString() {
+        return "Categories{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                '}';
+    }
 }

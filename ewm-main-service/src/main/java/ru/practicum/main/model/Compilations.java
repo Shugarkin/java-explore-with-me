@@ -7,9 +7,7 @@ import java.util.Set;
 
 @Getter
 @Setter
-@ToString
 @Builder
-@EqualsAndHashCode
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -32,4 +30,14 @@ public class Compilations {
             joinColumns = @JoinColumn(name = "compilations_id"),
             inverseJoinColumns = @JoinColumn(name = "events_id"))
     private Set<Event> events;
+
+    @Override
+    public String toString() {
+        return "Compilations{" +
+                "id=" + id +
+                ", pinned=" + pinned +
+                ", title='" + title + '\'' +
+                ", events=" + events +
+                '}';
+    }
 }

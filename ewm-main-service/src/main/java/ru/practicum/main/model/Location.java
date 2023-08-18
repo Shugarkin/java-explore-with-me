@@ -7,9 +7,7 @@ import javax.persistence.*;
 
 @Getter
 @Setter
-@ToString
 @Builder
-@EqualsAndHashCode
 @Entity
 @AllArgsConstructor
 @NoArgsConstructor
@@ -26,4 +24,13 @@ public class Location {
 
     @Column(name = "lon")
     private String lon;
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "id=" + id +
+                ", lat='" + lat + '\'' +
+                ", lon='" + lon + '\'' +
+                '}';
+    }
 }
