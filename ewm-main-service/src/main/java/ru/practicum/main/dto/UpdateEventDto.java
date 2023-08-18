@@ -1,19 +1,19 @@
-package ru.practicum.dto;
+package ru.practicum.main.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import ru.practicum.dto.Marker;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
-
 
 @Data
 @Builder
 @EqualsAndHashCode
 @AllArgsConstructor
 @NoArgsConstructor
-public class AdminEventReceivedDto {
+public class UpdateEventDto {
 
     @Size(min = 20, max = 2000, groups = Marker.Update.class)
     private String annotation;
@@ -38,5 +38,5 @@ public class AdminEventReceivedDto {
     @Size(min = 3, max = 120, groups = Marker.Update.class)
     private String title;
 
-    private AdminUpdateEventStatus stateAction;
+    private UpdateEventStatus stateAction;
 }

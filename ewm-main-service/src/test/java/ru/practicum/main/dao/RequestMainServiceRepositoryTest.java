@@ -5,7 +5,7 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import ru.practicum.dto.State;
+import ru.practicum.main.dto.State;
 import ru.practicum.dto.Status;
 import ru.practicum.main.model.*;
 

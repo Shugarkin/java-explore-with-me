@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.practicum.dto.CompilationsDto;
+import ru.practicum.main.dto.CompilationsDto;
 import ru.practicum.main.model.CompilationShort;
 import ru.practicum.main.service.PublicCompilationService;
 

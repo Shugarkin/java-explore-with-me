@@ -1,7 +1,7 @@
 package ru.practicum.main.service;
 
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.dto.State;
+import ru.practicum.main.dto.State;
 import ru.practicum.main.model.AdminEvent;
 import ru.practicum.main.model.Event;
 

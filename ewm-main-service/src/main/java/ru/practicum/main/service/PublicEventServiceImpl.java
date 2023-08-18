@@ -8,7 +8,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.StatDto;
-import ru.practicum.dto.State;
+import ru.practicum.main.dto.State;
 import ru.practicum.main.dao.EventMainServiceRepository;
 import ru.practicum.main.exception.NotFoundException;
 import ru.practicum.main.mapper.EventMapper;

@@ -4,7 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.dto.CategoriesDto;
+import ru.practicum.main.dto.CategoriesDto;
 import ru.practicum.dto.Marker;
 import ru.practicum.main.mapper.CategoriesMapper;
 import ru.practicum.main.model.Categories;

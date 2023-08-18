@@ -1,7 +1,7 @@
 package ru.practicum.main.model;
 
 import lombok.*;
-import ru.practicum.dto.UpdateEventStatus;
+import ru.practicum.main.dto.UpdateEventStatus;
 
 import java.time.LocalDateTime;
 

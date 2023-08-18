@@ -2,10 +2,9 @@ package ru.practicum.main.controller;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
-import org.springframework.lang.Nullable;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.dto.RequestDto;
+import ru.practicum.main.dto.RequestDto;
 import ru.practicum.main.mapper.RequestMapper;
 import ru.practicum.main.model.Request;
 import ru.practicum.main.service.RequestService;

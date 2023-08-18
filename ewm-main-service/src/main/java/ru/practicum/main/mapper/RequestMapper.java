@@ -1,9 +1,9 @@
 package ru.practicum.main.mapper;
 
 import lombok.experimental.UtilityClass;
-import ru.practicum.dto.RequestDto;
-import ru.practicum.dto.RequestShortDto;
-import ru.practicum.dto.RequestShortUpdateDto;
+import ru.practicum.main.dto.RequestDto;
+import ru.practicum.main.dto.RequestShortDto;
+import ru.practicum.main.dto.RequestShortUpdateDto;
 import ru.practicum.main.model.Request;
 import ru.practicum.main.model.RequestShort;
 import ru.practicum.main.model.RequestShortUpdate;

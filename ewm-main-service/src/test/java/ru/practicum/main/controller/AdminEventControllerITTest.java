@@ -7,22 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.practicum.dto.AdminEventReceivedDto;
-import ru.practicum.dto.AdminUpdateEventStatus;
-import ru.practicum.dto.State;
-import ru.practicum.main.model.Categories;
-import ru.practicum.main.model.Location;
-import ru.practicum.main.model.User;
 import ru.practicum.main.service.AdminEventService;
 
-import java.nio.charset.StandardCharsets;
-import java.time.LocalDateTime;
-
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
 import static org.mockito.Mockito.verify;
-import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 

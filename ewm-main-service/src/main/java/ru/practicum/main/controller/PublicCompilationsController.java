@@ -3,7 +3,7 @@ package ru.practicum.main.controller;
 import lombok.RequiredArgsConstructor;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.dto.CompilationsDto;
+import ru.practicum.main.dto.CompilationsDto;
 import ru.practicum.main.mapper.CompilationMapper;
 import ru.practicum.main.model.CompilationShort;
 import ru.practicum.main.service.PublicCompilationService;

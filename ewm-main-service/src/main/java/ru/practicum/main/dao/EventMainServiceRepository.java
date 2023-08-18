@@ -3,7 +3,7 @@ package ru.practicum.main.dao;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
-import ru.practicum.dto.State;
+import ru.practicum.main.dto.State;
 import ru.practicum.main.model.Event;
 
 import java.time.LocalDateTime;

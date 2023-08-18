@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.practicum.dto.CategoriesDto;
+import ru.practicum.main.dto.CategoriesDto;
 import ru.practicum.main.mapper.CategoriesMapper;
 import ru.practicum.main.model.Categories;
 import ru.practicum.main.service.AdminCategoriesService;

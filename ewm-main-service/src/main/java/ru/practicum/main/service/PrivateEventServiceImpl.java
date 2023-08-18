@@ -9,10 +9,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.dto.*;
 import ru.practicum.main.dao.*;
+import ru.practicum.main.dto.State;
+import ru.practicum.main.dto.UpdateEventStatus;
 import ru.practicum.main.exception.BadRequestException;
 import ru.practicum.main.exception.ConflictException;
 import ru.practicum.main.exception.NotFoundException;
-import ru.practicum.main.mapper.EventMapper;
 import ru.practicum.main.model.*;
 
 import java.time.LocalDateTime;

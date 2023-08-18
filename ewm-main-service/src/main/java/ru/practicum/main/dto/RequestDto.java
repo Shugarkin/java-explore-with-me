@@ -1,6 +1,7 @@
-package ru.practicum.dto;
+package ru.practicum.main.dto;
 
 import lombok.*;
+import ru.practicum.dto.Status;
 
 import java.time.LocalDateTime;
 

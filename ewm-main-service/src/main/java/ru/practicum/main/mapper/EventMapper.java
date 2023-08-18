@@ -1,7 +1,7 @@
 package ru.practicum.main.mapper;
 
 import lombok.experimental.UtilityClass;
-import ru.practicum.dto.*;
+import ru.practicum.main.dto.*;
 import ru.practicum.main.model.*;
 
 import java.time.format.DateTimeFormatter;

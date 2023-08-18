@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.practicum.dto.CategoriesDto;
+import ru.practicum.main.dto.CategoriesDto;
 import ru.practicum.main.mapper.CategoriesMapper;
 import ru.practicum.main.model.Categories;
 import ru.practicum.main.service.AdminCategoriesService;

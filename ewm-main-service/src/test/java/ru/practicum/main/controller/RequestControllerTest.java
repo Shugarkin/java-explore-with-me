@@ -1,24 +1,17 @@
 package ru.practicum.main.controller;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.practicum.dto.RequestDto;
-import ru.practicum.dto.State;
+import ru.practicum.main.dto.State;
 import ru.practicum.dto.Status;
-import ru.practicum.main.mapper.RequestMapper;
 import ru.practicum.main.model.*;
 import ru.practicum.main.service.RequestService;
 
 import java.time.LocalDateTime;
-import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.ArgumentMatchers.anyLong;
-import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class RequestControllerTest {

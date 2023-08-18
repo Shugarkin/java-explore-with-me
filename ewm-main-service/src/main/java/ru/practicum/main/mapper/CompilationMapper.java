@@ -1,8 +1,8 @@
 package ru.practicum.main.mapper;
 
 import lombok.experimental.UtilityClass;
-import ru.practicum.dto.CompilationsDto;
-import ru.practicum.dto.NewCompilationDto;
+import ru.practicum.main.dto.CompilationsDto;
+import ru.practicum.main.dto.NewCompilationDto;
 import ru.practicum.main.model.*;
 
 import java.util.List;

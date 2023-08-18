@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.test.web.servlet.MockMvc;
-import ru.practicum.dto.State;
+import ru.practicum.main.dto.State;
 import ru.practicum.dto.Status;
 import ru.practicum.main.mapper.RequestMapper;
 import ru.practicum.main.model.*;

@@ -7,7 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import ru.practicum.dto.State;
+import ru.practicum.main.dto.State;
 import ru.practicum.main.model.Categories;
 import ru.practicum.main.model.Event;
 import ru.practicum.main.model.Location;

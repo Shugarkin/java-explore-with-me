@@ -5,7 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.practicum.dto.State;
+import ru.practicum.main.dto.State;
 import ru.practicum.main.dao.EventMainServiceRepository;
 import ru.practicum.main.dao.RequestMainServiceRepository;
 import ru.practicum.main.dao.UserMainServiceRepository;

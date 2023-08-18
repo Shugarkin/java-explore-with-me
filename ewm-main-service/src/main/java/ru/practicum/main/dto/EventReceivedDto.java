@@ -1,7 +1,8 @@
-package ru.practicum.dto;
+package ru.practicum.main.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
+import ru.practicum.dto.Marker;
 
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;

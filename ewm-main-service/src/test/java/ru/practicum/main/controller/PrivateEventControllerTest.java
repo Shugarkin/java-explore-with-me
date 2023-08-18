@@ -5,8 +5,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import ru.practicum.dto.*;
-import ru.practicum.main.mapper.EventMapper;
+import ru.practicum.main.dto.*;
 import ru.practicum.main.model.*;
 import ru.practicum.main.service.PrivateEventService;
 
