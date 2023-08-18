@@ -8,7 +8,6 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.client.StatClient;
-import ru.practicum.dto.StatDto;
 import ru.practicum.dto.StatUniqueOrNotDto;
 import ru.practicum.main.dao.RequestMainServiceRepository;
 import ru.practicum.main.exception.StatException;

@@ -15,7 +15,6 @@ import ru.practicum.main.model.CompilationShort;
 import ru.practicum.main.model.Compilations;
 import ru.practicum.main.model.EventShort;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;

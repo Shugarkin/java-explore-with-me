@@ -2,7 +2,6 @@ package ru.practicum.main.dto;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import ru.practicum.dto.Marker;
 
 import javax.validation.Valid;
 import javax.validation.constraints.*;
