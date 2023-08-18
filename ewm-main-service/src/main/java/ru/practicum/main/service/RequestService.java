@@ -5,9 +5,9 @@ import ru.practicum.main.model.Request;
 import java.util.List;
 
 public interface RequestService {
-    Request createRequest(Long userId, Long eventId);
+    Request createRequest(long userId, long eventId);
 
-    List<Request> getRequests(Long userId);
+    List<Request> getRequests(long userId);
 
-    Request canselRequest(Long userId, Long requestId);
+    Request canselRequest(long userId, long requestId);
 }

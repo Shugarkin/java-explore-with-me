@@ -22,19 +22,19 @@ public class RequestController {
 
     @PostMapping("/{userId}/requests")
     @ResponseStatus(HttpStatus.CREATED)
-    public RequestDto createRequest(@PathVariable @Nullable Long userId, @RequestParam @Nullable Long eventId) {
+    public RequestDto createRequest(@PathVariable long userId, @RequestParam long eventId) {
         Request request = service.createRequest(userId, eventId);
         return RequestMapper.toRequestDto(request);
     }
 
     @GetMapping("/{userId}/requests")
-    public List<RequestDto> getRequests(@PathVariable @Nullable Long userId) {
+    public List<RequestDto> getRequests(@PathVariable long userId) {
         List<Request> requests = service.getRequests(userId);
         return RequestMapper.toListRequestDto(requests);
     }
 
     @PatchMapping("/{userId}/requests/{requestId}/cancel")
-    public RequestDto canselRequest(@PathVariable @Nullable Long userId, @PathVariable @Nullable Long requestId) {
+    public RequestDto canselRequest(@PathVariable long userId, @PathVariable long requestId) {
         Request request = service.canselRequest(userId, requestId);
         return RequestMapper.toRequestDto(request);
     }

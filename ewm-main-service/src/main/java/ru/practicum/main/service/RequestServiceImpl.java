@@ -34,10 +34,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Transactional
     @Override
-    public Request createRequest(Long userId, Long eventId) {
-        if (userId == null || eventId == null) {
-            throw new BadRequestException("Неверный запрос");
-        }
+    public Request createRequest(long userId, long eventId) {
 
         User user = userMainServiceRepository.findById(userId).orElseThrow(() -> new NotFoundException("Вы не зарегестрированный пользователь"));
 
@@ -80,10 +77,7 @@ public class RequestServiceImpl implements RequestService {
 
 
     @Override
-    public List<Request> getRequests(Long userId) {
-        if (userId == null) {
-            throw new BadRequestException("Неверный запрос");
-        }
+    public List<Request> getRequests(long userId) {
         List<Request> byRequesterId = repository.findAllByRequesterId(userId);
         log.info("get request");
         return byRequesterId;
@@ -91,10 +85,7 @@ public class RequestServiceImpl implements RequestService {
 
     @Transactional
     @Override
-    public Request canselRequest(Long userId, Long requestId) {
-        if (userId == null || requestId == null) {
-            throw new BadRequestException("Неверный запрос");
-        }
+    public Request canselRequest(long userId, long requestId) {
 
         boolean answer = userMainServiceRepository.existsById(userId);
         if (!answer) {
