@@ -4,6 +4,7 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
 import ru.practicum.dto.Marker;
 
+import javax.validation.Valid;
 import javax.validation.constraints.*;
 import java.time.LocalDateTime;
 
@@ -27,8 +28,10 @@ public class EventReceivedDto {
 
     @Future
     @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss", shape = JsonFormat.Shape.STRING)
+    @NotNull
     private LocalDateTime eventDate;
 
+    @Valid
     private LocationDto location;
 
     private boolean paid;
