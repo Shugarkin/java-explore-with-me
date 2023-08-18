@@ -16,9 +16,9 @@ public class LocationDto {
 
     @NotBlank(groups = Marker.Create.class)
     @NotNull(groups = Marker.Create.class)
-    private String lat;
+    private double lat;
 
     @NotBlank(groups = Marker.Create.class)
     @NotNull(groups = Marker.Create.class)
-    private String lon;
+    private double lon;
 }
