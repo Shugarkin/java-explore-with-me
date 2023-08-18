@@ -69,7 +69,7 @@ public class AdminCompilationsServiceImpl implements AdminCompilationsService {
             compilations.setPinned(newCompilation.getPinned());
         }
 
-        if (newCompilation.getTitle() != null) {
+        if (newCompilation.getTitle() != null && !newCompilation.getTitle().isBlank()) {
             compilations.setTitle(newCompilation.getTitle());
         }
 

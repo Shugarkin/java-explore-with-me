@@ -79,13 +79,13 @@ public class AdminEventServiceImpl implements AdminEventService {
         if (eventNew.getLocation() != null) {
             event.setLocation(getLocation(eventNew.getLocation()).orElse(saveLocation(eventNew.getLocation())));
         }
-        if (eventNew.getAnnotation() != null) {
+        if (eventNew.getAnnotation() != null && !eventNew.getTitle().isBlank()) {
             event.setAnnotation(eventNew.getAnnotation());
         }
-        if (eventNew.getDescription() != null) {
+        if (eventNew.getDescription() != null && !eventNew.getDescription().isBlank()) {
             event.setDescription(eventNew.getDescription());
         }
-        if (eventNew.getTitle() != null) {
+        if (eventNew.getTitle() != null && !eventNew.getTitle().isBlank()) {
             event.setTitle(eventNew.getTitle());
         }
         if (eventNew.getCategory() != null) {
