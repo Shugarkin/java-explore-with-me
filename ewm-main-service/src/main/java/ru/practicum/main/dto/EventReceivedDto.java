@@ -31,10 +31,12 @@ public class EventReceivedDto {
     private LocalDateTime eventDate;
 
     @Valid
+    @NotNull
     private LocationDto location;
 
     private boolean paid;
 
+    @PositiveOrZero
     private int participantLimit = 0;
 
     @NotNull

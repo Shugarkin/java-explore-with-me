@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.main.dao.CompilationMainServiceRepository;
 import ru.practicum.main.dao.EventMainServiceRepository;
-import ru.practicum.main.exception.BadRequestException;
 import ru.practicum.main.exception.NotFoundException;
 import ru.practicum.main.mapper.CompilationMapper;
 import ru.practicum.main.mapper.EventMapper;
@@ -31,11 +30,13 @@ public class AdminCompilationsServiceImpl implements AdminCompilationsService {
 
     @Override
     public CompilationShort createCompilation(NewCompilation newCompilation) {
-        if (newCompilation.getEvents() == null) {
-            throw new BadRequestException("ВЫ не добавили ивенты для создания подборки");
-        }
+        List<Event> events;
 
-        List<Event> events = eventMainServiceRepository.findAllById(newCompilation.getEvents());
+        if (newCompilation.getEvents() != null) {
+            events = eventMainServiceRepository.findAllById(newCompilation.getEvents());
+        } else {
+            events = List.of();
+        }
 
         if (newCompilation.getPinned() == null) {
             newCompilation.setPinned(false);
