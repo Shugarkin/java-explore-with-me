@@ -9,7 +9,7 @@ public interface PrivateEventService {
 
     List<Event> getEventByUserId(long userId, int from, int size);
 
-    Event getEventByUserIdAndEventId(long userId, long eventId);
+    EventFullWithComment getEventByUserIdAndEventId(long userId, long eventId);
 
     Event patchEvent(long userId, long eventId, UpdateEvent updateEvent);
 

@@ -145,4 +145,58 @@ public class EventMapper {
     public static List<EventShort> toListEventShort(List<Event> list) {
         return list.stream().map(EventMapper::toEventShort).collect(Collectors.toList());
     }
+
+    public EventCommentDto  toEventComment(Event event) {
+        return EventCommentDto.builder()
+                .id(event.getId())
+                .title(event.getTitle())
+                .build();
+    }
+
+    public EventFullWithComment toEventWithComment(Event event, List<Comment> commentList) {
+        EventFullWithComment build = EventFullWithComment.builder()
+                .createdOn(event.getCreatedOn().format(FORMATTER))
+                .initiator(event.getInitiator())
+                .confirmedRequests(event.getConfirmedRequests())
+                .views(event.getView())
+                .state(event.getState())
+                .annotation(event.getAnnotation())
+                .participantLimit(event.getParticipantLimit())
+                .requestModeration(event.getRequestModeration())
+                .paid(event.getPaid())
+                .title(event.getTitle())
+                .id(event.getId())
+                .category(event.getCategory())
+                .description(event.getDescription())
+                .eventDate(event.getEventDate().format(FORMATTER))
+                .location(event.getLocation())
+                .comments(commentList)
+                .build();
+
+        if (event.getPublishedOn() != null) {
+            build.setPublishedOn(event.getPublishedOn().format(FORMATTER));
+        }
+        return build;
+    }
+
+    public EventFullWithCommentDto toEventWIthCommentDto(EventFullWithComment event) {
+        return EventFullWithCommentDto.builder()
+                .createdOn(event.getCreatedOn())
+                .initiator(UserMapper.toUserDto(event.getInitiator()))
+                .confirmedRequests(event.getConfirmedRequests())
+                .views(event.getViews())
+                .state(event.getState())
+                .annotation(event.getAnnotation())
+                .participantLimit(event.getParticipantLimit())
+                .requestModeration(event.getRequestModeration())
+                .paid(event.getPaid())
+                .title(event.getTitle())
+                .id(event.getId())
+                .category(CategoriesMapper.toCategoriesDto(event.getCategory()))
+                .description(event.getDescription())
+                .eventDate(event.getEventDate())
+                .location(LocationMapper.toLocationDto(event.getLocation()))
+                .comments(CommentMapper.toListCommentDto(event.getComments()))
+                .build();
+    }
 }

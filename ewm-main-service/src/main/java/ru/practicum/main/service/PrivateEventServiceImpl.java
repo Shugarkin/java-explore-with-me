@@ -14,6 +14,7 @@ import ru.practicum.main.dto.UpdateEventStatus;
 import ru.practicum.main.exception.BadRequestException;
 import ru.practicum.main.exception.ConflictException;
 import ru.practicum.main.exception.NotFoundException;
+import ru.practicum.main.mapper.EventMapper;
 import ru.practicum.main.model.*;
 
 import java.time.LocalDateTime;
@@ -35,6 +36,8 @@ public class PrivateEventServiceImpl implements PrivateEventService {
     private final RequestMainServiceRepository requestMainServiceRepository;
 
     private final LocationMainServiceRepository locationMainServiceRepository;
+
+    private final CommentMainServiceRepository commentMainServiceRepository;
 
     private final StatService statService;
 
@@ -75,17 +78,20 @@ public class PrivateEventServiceImpl implements PrivateEventService {
     }
 
     @Override
-    public Event getEventByUserIdAndEventId(long userId, long eventId) {
+    public EventFullWithComment getEventByUserIdAndEventId(long userId, long eventId) {
         Event event = repository.findByIdAndInitiatorId(eventId, userId).orElseThrow(() -> new NotFoundException("Ивент не найден"));
 
         Map<Long, Long> confirmedRequest = statService.toConfirmedRequest(List.of(event));
 
         Map<Long, Long> mapView = statService.toView(List.of(event));
 
+        Pageable pageable = PageRequest.of(0, 5, Sort.by("create_time").ascending());
+        List<Comment> commentList = commentMainServiceRepository.findAllByEventId(eventId, pageable);
+
         event.setView(mapView.getOrDefault(eventId, 0L));
         event.setConfirmedRequests(confirmedRequest.getOrDefault(eventId, 0L));
         log.info("get event by userID and eventID");
-        return event;
+        return EventMapper.toEventWithComment(event, commentList);
     }
 
     @Transactional

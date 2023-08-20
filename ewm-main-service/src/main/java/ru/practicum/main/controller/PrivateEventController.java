@@ -9,6 +9,7 @@ import ru.practicum.main.dto.*;
 import ru.practicum.main.mapper.EventMapper;
 import ru.practicum.main.mapper.RequestMapper;
 import ru.practicum.main.model.Event;
+import ru.practicum.main.model.EventFullWithComment;
 import ru.practicum.main.model.Request;
 import ru.practicum.main.model.RequestShortUpdate;
 import ru.practicum.main.service.PrivateEventService;
@@ -41,9 +42,9 @@ public class PrivateEventController {
     }
 
     @GetMapping("/{userId}/events/{eventId}")
-    public EventFullDto getEventByUserIdAndEventId(@PathVariable long userId, @PathVariable long eventId) {
-        Event event = service.getEventByUserIdAndEventId(userId, eventId);
-        return EventMapper.toEventFullDto(event);
+    public EventFullWithCommentDto getEventByUserIdAndEventId(@PathVariable long userId, @PathVariable long eventId) {
+        EventFullWithComment event = service.getEventByUserIdAndEventId(userId, eventId);
+        return EventMapper.toEventWIthCommentDto(event);
     }
 
     @PatchMapping("/{userId}/events/{eventId}")
