@@ -13,5 +13,5 @@ public class StatUniqueOrNotDto {
 
     private String uri;
 
-    private long hits;
+    private Long hits;
 }

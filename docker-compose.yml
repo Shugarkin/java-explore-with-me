@@ -5,8 +5,9 @@ services:
     build: ./ewm-stat-service/stat_service
 
     image:
-      stat_server:latest
-    container_name: stat_server
+      stats-server
+    container_name:
+      stats-server
 
     ports:
       - "9090:9090"
@@ -39,6 +40,7 @@ services:
 
     ports:
      - "8080:8080"
+     - "8081:8081"
 
     depends_on:
      - ewm-db
