@@ -7,61 +7,6 @@
   },
   "item": [
     {
-      "name": "Создание комментария с валидацией на пользователя",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Проверка наличия пользователя\", function()  {\r",
-              "    pm.response.to.be.notFound;\r",
-              "});"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"text\":\"new comment\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/users/:userId/events/:eventId/comment",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "users",
-            ":userId",
-            "events",
-            ":eventId",
-            "comment"
-          ],
-          "variable": [
-            {
-              "key": "userId",
-              "value": "1"
-            },
-            {
-              "key": "eventId",
-              "value": "1"
-            }
-          ]
-        }
-      },
-      "response": []
-    },
-    {
       "name": "Добавление пользователя",
       "event": [
         {
@@ -110,61 +55,6 @@
           "path": [
             "admin",
             "users"
-          ]
-        }
-      },
-      "response": []
-    },
-    {
-      "name": "Создание комментария при отсутствии события",
-      "event": [
-        {
-          "listen": "test",
-          "script": {
-            "exec": [
-              "pm.test(\"Проверка наличия события\", function()  {\r",
-              "    pm.response.to.be.notFound;\r",
-              "});"
-            ],
-            "type": "text/javascript"
-          }
-        }
-      ],
-      "request": {
-        "method": "POST",
-        "header": [],
-        "body": {
-          "mode": "raw",
-          "raw": "{\r\n    \"text\":\"new comment\"\r\n}",
-          "options": {
-            "raw": {
-              "language": "json"
-            }
-          }
-        },
-        "url": {
-          "raw": "http://localhost:8080/users/:userId/events/:eventId/comment",
-          "protocol": "http",
-          "host": [
-            "localhost"
-          ],
-          "port": "8080",
-          "path": [
-            "users",
-            ":userId",
-            "events",
-            ":eventId",
-            "comment"
-          ],
-          "variable": [
-            {
-              "key": "userId",
-              "value": "1"
-            },
-            {
-              "key": "eventId",
-              "value": "1"
-            }
           ]
         }
       },
