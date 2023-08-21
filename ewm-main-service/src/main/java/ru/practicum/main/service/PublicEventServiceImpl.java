@@ -78,7 +78,7 @@ public class PublicEventServiceImpl implements PublicEventService {
         Map<Long, Long> view = statService.toView(List.of(event));
         Map<Long, Long> confirmedRequest = statService.toConfirmedRequest(List.of(event));
 
-        Pageable pageable = PageRequest.of(0, 5, Sort.by("create_time").ascending());
+        Pageable pageable = PageRequest.of(0, 5, Sort.by("createTime").ascending());
         List<Comment> commentList = commentMainServiceRepository.findAllByEventId(id, pageable);
         statService.addHits(request);
 

@@ -95,7 +95,7 @@ public class CommentServiceImpl implements CommentService {
         if (!answer) {
             throw new NotFoundException("Данного события не существует");
         }
-        Pageable pageable = PageRequest.of(from > 0 ? from / size : 0, size, Sort.by("create_time").ascending());
+        Pageable pageable = PageRequest.of(from > 0 ? from / size : 0, size, Sort.by("createTime").ascending());
         List<Comment> list = repository.findAllByEventId(eventId, pageable);
         log.info("get list comment");
         return list;

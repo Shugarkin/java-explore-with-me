@@ -85,7 +85,7 @@ public class PrivateEventServiceImpl implements PrivateEventService {
 
         Map<Long, Long> mapView = statService.toView(List.of(event));
 
-        Pageable pageable = PageRequest.of(0, 5, Sort.by("create_time").ascending());
+        Pageable pageable = PageRequest.of(0, 5, Sort.by("createTime").ascending());
         List<Comment> commentList = commentMainServiceRepository.findAllByEventId(eventId, pageable);
 
         event.setView(mapView.getOrDefault(eventId, 0L));

@@ -196,7 +196,7 @@ public class EventMapper {
                 .description(event.getDescription())
                 .eventDate(event.getEventDate())
                 .location(LocationMapper.toLocationDto(event.getLocation()))
-                .comments(CommentMapper.toListCommentDto(event.getComments()))
+                .comments(CommentMapper.toListCommentShortDto(event.getComments()))
                 .build();
     }
 }

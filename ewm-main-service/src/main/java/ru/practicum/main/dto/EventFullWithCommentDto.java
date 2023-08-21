@@ -44,5 +44,5 @@ public class EventFullWithCommentDto {
 
     private String publishedOn;
 
-    private List<CommentDto> comments;
+    private List<CommentShortDto> comments;
 }

@@ -5,6 +5,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 import ru.practicum.main.dto.CommentDto;
+import ru.practicum.main.dto.CommentShortDto;
 import ru.practicum.main.dto.NewCommentDto;
 import ru.practicum.main.mapper.CommentMapper;
 import ru.practicum.main.model.Comment;
@@ -47,10 +48,10 @@ public class PrivateCommentController {
     }
 
     @GetMapping("/events/{eventId}/comment")
-    public List<CommentDto> getCommentsByEvent(@PathVariable long eventId,
-                                               @RequestParam(defaultValue = "0") int from,
-                                               @RequestParam(defaultValue = "10") int size) {
+    public List<CommentShortDto> getCommentsByEvent(@PathVariable long eventId,
+                                                    @RequestParam(defaultValue = "0") int from,
+                                                    @RequestParam(defaultValue = "10") int size) {
         List<Comment> list = service.getCommentsByEvent(eventId, from, size);
-        return CommentMapper.toListCommentDto(list);
+        return CommentMapper.toListCommentShortDto(list);
     }
 }
