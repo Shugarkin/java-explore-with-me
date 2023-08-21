@@ -3,8 +3,6 @@ package ru.practicum.main.dto;
 import lombok.*;
 import ru.practicum.main.model.EventCommentDto;
 
-import java.time.LocalDateTime;
-
 @Getter
 @Setter
 @Builder
