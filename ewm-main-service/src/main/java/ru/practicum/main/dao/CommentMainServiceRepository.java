@@ -17,4 +17,11 @@ public interface CommentMainServiceRepository extends JpaRepository<Comment, Lon
             "where c.event.id in ?1 " +
             "group by c.event.id")
     List<CommentCount> findAllCommentCount(List<Long> listEventId);
+
+    @Query("select c " +
+            "from Comment as c " +
+            "where lower(c.text) like concat('%', lower(?1), '%') ")
+    List<Comment> findAllByText(String text);
+
+    List<Comment> findAllByAuthorId(long userId);
 }

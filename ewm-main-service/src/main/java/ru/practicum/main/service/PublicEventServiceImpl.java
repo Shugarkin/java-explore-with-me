@@ -7,7 +7,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import ru.practicum.main.dao.CommentMainServiceRepository;
 import ru.practicum.main.dto.State;
 import ru.practicum.main.dao.EventMainServiceRepository;
 import ru.practicum.main.exception.NotFoundException;
@@ -32,7 +31,7 @@ public class PublicEventServiceImpl implements PublicEventService {
 
     private final StatService statService;
 
-    private final CommentService commentService;
+    private final PrivateCommentService privateCommentService;
 
 
     @Override
@@ -51,7 +50,7 @@ public class PublicEventServiceImpl implements PublicEventService {
 
         Map<Long, Long> view = statService.toView(list);
         Map<Long, Long> confirmedRequest = statService.toConfirmedRequest(list);
-        Map<Long, Long> commentCount = commentService.getCommentCount(list);
+        Map<Long, Long> commentCount = privateCommentService.getCommentCount(list);
         List<EventShort> listShort = new ArrayList<>();
 
         list.forEach(event -> listShort.add(EventMapper.toEventShort(event, view.getOrDefault(event.getId(), 0L),
