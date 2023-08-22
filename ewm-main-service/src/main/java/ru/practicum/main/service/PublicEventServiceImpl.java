@@ -36,6 +36,8 @@ public class PublicEventServiceImpl implements PublicEventService {
 
     private final StatService statService;
 
+    private final CommentService commentService;
+
 
     @Override
     public List<EventShort> getPublicEvents(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart,
@@ -53,11 +55,11 @@ public class PublicEventServiceImpl implements PublicEventService {
 
         Map<Long, Long> view = statService.toView(list);
         Map<Long, Long> confirmedRequest = statService.toConfirmedRequest(list);
-
+        Map<Long, Long> commentCount = commentService.getCommentCount(list);
         List<EventShort> listShort = new ArrayList<>();
 
         list.forEach(event -> listShort.add(EventMapper.toEventShort(event, view.getOrDefault(event.getId(), 0L),
-                confirmedRequest.getOrDefault(event.getId(), 0L))));
+                confirmedRequest.getOrDefault(event.getId(), 0L), commentCount.getOrDefault(event.getId(), 0L))));
 
         if (sort.equals("VIEWS")) {
             listShort.sort(Comparator.comparingLong(EventShort::getViews));

@@ -14,11 +14,15 @@ import ru.practicum.main.dto.State;
 import ru.practicum.main.exception.ConflictException;
 import ru.practicum.main.exception.NotFoundException;
 import ru.practicum.main.model.Comment;
+import ru.practicum.main.model.CommentCount;
 import ru.practicum.main.model.Event;
 import ru.practicum.main.model.User;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 @Transactional(readOnly = true)
@@ -99,5 +103,13 @@ public class CommentServiceImpl implements CommentService {
         List<Comment> list = repository.findAllByEventId(eventId, pageable);
         log.info("get list comment");
         return list;
+    }
+
+    @Override
+    public Map<Long, Long> getCommentCount(Collection<Event> list) {
+        List<Long> listEventId = list.stream().map(a -> a.getId()).collect(Collectors.toList());
+        List<CommentCount> countList = repository.findAllCommentCount(listEventId);
+        Map<Long, Long> map = countList.stream().collect(Collectors.toMap(CommentCount::getEventId, CommentCount::getCommentCount));
+        return map;
     }
 }

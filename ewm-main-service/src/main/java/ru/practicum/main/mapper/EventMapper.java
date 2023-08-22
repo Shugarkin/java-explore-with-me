@@ -96,7 +96,7 @@ public class EventMapper {
         return event;
     }
 
-    public EventShort toEventShort(Event event, Long view, Long confirmedRequests) {
+    public EventShort toEventShort(Event event, Long view, Long confirmedRequests, Long commentCount) {
         return EventShort.builder()
                 .id(event.getId())
                 .eventDate(event.getEventDate())
@@ -107,6 +107,7 @@ public class EventMapper {
                 .initiator(event.getInitiator())
                 .paid(event.getPaid())
                 .title(event.getTitle())
+                .commentCount(commentCount)
                 .build();
     }
 
@@ -121,6 +122,7 @@ public class EventMapper {
                 .confirmedRequests(eventShort.getConfirmedRequests())
                 .id(eventShort.getId())
                 .paid(eventShort.getPaid())
+                .commentCount(eventShort.getCommentCount())
                 .build();
     }
 

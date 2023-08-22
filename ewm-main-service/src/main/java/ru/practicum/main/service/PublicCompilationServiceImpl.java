@@ -27,6 +27,8 @@ public class PublicCompilationServiceImpl implements PublicCompilationService {
 
     private final CompilationMainServiceRepository repository;
 
+    private final CommentService commentService;
+
     private final StatService statService;
 
     @Override
@@ -48,11 +50,12 @@ public class PublicCompilationServiceImpl implements PublicCompilationService {
 
     private CompilationShort toCompilationShort(Compilations compilations) {
         Map<Long, Long> view = statService.toView(compilations.getEvents());
-
         Map<Long, Long> confirmedRequest = statService.toConfirmedRequest(compilations.getEvents());
+        Map<Long, Long> commentCount = commentService.getCommentCount(compilations.getEvents());
 
         List<EventShort> listEventShort = compilations.getEvents().stream().map(event ->
-                        EventMapper.toEventShort(event, view.getOrDefault(event.getId(), 0L), confirmedRequest.getOrDefault(event.getId(), 0L)))
+                        EventMapper.toEventShort(event, view.getOrDefault(event.getId(), 0L), confirmedRequest.getOrDefault(event.getId(), 0L),
+                                commentCount.getOrDefault(event.getId(), 0L)))
                 .collect(Collectors.toList());
 
         return  CompilationMapper.toCompilationShort(compilations, listEventShort);

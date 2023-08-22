@@ -1,8 +1,11 @@
 package ru.practicum.main.service;
 
 import ru.practicum.main.model.Comment;
+import ru.practicum.main.model.Event;
 
+import java.util.Collection;
 import java.util.List;
+import java.util.Map;
 
 public interface CommentService {
 
@@ -15,4 +18,6 @@ public interface CommentService {
     Comment getComment(long comId);
 
     List<Comment> getCommentsByEvent(long eventId, int from, int size);
+
+    Map<Long, Long> getCommentCount(Collection<Event> list);
 }
