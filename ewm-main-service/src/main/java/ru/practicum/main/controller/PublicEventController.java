@@ -4,10 +4,10 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
-import ru.practicum.main.dto.EventFullWithCommentDto;
+import ru.practicum.main.dto.EventFullDto;
 import ru.practicum.main.dto.EventShortDto;
 import ru.practicum.main.mapper.EventMapper;
-import ru.practicum.main.model.EventFullWithComment;
+import ru.practicum.main.model.Event;
 import ru.practicum.main.model.EventShort;
 import ru.practicum.main.service.PublicEventService;
 
@@ -43,8 +43,8 @@ public class PublicEventController {
 
 
     @GetMapping("/{id}")
-    public EventFullWithCommentDto getPublicEvent(@PathVariable long id, HttpServletRequest request) {
-        EventFullWithComment event = service.getPublicEvent(id, request);
-        return EventMapper.toEventWIthCommentDto(event);
+    public EventFullDto getPublicEvent(@PathVariable long id, HttpServletRequest request) {
+        Event event = service.getPublicEvent(id, request);
+        return EventMapper.toEventFullDto(event);
     }
 }

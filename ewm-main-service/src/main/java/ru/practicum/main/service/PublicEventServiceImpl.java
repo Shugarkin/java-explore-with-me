@@ -12,9 +12,7 @@ import ru.practicum.main.dto.State;
 import ru.practicum.main.dao.EventMainServiceRepository;
 import ru.practicum.main.exception.NotFoundException;
 import ru.practicum.main.mapper.EventMapper;
-import ru.practicum.main.model.Comment;
 import ru.practicum.main.model.Event;
-import ru.practicum.main.model.EventFullWithComment;
 import ru.practicum.main.model.EventShort;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,8 +29,6 @@ import java.util.Map;
 public class PublicEventServiceImpl implements PublicEventService {
 
     private final EventMainServiceRepository repository;
-
-    private final CommentMainServiceRepository commentMainServiceRepository;
 
     private final StatService statService;
 
@@ -70,7 +66,7 @@ public class PublicEventServiceImpl implements PublicEventService {
     }
 
     @Override
-    public EventFullWithComment getPublicEvent(long id, HttpServletRequest request) {
+    public Event getPublicEvent(long id, HttpServletRequest request) {
         Event event = repository.findById(id).orElseThrow(() -> new NotFoundException("Событие с id " + id + " не найдено"));
 
         if (!event.getState().equals(State.PUBLISHED)) {
@@ -80,14 +76,12 @@ public class PublicEventServiceImpl implements PublicEventService {
         Map<Long, Long> view = statService.toView(List.of(event));
         Map<Long, Long> confirmedRequest = statService.toConfirmedRequest(List.of(event));
 
-        Pageable pageable = PageRequest.of(0, 5, Sort.by("createTime").ascending());
-        List<Comment> commentList = commentMainServiceRepository.findAllByEventId(id, pageable);
         statService.addHits(request);
 
         event.setView(view.getOrDefault(event.getId(), 0L));
         event.setConfirmedRequests(confirmedRequest.getOrDefault(event.getId(), 0L));
 
         log.info("get public event");
-        return EventMapper.toEventWithComment(event, commentList);
+        return event;
     }
 }
