@@ -9,8 +9,10 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ru.practicum.main.dao.CommentMainServiceRepository;
 import ru.practicum.main.dao.EventMainServiceRepository;
+import ru.practicum.main.dto.State;
 import ru.practicum.main.exception.NotFoundException;
 import ru.practicum.main.model.Comment;
+import ru.practicum.main.model.Event;
 
 import java.util.List;
 
@@ -34,10 +36,11 @@ public class PublicCommentServiceImpl implements PublicCommentService {
 
     @Override
     public List<Comment> getCommentsByEvent(long eventId, int from, int size) {
-        boolean answer = eventMainServiceRepository.existsById(eventId);
-        if (!answer) {
-            throw new NotFoundException("Данного события не существует");
+        Event answer = eventMainServiceRepository.findById(eventId).orElseThrow(() -> new NotFoundException("Данного события не существует"));
+        if (!answer.getState().equals(State.PUBLISHED)) {
+            throw new NotFoundException("Данное событие не опубликованно");
         }
+
         Pageable pageable = PageRequest.of(from > 0 ? from / size : 0, size, Sort.by("createTime").ascending());
         List<Comment> list = repository.findAllByEventId(eventId, pageable);
         log.info("get list comment");

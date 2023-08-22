@@ -153,7 +153,7 @@
         "header": [],
         "body": {
           "mode": "raw",
-          "raw": "{\"annotation\":\"test annotation. but validation wont 20 simbols\",\"category\":1,\"description\":\"test description. but validation wont 20 simbols\",\"eventDate\":\"2023-08-21 18:05:13\",\"location\":{\"lat\":-10.7,\"lon\":92.2},\"paid\":\"true\",\"participantLimit\":\"100\",\"requestModeration\":\"false\",\"title\":\"test title.\"}",
+          "raw": "{\"annotation\":\"test annotation. but validation wont 20 simbols\",\"category\":1,\"description\":\"test description. but validation wont 20 simbols\",\"eventDate\":\"2030-08-21 18:05:13\",\"location\":{\"lat\":-10.7,\"lon\":92.2},\"paid\":\"true\",\"participantLimit\":\"100\",\"requestModeration\":\"false\",\"title\":\"test title.\"}",
           "options": {
             "raw": {
               "language": "json"
@@ -691,6 +691,91 @@
           "variable": [
             {
               "key": "event",
+              "value": "1"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Получение по тексту",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+              "    pm.response.to.have.status(200);  \r",
+              "    pm.response.to.be.withBody;\r",
+              "    pm.response.to.be.json;\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/admin/comment/search?text=com",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "admin",
+            "comment",
+            "search"
+          ],
+          "query": [
+            {
+              "key": "text",
+              "value": "com"
+            }
+          ]
+        }
+      },
+      "response": []
+    },
+    {
+      "name": "Получение по id пользователя",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "pm.test(\"Ответ должен содержать код статуса 200 и данные в формате json\", function () {\r",
+              "    pm.response.to.have.status(200);  \r",
+              "    pm.response.to.be.withBody;\r",
+              "    pm.response.to.be.json;\r",
+              "});"
+            ],
+            "type": "text/javascript"
+          }
+        }
+      ],
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "http://localhost:8080/admin/users/:userId/comment",
+          "protocol": "http",
+          "host": [
+            "localhost"
+          ],
+          "port": "8080",
+          "path": [
+            "admin",
+            "users",
+            ":userId",
+            "comment"
+          ],
+          "variable": [
+            {
+              "key": "userId",
               "value": "1"
             }
           ]
