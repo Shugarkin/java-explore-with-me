@@ -19,4 +19,6 @@ public class CommentDto {
     private EventCommentDto event;
 
     private String createTime;
+
+    private String patchTime;
 }

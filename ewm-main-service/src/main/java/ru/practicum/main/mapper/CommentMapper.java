@@ -22,13 +22,18 @@ public class CommentMapper {
     }
 
     public CommentDto toCommentDto(Comment comment) {
-        return CommentDto.builder()
+        CommentDto commentDto = CommentDto.builder()
                 .id(comment.getId())
                 .author(UserMapper.toUserDto(comment.getAuthor()))
                 .event(EventMapper.toEventComment(comment.getEvent()))
                 .createTime(comment.getCreateTime().format(FORMATTER))
                 .text(comment.getText())
                 .build();
+        if (comment.getPatchTime() != null) {
+            commentDto.setPatchTime(comment.getPatchTime().format(FORMATTER));
+        }
+
+        return commentDto;
     }
 
     public List<CommentDto> toListCommentDto(List<Comment> list) {
@@ -36,12 +41,16 @@ public class CommentMapper {
     }
 
     public CommentShortDto toCommentShortDto(Comment comment) {
-        return CommentShortDto.builder()
+        CommentShortDto commentShortDto = CommentShortDto.builder()
                 .author(UserMapper.toUserDto(comment.getAuthor()))
                 .createTime(comment.getText())
                 .id(comment.getId())
                 .text(comment.getText())
                 .build();
+        if (comment.getPatchTime() != null) {
+            commentShortDto.setPatchTime(comment.getPatchTime().format(FORMATTER));
+        }
+        return commentShortDto;
     }
 
     public List<CommentShortDto> toListCommentShortDto(List<Comment> list) {

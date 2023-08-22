@@ -31,4 +31,7 @@ public class Comment {
 
     @Column(name = "create_time")
     private LocalDateTime createTime;
+
+    @Column(name = "patch_time")
+    private LocalDateTime patchTime;
 }

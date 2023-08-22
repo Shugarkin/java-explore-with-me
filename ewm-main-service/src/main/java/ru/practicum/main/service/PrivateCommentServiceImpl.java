@@ -75,9 +75,12 @@ public class PrivateCommentServiceImpl implements PrivateCommentService {
         if (!comment.getAuthor().getId().equals(userId)) {
             throw new ConflictException("Вы не можете изменить данный комментарий так как писали его не вы");
         }
+        if (comment.getCreateTime().isBefore(LocalDateTime.now().plusHours(1))) {
+            throw new ConflictException("Время на комментирование вышло");
+        }
 
         comment.setText(newComment.getText());
-        comment.setCreateTime(LocalDateTime.now().withNano(0));
+        comment.setPatchTime(LocalDateTime.now().withNano(0));
         log.info("patch comment");
         return comment;
     }

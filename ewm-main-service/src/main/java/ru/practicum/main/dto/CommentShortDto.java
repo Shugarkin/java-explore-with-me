@@ -16,4 +16,6 @@ public class CommentShortDto {
     private UserDto author;
 
     private String createTime;
+
+    private String patchTime;
 }

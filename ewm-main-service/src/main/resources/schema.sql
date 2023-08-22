@@ -78,6 +78,7 @@ CREATE TABLE IF NOT EXISTS comments (
     author_id BIGINT                            NOT NULL,
     event_id BIGINT                             NOT NULL,
     create_time TIMESTAMP WITHOUT TIME ZONE     NOT NULL,
+    patch_time TIMESTAMP WITHOUT TIME ZONE,
 
     CONSTRAINT pk_comment PRIMARY KEY (id),
     CONSTRAINT fk_user_comment FOREIGN KEY (author_id) REFERENCES users (id) ON DELETE CASCADE,
