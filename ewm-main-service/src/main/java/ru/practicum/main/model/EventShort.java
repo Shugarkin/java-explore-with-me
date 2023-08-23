@@ -27,4 +27,6 @@ public class EventShort {
     private String title;
 
     private Long views;
+
+    private Long commentCount;
 }
